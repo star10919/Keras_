@@ -29,6 +29,7 @@ from icecream import ic
 #     '../data/rps',
 #     target_size=(150, 150),
 #     batch_size=2000,
+#     class_mode='categorical',
 #     subset='training'
 # )
 # # Found 2016 images belonging to 3 classes.
@@ -40,11 +41,14 @@ from icecream import ic
 #     '../data/rps',
 #     target_size=(150, 150),
 #     batch_size=1000,
+#     class_mode='categorical',
 #     subset='validation'
 # )
 # # Found 504 images belonging to 3 classes.
 # ic(testGen[0][0].shape)     # testGen[0][0].shape: (504, 150, 150, 3)
 # ic(testGen[0][1].shape)     # testGen[0][1].shape: (504, 3)
+
+
 
 
 # # 넘파이로 저장
@@ -69,10 +73,10 @@ from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Dropou
 
 model = Sequential()
 model.add(Conv2D(32, (2,2), padding='same', input_shape=(150,150,3)))
-model.add(Conv2D(32, (3, 3), padding='same', activation='relu'))
+model.add(Conv2D(32, (3,3), padding='same', activation='relu'))
 model.add(MaxPooling2D(2,2))
 model.add(Dropout(rate=0.3))
-model.add(Conv2D(32, (3, 3), padding='same', activation='relu'))
+model.add(Conv2D(32, (3,3), padding='same', activation='relu'))
 model.add(MaxPooling2D(2,2))
 model.add(Dropout(rate=0.3))
 model.add(Flatten())
@@ -85,9 +89,17 @@ model.add(Dense(3, activation='softmax'))
 # 3. 컴파일(ES), 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 
-hist = model.fit(x_train, y_train, epochs=50, steps_per_epoch=32, validation_steps=4)
+from tensorflow.keras.callbacks import EarlyStopping
+es = EarlyStopping(monitor='val_loss', mode='min', patience=10, verbose=1)
+hist = model.fit(x_train, y_train, epochs=100, steps_per_epoch=32, validation_data=(x_test, y_test), validation_steps=4)
 
 
 results = model.evaluate(x_test, y_test)
 print('binary :', results[0])
 print('acc :', results[1])
+
+
+'''
+binary : 4.110682487487793
+acc : 0.511904776096344
+'''

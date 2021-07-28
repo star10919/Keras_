@@ -70,9 +70,9 @@ y_test = np.load('./_save/_npy/k59_5_test_y.npy')
 x_train = x_train[:-1,:,:,:]
 x_pred = x_train[-1,:,:,:].reshape(1,150,150,3)
 y_train = y_train[:-1]
-# y_pred = y_train[-1]
+y_pred = y_train[-1].reshape(1)
 ic(x_train.shape, y_train.shape)      # x_train.shape: (2648, 150, 150, 3), y_train.shape: (2648,)
-ic(x_pred.shape)                      # x_pred.shape: (1, 150, 150, 3)
+ic(x_pred.shape, y_pred)        # x_pred.shape: (1, 150, 150, 3),  y_pred: 1.0
 
 
 from tensorflow.keras.models import Sequential
@@ -93,8 +93,8 @@ model.add(Dense(1, activation= 'sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_;oss', patience=10, mode='min', verbose=1)
-hist = model.fit(x_train, y_train, epochs=50, steps_per_epoch=32, validation_steps=4, callbacks=[es])
+es = EarlyStopping(monitor='val_loss', patience=10, mode='min', verbose=1)
+hist = model.fit(x_train, y_train, epochs=100, steps_per_epoch=32, validation_data=(x_test, y_test), validation_steps=4, callbacks=[es])
 
 
 results = model.evaluate(x_test, y_test)
@@ -102,11 +102,13 @@ print('binary :', results[0])
 print('acc :', results[1])
 
 y_predict = model.predict(x_pred)
-res = y_predict * 100
+
+res = results[1] * 100
 print('여자일 확률 :', res, '%')
+ic(y_predict, y_predict.shape)
 
 '''
-binary : 3.5364973545074463
-acc : 0.5854765772819519
-여자일 확률 : [[100.]] %
+binary : 2.560406446456909
+acc : 0.5839636921882629
+여자일 확률 : 58.396369218826294 %
 '''
