@@ -27,47 +27,47 @@ from icecream import ic
 
 
 # trainGen = imageGen.flow_from_directory(
-#     '../data/rps',
+#     '../data/horse-or-human',
 #     target_size=(150, 150),
 #     batch_size=2000,
 #     class_mode='categorical',
 #     subset='training'
 # )
-# # Found 2016 images belonging to 3 classes.
-# ic(trainGen[0][0].shape)     # trainGen[0][0].shape: (2000, 150, 150, 3)
-# ic(trainGen[0][1].shape)     # trainGen[0][1].shape: (2000, 3)
+# # Found 822 images belonging to 2 classes.
+# ic(trainGen[0][0].shape)     #  (822, 150, 150, 3)
+# ic(trainGen[0][1].shape)     #  (822, 2)
 
 
 # testGen = imageGen.flow_from_directory(
-#     '../data/rps',
+#     '../data/horse-or-human',
 #     target_size=(150, 150),
 #     batch_size=1000,
 #     class_mode='categorical',
 #     subset='validation'
 # )
-# # Found 504 images belonging to 3 classes.
-# ic(testGen[0][0].shape)     # testGen[0][0].shape: (504, 150, 150, 3)
-# ic(testGen[0][1].shape)     # testGen[0][1].shape: (504, 3)
+# # Found 205 images belonging to 2 classes.
+# ic(testGen[0][0].shape)     # (205, 150, 150, 3)
+# ic(testGen[0][1].shape)     # (205, 2)
 
 
 
 
 # # 넘파이로 저장
-# np.save('./_save/_npy/k59_6_train_x.npy', arr=trainGen[0][0])
-# np.save('./_save/_npy/k59_6_train_y.npy', arr=trainGen[0][1])
-# np.save('./_save/_npy/k59_6_test_x.npy', arr=testGen[0][0])
-# np.save('./_save/_npy/k59_6_test_y.npy', arr=testGen[0][1])
+# np.save('./_save/_npy/k59_7_train_x.npy', arr=trainGen[0][0])
+# np.save('./_save/_npy/k59_7_train_y.npy', arr=trainGen[0][1])
+# np.save('./_save/_npy/k59_7_test_x.npy', arr=testGen[0][0])
+# np.save('./_save/_npy/k59_7_test_y.npy', arr=testGen[0][1])
 
 
 #============================================================================
 
-x_train = np.load('./_save/_npy/k59_6_train_x.npy')
-y_train = np.load('./_save/_npy/k59_6_train_y.npy')
-x_test = np.load('./_save/_npy/k59_6_test_x.npy')
-y_test = np.load('./_save/_npy/k59_6_test_y.npy')
+x_train = np.load('./_save/_npy/k59_7_train_x.npy')
+y_train = np.load('./_save/_npy/k59_7_train_y.npy')
+x_test = np.load('./_save/_npy/k59_7_test_x.npy')
+y_test = np.load('./_save/_npy/k59_7_test_y.npy')
 
-# ic(x_train.shape, y_train.shape)    # (2000, 150, 150, 3), y_train.shape: (2000, 2)
-# ic(x_test.shape, y_test.shape)      # (661, 150, 150, 3), y_test.shape: (661, 2)
+ic(x_train.shape, y_train.shape)    # 
+ic(x_test.shape, y_test.shape)      # 
 
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Dropout
@@ -84,7 +84,7 @@ model.add(Flatten())
 model.add(Dense(32, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(16, activation='relu'))
-model.add(Dense(3, activation='softmax'))
+model.add(Dense(2, activation='softmax'))
 
 
 # 3. 컴파일(ES), 훈련
@@ -96,5 +96,11 @@ hist = model.fit(x_train, y_train, epochs=100, steps_per_epoch=32, validation_da
 
 
 results = model.evaluate(x_test, y_test)
-print('binary :', results[0])
+print('category :', results[0])
 print('acc :', results[1])
+
+
+'''
+binary : 3.8556771278381348
+acc : 0.6097561120986938
+'''

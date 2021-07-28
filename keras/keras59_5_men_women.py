@@ -65,7 +65,7 @@ x_test = np.load('./_save/_npy/k59_5_test_x.npy')
 y_test = np.load('./_save/_npy/k59_5_test_y.npy')
 
 # ic(x_train.shape, y_train.shape)    # (2649, 150, 150, 3), y_train.shape: (2649,)
-# ic(x_test.shape, y_test.shape)      # (661, 150, 150, 3), y_test.shape: (661,)
+# ic(x_test.shape, y_test.shape)      # (662, 150, 150, 3), y_test.shape: (662,)
 
 x_train = x_train[:-1,:,:,:]
 x_pred = x_train[-1,:,:,:].reshape(1,150,150,3)
