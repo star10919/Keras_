@@ -1,6 +1,6 @@
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.python.keras.layers.convolutional import Conv2D
+
 
 ### fit_generator(fit 할 때, xy가 쌍으로 되어 있을 때 사용)
 
@@ -36,7 +36,7 @@ xy_train = train_datagen.flow_from_directory(# x와 y가 동시에 생성됨
 # Found 160 images belonging to 2 classes.
 
 
-xy_test = train_datagen.flow_from_directory(
+xy_test = test_datagen.flow_from_directory(
     '../data/brain/test',      
     target_size=(150, 150),     
     batch_size=5,       
@@ -68,11 +68,14 @@ xy_test = train_datagen.flow_from_directory(
 
 # 2. 모델
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv1D, Flatten
+from tensorflow.keras.layers import Dense, Conv2D, Flatten
 
 model = Sequential()
 model.add(Conv2D(32, (2,2), input_shape=(150,150,3)))
 model.add(Flatten())
+model.add(Dense(32))
+model.add(Dense(32))
+model.add(Dense(16))
 model.add(Dense(1, activation='sigmoid'))
 
 
@@ -80,7 +83,8 @@ model.add(Dense(1, activation='sigmoid'))
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics=['acc'])
 
 hist = model.fit_generator(xy_train, epochs=50, steps_per_epoch=32,   # 160/5(batch size) = 32
-                           validation_data=xy_test)
+                           validation_data=xy_test,
+                           validation_steps=4)
 
 acc = hist.history['acc']
 val_acc = hist.history['val_acc']
@@ -92,3 +96,8 @@ val_loss = hist.history['val_loss']
 
 print('acc :', acc[-1])
 print('val_acc :', val_acc[:-1])
+
+
+'''
+acc : 0.612500011920929
+'''
