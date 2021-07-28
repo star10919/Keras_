@@ -27,7 +27,7 @@ test_datagen = ImageDataGenerator(rescale=1./255)
 ## 이미지 x, y로 불러오기
 xy_train = train_datagen.flow_from_directory(# x와 y가 동시에 생성됨
     '../data/brain/train',      # 이미지가 있는 폴더 지정이 아닌 상위 폴더(동일한 급의 라벨이 모여있는 폴더까지)로 지정   # train(ad/normal)
-    target_size=(150, 150),     # 임의대로 크기 조정
+    target_size=(150, 150),     # 임의대로 크기 조정 - 해상도
     batch_size=5,               # y 하나의 개수
     class_mode='binary',        # 이상이 있다-라벨 / 이상이 없다-라벨 : 이진분류
     shuffle=False               # 셔플 디폴트 : 트루

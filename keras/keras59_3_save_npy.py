@@ -67,6 +67,7 @@ print(xy_test[0][0].shape, xy_test[0][1].shape)       # (120, 150, 150, 3) (120,
 # print(type(xy_train[0][1]))     # <class 'numpy.ndarray'>
 
 
+## save numpy
 np.save('./_save/_npy/k59_3_train_x.npy', arr=xy_train[0][0])
 np.save('./_save/_npy/k59_3_train_y.npy', arr=xy_train[0][1])
 np.save('./_save/_npy/k59_3_test_x.npy', arr=xy_test[0][0])

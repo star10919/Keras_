@@ -6,7 +6,7 @@ import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from icecream import ic
 
-'''
+
 ## ImageDataGenerator로 데이터 증폭시키기
 imageGen = ImageDataGenerator(
     rescale=1./255,
@@ -24,41 +24,42 @@ imageGen = ImageDataGenerator(
 
 
 
+
 trainGen = imageGen.flow_from_directory(
-    '../data/men_women',
+    '../data/rps',
     target_size=(150, 150),
     batch_size=2000,
     subset='training'
 )
-# Found 2648 images belonging to 2 classes.
-ic(trainGen[0][0].shape)     # (2000, 150, 150, 3)
-ic(trainGen[0][1].shape)     # (2000, 2)
+# Found 2016 images belonging to 3 classes.
+ic(trainGen[0][0].shape)     # trainGen[0][0].shape: (2000, 150, 150, 3)
+ic(trainGen[0][1].shape)     # trainGen[0][1].shape: (2000, 3)
 
 
 testGen = imageGen.flow_from_directory(
-    '../data/men_women',
+    '../data/rps',
     target_size=(150, 150),
     batch_size=1000,
     subset='validation'
 )
-#Found 661 images belonging to 2 classes.
-ic(testGen[0][0].shape)     # (661, 150, 150, 3)
-ic(testGen[0][1].shape)     # (661, 2)
+# Found 504 images belonging to 3 classes.
+ic(testGen[0][0].shape)     # testGen[0][0].shape: (504, 150, 150, 3)
+ic(testGen[0][1].shape)     # testGen[0][1].shape: (504, 3)
 
 
 # 넘파이로 저장
-np.save('./_save/_npy/k59_5_train_x.npy', arr=trainGen[0][0])
-np.save('./_save/_npy/k59_5_train_y.npy', arr=trainGen[0][1])
-np.save('./_save/_npy/k59_5_test_x.npy', arr=testGen[0][0])
-np.save('./_save/_npy/k59_5_test_y.npy', arr=testGen[0][1])
-'''
+np.save('./_save/_npy/k59_6_train_x.npy', arr=trainGen[0][0])
+np.save('./_save/_npy/k59_6_train_y.npy', arr=trainGen[0][1])
+np.save('./_save/_npy/k59_6_test_x.npy', arr=testGen[0][0])
+np.save('./_save/_npy/k59_6_test_y.npy', arr=testGen[0][1])
+
 
 #============================================================================
-
-x_train = np.load('./_save/_npy/k59_5_train_x.npy')
-y_train = np.load('./_save/_npy/k59_5_train_y.npy')
-x_test = np.load('./_save/_npy/k59_5_test_x.npy')
-y_test = np.load('./_save/_npy/k59_5_test_y.npy')
+'''
+x_train = np.load('./_save/_npy/k59_6_train_x.npy')
+y_train = np.load('./_save/_npy/k59_6_train_y.npy')
+x_test = np.load('./_save/_npy/k59_6_test_x.npy')
+y_test = np.load('./_save/_npy/k59_6_test_y.npy')
 
 # ic(x_train.shape, y_train.shape)    # (2000, 150, 150, 3), y_train.shape: (2000, 2)
 # ic(x_test.shape, y_test.shape)      # (661, 150, 150, 3), y_test.shape: (661, 2)
@@ -86,3 +87,4 @@ hist = model.fit(x_train, y_train, epochs=50, steps_per_epoch=32, validation_ste
 results = model.evaluate(x_test, y_test)
 print('binary :', results[0])
 print('acc :', results[1])
+'''
