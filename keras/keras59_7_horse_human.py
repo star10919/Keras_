@@ -70,20 +70,18 @@ ic(x_train.shape, y_train.shape)    #
 ic(x_test.shape, y_test.shape)      # 
 
 from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPooling2D, Dropout
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout
+
 
 model = Sequential()
-model.add(Conv2D(32, (2,2), padding='same', input_shape=(150,150,3)))
-model.add(Conv2D(32, (3,3), padding='same', activation='relu'))
-model.add(MaxPooling2D(2,2))
-model.add(Dropout(rate=0.3))
-model.add(Conv2D(32, (3,3), padding='same', activation='relu'))
-model.add(MaxPooling2D(2,2))
-model.add(Dropout(rate=0.3))
+model.add(Conv2D(32, (3,3), input_shape=(150,150,3), padding='same', activation='relu'))
+model.add(MaxPool2D(2,2))
+model.add(Conv2D(64, (3,3), activation='relu'))
+model.add(MaxPool2D(2,2))
+model.add(Conv2D(128, (3,3), activation='relu'))
 model.add(Flatten())
-model.add(Dense(32, activation='relu'))
-model.add(Dense(32, activation='relu'))
-model.add(Dense(16, activation='relu'))
+model.add(Dense(256, activation='relu'))
+model.add(Dense(512, activation='relu'))
 model.add(Dense(2, activation='softmax'))
 
 
@@ -101,6 +99,6 @@ print('acc :', results[1])
 
 
 '''
-binary : 3.8556771278381348
-acc : 0.6097561120986938
+category : 3.395993709564209
+acc : 0.712195098400116
 '''
