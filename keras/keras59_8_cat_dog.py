@@ -33,8 +33,8 @@ from icecream import ic
 #     class_mode='categorical'
 # )
 # # Found 8005 images belonging to 2 classes.
-# ic(trainGen[0][0].shape)     # trainGen[0][0].shape: (2000, 150, 150, 3)
-# ic(trainGen[0][1].shape)     # trainGen[0][1].shape: (2000, 1)
+# ic(trainGen[0][0].shape)     # (2000, 150, 150, 3)
+# ic(trainGen[0][1].shape)     # (2000, 1)
 
 
 # testGen = test_datagen.flow_from_directory(
@@ -72,14 +72,14 @@ from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout
 
 
 model = Sequential()
-model.add(Conv2D(32, (3,3), input_shape=(150,150,3), padding='same', activation='relu'))
+model.add(Conv2D(128, (3,3), input_shape=(150,150,3), padding='same', activation='relu'))
 model.add(MaxPool2D(2,2))
-model.add(Conv2D(64, (3,3), activation='relu'))
+model.add(Conv2D(128, (3,3), activation='relu'))
 model.add(MaxPool2D(2,2))
 model.add(Conv2D(128, (3,3), activation='relu'))
 model.add(Flatten())
-model.add(Dense(256, activation='relu'))
-model.add(Dense(512, activation='relu'))
+model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
 model.add(Dense(2, activation='sigmoid'))
 
 
@@ -91,7 +91,7 @@ es = EarlyStopping(monitor='val_loss', mode='min', patience=10, verbose=1)
 import time
 start = time.time()
 hist = model.fit(x_train, y_train, epochs=100, steps_per_epoch=32, validation_data=(x_test, y_test), validation_steps=4)
-end = time.time()
+end = time.time() - start
 
 results = model.evaluate(x_test, y_test)
 print("걸린시간 :", end)
@@ -100,5 +100,7 @@ print('acc :', results[1])
 
 
 '''
-
+걸린시간 : 132.89668941497803
+category : 7.166528701782227
+acc : 0.531000018119812
 '''
