@@ -36,14 +36,14 @@ train_datagen = ImageDataGenerator(
 
 augment_size=100
 x_data = train_datagen.flow(# x와 y를 각각 불러옴
-            np.tile(x_train[0].reshape(28*28), augment_size).reshape(-1,28,28,1),      # x      # x_train[0]을 아규먼트 사이즈 만큼 다른 각도로 복제함
+            np.tile(x_train[0].reshape(28*28), augment_size).reshape(-1,28,28,1),      # x      # x_train[0]을 아규먼트 사이즈 만큼 다른 각도로 복제함(증폭)
             np.zeros(augment_size),       # y
             batch_size=augment_size,
             shuffle=False
-).next()   # => iterator 방식(.next를 안 붙이면 iterator의 한 부분씩만 실행)으로 반환!!       //      # .next를 붙이면 전체실행
+).next()   # => iterator 방식(.next()를 안 붙이면 iterator의 한 부분씩만 실행)으로 반환!!       //      # .next()를 붙이면 전체실행
 
-# print(type(x_data))     # <class 'tensorflow.python.keras.preprocessing.image.NumpyArrayIterator'>
-#                         #   -> <class 'tuple'>
+# print(type(x_data))     # .next() x :<class 'tensorflow.python.keras.preprocessing.image.NumpyArrayIterator'>   # Iterator : 반복자
+#                         # .next() o :  -> <class 'tuple'>
 # print(type(x_data[0]))      # <class 'tuple'>
 #                         #   ->  <class 'numpy.ndarray'>
 # print(type(x_data[0][0]))      # <class 'numpy.ndarray'>
