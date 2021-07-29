@@ -1,7 +1,7 @@
 from tensorflow.keras.datasets import fashion_mnist
 import numpy as np
 
-### flow
+### flow  / 한개의 이미지를 여러개로 늘린 것
 
 (x_train, y_train), (x_test, y_test) = fashion_mnist.load_data()
 
@@ -34,11 +34,11 @@ train_datagen = ImageDataGenerator(
 #2. 파일에서 땡겨오려면 -> flow_from_directory()  :  xy 가 튜플형태로 묶여서 나옴
 #3. 데이터에서 땡겨오려면 -> flow()  :  x와 y가 분류되어 있어야 한다.
 
-argument_size=100
+augment_size=100
 x_data = train_datagen.flow(# x와 y를 각각 불러옴
-            np.tile(x_train[0].reshape(28*28), argument_size).reshape(-1,28,28,1),      # x      # x_train[0]을 아규먼트 사이즈 만큼 다른 각도로 복제함
-            np.zeros(argument_size),       # y
-            batch_size=argument_size,
+            np.tile(x_train[0].reshape(28*28), augment_size).reshape(-1,28,28,1),      # x      # x_train[0]을 아규먼트 사이즈 만큼 다른 각도로 복제함
+            np.zeros(augment_size),       # y
+            batch_size=augment_size,
             shuffle=False
 ).next()   # => iterator 방식(.next를 안 붙이면 iterator의 한 부분씩만 실행)으로 반환!!       //      # .next를 붙이면 전체실행
 
