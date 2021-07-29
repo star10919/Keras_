@@ -69,9 +69,6 @@ model.add(MaxPool2D((2,2)))
 model.add(Flatten())
 model.add(Dense(128, activation='relu'))
 model.add(Dense(128, activation='relu'))
-# model.add(Dense(64, activation='relu'))
-# model.add(Dense(100, activation='relu'))
-# model.add(Dense(128, activation='relu'))
 model.add(Dense(64, activation='relu'))
 model.add(Dense(32, activation='relu'))
 model.add(Dense(10, activation='softmax'))
@@ -99,7 +96,13 @@ print('accuracy :', results[1])
 
 
 '''
+* onehotencoding
 걸린시간 : 256.97893238067627
 category : 1.085862636566162
 accuracy : 0.8981000185012817
+
+* sparse_categorical_crossentropy
+걸린시간 : 81.27210283279419
+category : 0.6393763422966003
+accuracy : 0.8881000280380249
 '''
