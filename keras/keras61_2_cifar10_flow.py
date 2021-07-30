@@ -7,8 +7,8 @@
 import numpy as np
 from icecream import ic
 
-### 데이터 로드하기
 
+### 데이터 로드하기
 x_train_cifar10 = np.load('./_save/_npy/k55_x_train_cifar10.npy')
 x_test_cifar10 = np.load('./_save/_npy/k55_x_test_cifar10.npy')
 y_train_cifar10 = np.load('./_save/_npy/k55_y_train_cifar10.npy')
