@@ -4,11 +4,11 @@
 
 ### 랜덤 ->  [4차원 -> flow] -> concatenate
 
+
 import numpy as np
 from icecream import ic
 
 ### 데이터 로드하기
-
 # (x_train_minst, y_train_mnist), (x_test_minst, y_test_minst) = mnist.load_data()
 # np.save('./_save/_npy/k55_x_train_mnist.npy', arr=x_train_minst)
 # np.save('./_save/_npy/k55_x_test_mnist.npy', arr=x_test_minst)
