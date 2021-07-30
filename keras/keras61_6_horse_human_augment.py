@@ -3,5 +3,5 @@
 # save_dir도 temp에 넣을 것
 # 증폭데이터는 temp에 저장 후 훈련끝난 후 결과 본 뒤 삭제
 
-### 랜덤 ->  [4차원 -> flow] -> concatenate
+### 랜덤 ->   [4차원 -> flow] -> concatenate
 
