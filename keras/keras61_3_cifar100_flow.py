@@ -7,7 +7,7 @@
 import numpy as np
 from icecream import ic
 from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, GlobalAveragePooling2D, Conv1D, LSTM
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool1D, Dropout, GlobalAveragePooling2D, Conv1D, LSTM
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.utils import to_categorical
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, PowerTransformer, QuantileTransformer
@@ -78,7 +78,7 @@ x_augment = train_datagen.flow(# x와 y를 각각 불러옴
             save_to_dir='d:/temp/',
             shuffle=False).next()[0]
 ic(type(x_augment), x_augment.shape)       # <class 'numpy.ndarray'>, (50000, 32, 32, 3)
-print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+print('%%%%%%%%%%%%%%% 1 %%%%%%%%%%%%%%%%')
 ic(x_train_cifar100.shape, x_augment.shape)  #(50000, 32, 32, 3), (50000, 32, 32, 3)
 ic(y_train_cifar100.shape, y_augment.shape)  #(50000, 1), (50000, 1)
 
@@ -107,24 +107,26 @@ x_train = x_train.reshape(100000, 32 , 96)
 x_test = x_test.reshape(10000, 32, 96)
 
 # 1-3. y 데이터 전처리 -> one-hot-encoding
-y_train = to_categorical(y_train_cifar100)
+y_train = to_categorical(y_train)
 y_test = to_categorical(y_test_cifar100)
-print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-ic(y_train.shape, y_test.shape)         #(50000, 100), (10000, 100)
+print('%%%%%%%%%%%%%%%% 2 %%%%%%%%%%%%%%%%')
+ic(y_train.shape, y_test.shape)         #(100000, 100), (10000, 100)
 
 
 # 2. 모델 구성(GlobalAveragePooling2D 사용)
 model = Sequential()
-model.add(LSTM(128, input_shape=(32, 96), activation='relu', return_sequences=True))
-model.add(Conv1D(64, 2, activation='relu'))
-model.add(Flatten())
-model.add(Dense(128, activation='relu'))    
-model.add(Dense(128, activation='relu')) 
-model.add(Dense(64, activation='relu')) 
-model.add(Dense(64, activation='relu')) 
-model.add(Dense(128, activation='relu'))
-model.add(Dense(128, activation='relu'))
+model.add(Conv1D(filters=32, kernel_size=2, padding='same',                        
+                        activation='relu' ,input_shape=(32, 96))) 
+model.add(Conv1D(32, 2, padding='same', activation='relu'))                   
+model.add(MaxPool1D())                                         
+model.add(Conv1D(64, 2, padding='same', activation='relu'))                   
+model.add(Conv1D(64, 2, padding='same', activation='relu'))    
+model.add(Flatten())                                              
+model.add(Dense(256, activation='relu'))
+model.add(Dense(124, activation='relu'))
+# model.add(Dense(84, activation='relu'))
 model.add(Dense(100, activation='softmax'))
+
 
 
 # 3. 컴파일(ES), 훈련
