@@ -57,7 +57,7 @@ train_datagen = ImageDataGenerator(
 
 #####랜덤
 # 데이터 증폭
-augment_size=5000
+augment_size=50000
 
 randidx = np.random.randint(x_train_cifar100.shape[0], size=augment_size)
 x_augment = x_train_cifar100[randidx].copy()
