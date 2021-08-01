@@ -78,7 +78,7 @@ x_augment = train_datagen.flow(# x와 y를 각각 불러옴
             save_to_dir='d:/temp/',
             shuffle=False).next()[0]
 ic(type(x_augment), x_augment.shape)       # <class 'numpy.ndarray'>, (50000, 32, 32, 3)
-print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
 ic(x_train_cifar100.shape, x_augment.shape)  #(50000, 32, 32, 3), (50000, 32, 32, 3)
 ic(y_train_cifar100.shape, y_augment.shape)  #(50000, 1), (50000, 1)
 
