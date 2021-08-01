@@ -35,7 +35,13 @@ train_datagen = ImageDataGenerator(
 #3. 데이터에서 땡겨오려면 -> flow()  :  x와 y가 분류되어 있어야 한다.
 
 
+
 # 데이터 증폭
+'''
+배열을 반복하면서 새로운 축을 추가하기 : np.tile
+np.tile(arr, reps) method 는 'arr' 에는 배열을, 'reps'에는 반복하고자 하는 회수를 넣어줍니다.
+'reps'에는 숫자를 넣을 수도 있고, 배열을 넣을 수도 있습니다.
+'''
 augment_size=100
 x_data = train_datagen.flow(# x와 y를 각각 불러옴
             np.tile(x_train[0].reshape(28*28), augment_size).reshape(-1,28,28,1),      # x      # x_train[0]을 아규먼트 사이즈 만큼 다른 각도로 복제함(증폭)
