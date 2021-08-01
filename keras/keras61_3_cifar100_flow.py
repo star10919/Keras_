@@ -77,43 +77,40 @@ x_augment = train_datagen.flow(# x와 y를 각각 불러옴
             batch_size=augment_size,
             save_to_dir='d:/temp/',
             shuffle=False).next()[0]
-# ic(type(x_augment), x_augment.shape)       # <class 'numpy.ndarray'>, (40000, 28, 28, 1)
+ic(type(x_augment), x_augment.shape)       # <class 'numpy.ndarray'>, (50000, 32, 32, 3)
 print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
-ic(x_train_cifar10.shape, x_augment.shape)  #(50000, 32, 32, 3), (50000, 32, 32, 3)
-ic(y_train_cifar10.shape, y_augment.shape)  #(50000, 1), (50000, 1)
+ic(x_train_cifar100.shape, x_augment.shape)  #(50000, 32, 32, 3), (50000, 32, 32, 3)
+ic(y_train_cifar100.shape, y_augment.shape)  #(50000, 1), (50000, 1)
 
 #####concatenate
-x_train = np.concatenate((x_train_cifar10, x_augment))
-y_train = np.concatenate((y_train_cifar10, y_augment))
-ic(x_train.shape, y_train.shape)        #  (100000, 32, 32, 1), (100000, 1)
+x_train = np.concatenate((x_train_cifar100, x_augment))
+y_train = np.concatenate((y_train_cifar100, y_augment))
+ic(x_train.shape, y_train.shape)        #  (100000, 32, 32, 3), (100000, 1)
 
 
 
-
-
-
-
-
-x_train = x_train_cifar100.reshape(50000, 32 * 32 * 3)
-x_test = x_test_cifar100.reshape(10000, 32 * 32 * 3)
-print(np.unique(y_train_cifar100)) 
+ic(np.unique(y_train_cifar100))  #0-99 : 100개
 # 전처리 하기 -> scailing
 # 단, 2차원 데이터만 가능하므로 4차원 -> 2차원
 # x_train = x_train/255.
 # x_test = x_test/255.
-print(x_train.shape, x_test.shape) # (50000, 3072) (10000, 3072)
+ic(x_train.shape, x_test_cifar100.shape) # (100000, 32, 32, 3), (10000, 32, 32, 3)
+
+x_train = x_train.reshape(100000, 32*32*3)
+x_test = x_test_cifar100.reshape(10000, 32*32*3)
 
 # 1-2. x 데이터 전처리
 scaler = StandardScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
-x_train = x_train.reshape(50000, 32 , 96)
+x_train = x_train.reshape(100000, 32 , 96)
 x_test = x_test.reshape(10000, 32, 96)
 
 # 1-3. y 데이터 전처리 -> one-hot-encoding
 y_train = to_categorical(y_train_cifar100)
 y_test = to_categorical(y_test_cifar100)
-print(y_train.shape, y_test.shape)
+print('%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%')
+ic(y_train.shape, y_test.shape)         #(50000, 100), (10000, 100)
 
 
 # 2. 모델 구성(GlobalAveragePooling2D 사용)
@@ -145,10 +142,17 @@ end_time = time.time() - start_time
 # model = load_model('./_save/ModelCheckPoint/keras48_9_MCP.hdf5')                # checkpoint
 
 # 4. 평가, 예측
+acc = hist.history['acc']
+val_acc = hist.history['val_acc']
+loss = hist.history['loss']
+val_loss = hist.history['val_loss']
+
 loss = model.evaluate(x_test, y_test)
 print("걸린시간 :", end_time)
-print('category :', loss[0])
-print('accuracy :', loss[1])
+print('acc :',acc[-10])
+print('val_acc :',val_acc[-10])
+# print('loss : ',loss[-10])
+print('val_loss :',val_loss[-10])
 
 
 # # 시각화 
