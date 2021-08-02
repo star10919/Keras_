@@ -155,7 +155,7 @@ model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
 # model.add(Dropout(0.2))
 model.add(MaxPool2D(2,2))                  
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-model.add(Flatten())                                              
+model.add(GlobalAveragePooling2D())                                              
 model.add(Dense(64, activation='relu'))
 model.add(Dense(64, activation='relu'))
 # model.add(Dense(64, activation='relu'))
@@ -166,11 +166,11 @@ model.add(Dense(11, activation='softmax'))
 
 # 3. 컴파일(ES), 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-es = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='min')
+es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
 cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_3.hdf5')
 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=10000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=512)
+hist = model.fit(x_train, y_train, epochs=10000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=200)
 end_time = time.time() - start_time
 
 model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5')
@@ -188,7 +188,12 @@ loss = model.evaluate(x_test, y_test)
 print("걸린시간 :", end_time)
 print('acc :',acc[-1])
 print('val_acc :',val_acc[-1])
+print('loss :',loss[-1])
 print('val_loss :',val_loss[-1])
+
+
+# y_predict = model.predict(test_tf_text)
+# y_predict = np.argmax(y_predict, axis=1)
 
 
 # 시각화 
