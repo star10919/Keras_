@@ -13,19 +13,19 @@ import matplotlib.pyplot as plt
 
 
 
-### ImageDataGenerator로 데이터 증폭시키기
-imageGen = ImageDataGenerator(
-    rescale=1./255,
-    horizontal_flip=True,
-    vertical_flip=True,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    rotation_range=5,
-    zoom_range=1.2,
-    shear_range=0.7,
-    fill_mode='nearest',
-    validation_split=0.2
-    )
+# ### ImageDataGenerator로 데이터 증폭시키기
+# imageGen = ImageDataGenerator(
+#     rescale=1./255,
+#     horizontal_flip=True,
+#     vertical_flip=True,
+#     width_shift_range=0.1,
+#     height_shift_range=0.1,
+#     rotation_range=5,
+#     zoom_range=1.2,
+#     shear_range=0.7,
+#     fill_mode='nearest',
+#     validation_split=0.2
+#     )
 
 
 # xy_train = imageGen.flow_from_directory(
@@ -52,12 +52,57 @@ imageGen = ImageDataGenerator(
 # ic(xy_test[0][1].shape)     # (220, 11)
 
 
+# x_train = xy_train[0][0]
+# y_train = xy_train[0][1]
+# x_test = xy_test[0][0]
+# y_test = xy_test[0][1]
 
-### 넘파이로 세이브하기
-# np.save('./_save/_npy/proj_faceage_aug_x_train.npy', arr=xy_train[0][0])
-# np.save('./_save/_npy/proj_faceage_aug_x_test.npy', arr=xy_test[0][0])
-# np.save('./_save/_npy/proj_faceage_aug_y_train.npy', arr=xy_train[0][1])
-# np.save('./_save/_npy/proj_faceage_aug_y_test.npy', arr=xy_test[0][1])
+
+# #####랜덤
+# # 데이터 증폭
+# augment_size=50000
+
+# randidx = np.random.randint(x_train.shape[0], size=augment_size)
+# x_augment = x_train[randidx].copy()
+# y_augment = y_train[randidx].copy()
+# print('%%%%%%%%%%%%%%% 1 %%%%%%%%%%%%%%%%')
+# ic(x_augment.shape, y_augment.shape)        # (50000, 32, 32, 3), (50000, 11)
+
+
+# #####4차원
+# # x_augment = x_augment.reshape(x_augment.shape[0], 32, 32, 3)
+# # x_train = x_train_cifar10.reshape(x_train_cifar10.shape[0], 32, 32, 3)
+# # x_test = x_test_cifar10.reshape(x_test_cifar10.shape[0], 32, 32, 3)
+
+# #####flow
+# x_augment = imageGen.flow(# x와 y를 각각 불러옴
+#             x_augment,  # x
+#             np.zeros(augment_size),  # y
+#             batch_size=augment_size,
+#             save_to_dir='d:/temp/',
+#             shuffle=False).next()[0]
+# ic(type(x_augment), x_augment.shape)       # <class 'numpy.ndarray'>, (50000, 32, 32, 3)
+# print('%%%%%%%%%%%%%%% 2 %%%%%%%%%%%%%%%%')
+# ic(x_train.shape, x_augment.shape)  #(880, 32, 32, 3), (50000, 32, 32, 3)
+# ic(y_train.shape, y_augment.shape)  #(880, 11), (50000, 11)
+
+# #####concatenate
+# x_train = np.concatenate((x_train, x_augment))
+# y_train = np.concatenate((y_train, y_augment))
+# print('%%%%%%%%%%%%%%% 3 %%%%%%%%%%%%%%%%')
+# ic(x_train.shape, y_train.shape)        #  (50880, 32, 32, 3), (50880, 11)
+
+# ic(x_train)
+# ic(x_test)
+# ic(y_train)
+# ic(y_test)
+# ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
+
+# ### 넘파이로 세이브하기
+# np.save('./_save/_npy/proj_faceage_aug_x_train.npy', arr=x_train)
+# np.save('./_save/_npy/proj_faceage_aug_x_test.npy', arr=x_test)
+# np.save('./_save/_npy/proj_faceage_aug_y_train.npy', arr=y_train)
+# np.save('./_save/_npy/proj_faceage_aug_y_test.npy', arr=y_test)
 
 
 # ============================================================================================================
@@ -75,50 +120,11 @@ ic(y_test)
 ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
 
 '''
-    x_train.shape: (880, 32, 32, 3)
+    x_train.shape: (50880, 32, 32, 3)
     x_test.shape: (220, 32, 32, 3)
-    y_train.shape: (880, 11)
+    y_train.shape: (50880, 11)
     y_test.shape: (220, 11)
 '''
-
-
-
-
-#####랜덤
-# 데이터 증폭
-augment_size=50000
-
-randidx = np.random.randint(x_train.shape[0], size=augment_size)
-x_augment = x_train[randidx].copy()
-y_augment = y_train[randidx].copy()
-print('%%%%%%%%%%%%%%% 1 %%%%%%%%%%%%%%%%')
-ic(x_augment.shape, y_augment.shape)        # (50000, 32, 32, 3), (50000, 11)
-
-
-#####4차원
-# x_augment = x_augment.reshape(x_augment.shape[0], 32, 32, 3)
-# x_train = x_train_cifar10.reshape(x_train_cifar10.shape[0], 32, 32, 3)
-# x_test = x_test_cifar10.reshape(x_test_cifar10.shape[0], 32, 32, 3)
-
-#####flow
-x_augment = imageGen.flow(# x와 y를 각각 불러옴
-            x_augment,  # x
-            np.zeros(augment_size),  # y
-            batch_size=augment_size,
-            save_to_dir='d:/temp/',
-            shuffle=False).next()[0]
-ic(type(x_augment), x_augment.shape)       # <class 'numpy.ndarray'>, (50000, 32, 32, 3)
-print('%%%%%%%%%%%%%%% 2 %%%%%%%%%%%%%%%%')
-ic(x_train.shape, x_augment.shape)  #(880, 32, 32, 3), (50000, 32, 32, 3)
-ic(y_train.shape, y_augment.shape)  #(880, 11), (50000, 11)
-
-#####concatenate
-x_train = np.concatenate((x_train, x_augment))
-y_train = np.concatenate((y_train, y_augment))
-print('%%%%%%%%%%%%%%% 3 %%%%%%%%%%%%%%%%')
-ic(x_train.shape, y_train.shape)        #  (50880, 32, 32, 3), (50880, 11)
-
-
 
 
 
@@ -148,7 +154,9 @@ model.add(MaxPool2D(2,2))
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
 model.add(Dropout(0.2))
 model.add(MaxPool2D(2,2))                  
-model.add(Conv2D(64, (2,2), padding='same', activation='relu'))    
+model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
+model.add(MaxPool2D(2,2))
+model.add(Dropout(0.2))
 model.add(Flatten())                                              
 model.add(Dense(64, activation='relu'))
 model.add(Dense(64, activation='relu'))
@@ -161,13 +169,13 @@ model.add(Dense(11, activation='softmax'))
 # 3. 컴파일(ES), 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 es = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='min')
-cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/face_age_MCP2.hdf5')
+cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_3.hdf5')
 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=10000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=512)
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/face_age_model_save2.h5')
+model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5')
 
 # model = load_model('./_save/ModelCheckPoint/face_age_model_save.h5')           # save model
 # model = load_model('./_save/ModelCheckPoint/face_age_MCP.hdf5')                # checkpoint
@@ -217,10 +225,14 @@ plt.show()
 acc : 0.40430623292922974
 val_acc : 0.20454545319080353
 
+
 *augment 50000
-'./_save/ModelCheckPoint/face_age_model_save.h5'
-걸린시간 : 113.05613613128662
-acc : 0.8466567397117615
-val_acc : 0.6780660152435303
-val_loss : 1.1923494338989258
+'./_save/ModelCheckPoint/face_age_model_save_aug5_2.h5'
+걸린시간 : 197.54050087928772
+acc : 0.8777929544448853
+val_acc : 0.7338836193084717
+val_loss : 0.9268954992294312
+
+'./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5'
+
 '''

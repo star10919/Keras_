@@ -205,7 +205,7 @@ plt.show()
 
 
 '''
-*flow_from_directory
+*augment X
 걸린시간 : 6.861128091812134
 acc : 0.40430623292922974
 val_acc : 0.20454545319080353
