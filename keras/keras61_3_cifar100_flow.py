@@ -115,7 +115,7 @@ ic(y_train.shape, y_test.shape)         #(100000, 100), (10000, 100)
 
 # 2. 모델 구성(GlobalAveragePooling2D 사용)
 model = Sequential()
-model.add(Conv1D(filters=32, kernel_size=2, padding='same',                        
+model.add(Conv1D(filters=128, kernel_size=2, padding='same',                        
                         activation='relu' ,input_shape=(32, 96))) 
 model.add(Conv1D(32, 2, padding='same', activation='relu'))                   
 model.add(MaxPool1D())                                         
@@ -135,7 +135,7 @@ es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
 cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/keras48_9_MCP.hdf5')
 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=100, verbose=1, callbacks=[es, cp], validation_split=0.2, shuffle=True, batch_size=512)
+hist = model.fit(x_train, y_train, epochs=10000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=512)
 end_time = time.time() - start_time
 
 # model.save('./_save/ModelCheckPoint/keras48_9_model_save.h5')
@@ -246,4 +246,10 @@ accuracy : 0.2451999932527542
 걸린시간 : 144.05347609519958
 category : 3.4703280925750732
 accuracy : 0.26649999618530273
+
+*flow
+걸린시간 : 40.634702920913696
+acc : 0.3096526265144348
+val_acc : 0.008799999952316284
+val_loss : 4.606176376342773
 '''

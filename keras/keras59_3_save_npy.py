@@ -1,8 +1,6 @@
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 
-### 넘파이로 저장
-
 
 ## ImageDataGenerator로 데이터 증폭시키기
 train_datagen = ImageDataGenerator(
