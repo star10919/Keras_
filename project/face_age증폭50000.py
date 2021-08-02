@@ -3,7 +3,6 @@
 import numpy as np
 from icecream import ic
 from tensorflow.keras.models import Sequential, load_model
-from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, GlobalAveragePooling2D, Conv1D, LSTM
 from tensorflow.keras.callbacks import EarlyStopping, ModelCheckpoint
 from tensorflow.keras.utils import to_categorical
 from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, PowerTransformer, QuantileTransformer
@@ -144,6 +143,7 @@ x_test = x_test.reshape(x_test.shape[0], 32, 32, 3)
 
 
 # 2. 모델 구성(GlobalAveragePooling2D 사용)
+from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, GlobalAveragePooling2D, Conv1D, LSTM
 model = Sequential()
 model.add(Conv2D(filters=64, kernel_size=(2,2), padding='same',                        
                         activation='relu' ,input_shape=(32, 32, 3)))
