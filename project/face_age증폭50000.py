@@ -181,7 +181,7 @@ x_test = x_test.reshape(x_test.shape[0], 32*32*3)
 x_pred = x_pred.reshape(x_pred.shape[0], 32*32*3)
 
 # 1-2. x 데이터 전처리
-scaler = StandardScaler()
+scaler = RobustScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 x_pred = scaler.transform(x_pred)
