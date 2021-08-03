@@ -221,7 +221,7 @@ cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
                      filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_5.hdf5')
 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=10000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=200)
+hist = model.fit(x_train, y_train, epochs=1000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=500)
 end_time = time.time() - start_time
 
 model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_5.h5')
@@ -274,39 +274,7 @@ plt.legend(['acc', 'val_acc'])
 plt.show()
 
 
-'''
-*augment 전
-걸린시간 : 6.861128091812134
-acc : 0.40430623292922974
-val_acc : 0.20454545319080353
-
-*augment 50000
-'./_save/ModelCheckPoint/face_age_model_save_aug5_2.h5'
-걸린시간 : 197.54050087928772
-acc : 0.8777929544448853
-val_acc : 0.7338836193084717
-val_loss : 0.9268954992294312
-
-'./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5'
-걸린시간 : 216.13762092590332
-acc : 0.7695713043212891
-val_acc : 0.6855345964431763
-loss : 0.10000000149011612
-val_loss : 0.9884343147277832
-
-'./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5'
-걸린시간 : 242.25332069396973
-acc : 0.869745135307312
-val_acc : 0.7889150977134705
-loss : 0.12272727489471436
-val_loss : 0.7013579607009888
-[ 9,  2,  2,  8,  8,  3,  4,  0,  6,  9, 10]
-
-'./_save/ModelCheckPoint/face_age_model_save_aug5_5.h5'
-
-'''
-
-real = y_predict.split(",")
+real = y_predict
 age = []
 def real_age():
     for i in range(11):
@@ -338,3 +306,36 @@ def real_age():
     return print(age)
 
 real_age()
+
+
+'''
+*augment 전
+걸린시간 : 6.861128091812134
+acc : 0.40430623292922974
+val_acc : 0.20454545319080353
+
+*augment 50000
+'./_save/ModelCheckPoint/face_age_model_save_aug5_2.h5'
+걸린시간 : 197.54050087928772
+acc : 0.8777929544448853
+val_acc : 0.7338836193084717
+val_loss : 0.9268954992294312
+
+'./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5'
+걸린시간 : 216.13762092590332
+acc : 0.7695713043212891
+val_acc : 0.6855345964431763
+loss : 0.10000000149011612
+val_loss : 0.9884343147277832
+
+'./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5'
+걸린시간 : 242.25332069396973
+acc : 0.869745135307312
+val_acc : 0.7889150977134705
+loss : 0.12272727489471436
+val_loss : 0.7013579607009888
+[ 9,  2,  2,  8,  8,  3,  4,  0,  6,  9, 10]
+
+'./_save/ModelCheckPoint/face_age_model_save_aug5_5.h5'
+
+'''
