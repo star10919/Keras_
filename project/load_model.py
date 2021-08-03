@@ -9,11 +9,12 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, Po
 import time 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
+from tensorflow.python.ops.math_ops import scalar_mul
 import tensorflow as tf
 
 
 
-### ImageDataGenerator로 데이터 증폭시키기
+# ### ImageDataGenerator로 데이터 증폭시키기
 # imageGen = ImageDataGenerator(
 #     rescale=1./255,
 #     horizontal_flip=True,
@@ -23,7 +24,7 @@ import tensorflow as tf
 #     rotation_range=10,
 #     zoom_range=1.0,
 #     shear_range=0.7,
-#     fill_mode='nearest',
+#     fill_mode='constant',#'nearest',
 #     validation_split=0.20
 #     )
 
@@ -181,7 +182,7 @@ x_test = x_test.reshape(x_test.shape[0], 32*32*3)
 x_pred = x_pred.reshape(x_pred.shape[0], 32*32*3)
 
 # 1-2. x 데이터 전처리
-scaler = StandardScaler()
+scaler = RobustScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
 x_pred = scaler.transform(x_pred)
@@ -193,85 +194,52 @@ ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape, x_pred.shape, y_pre
 
 
 # 2. 모델 구성(GlobalAveragePooling2D 사용)
-from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, GlobalAveragePooling2D, Conv1D, LSTM
-model = Sequential()
-model.add(Conv2D(filters=64, kernel_size=(2,2), padding='same',                        
-                        activation='relu' ,input_shape=(32, 32, 3)))
-model.add(MaxPool2D(2,2))
-model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.2))
-model.add(MaxPool2D(2,2))                                                     
-model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.2))
-model.add(MaxPool2D(2,2))                  
-model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-model.add(GlobalAveragePooling2D())                                              
-model.add(Dense(64, activation='relu'))
-model.add(Dense(64, activation='relu'))
+# from tensorflow.keras.layers import Dense, Conv2D, Flatten, MaxPool2D, Dropout, GlobalAveragePooling2D, Conv1D, LSTM
+# model = Sequential()
+# model.add(Conv2D(filters=64, kernel_size=(2,2), padding='same',                        
+#                         activation='relu' ,input_shape=(32, 32, 3)))
+# model.add(MaxPool2D(2,2))
+# model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
+# model.add(Dropout(0.2))
+# model.add(MaxPool2D(2,2))                                                     
+# model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
+# # model.add(Dropout(0.2))
+# model.add(MaxPool2D(2,2))                  
+# model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
+# model.add(GlobalAveragePooling2D())                                              
 # model.add(Dense(64, activation='relu'))
-# model.add(Dense(32, activation='relu'))
-model.add(Dense(11, activation='softmax'))
+# model.add(Dense(64, activation='relu'))
+# # model.add(Dense(64, activation='relu'))
+# # model.add(Dense(32, activation='relu'))
+# model.add(Dense(11, activation='softmax'))
 
 
 
 # 3. 컴파일(ES), 훈련
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
-cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
-                     filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_5.hdf5')
+# model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
+# es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
+# cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
+#                      filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_3.hdf5')
 
-start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=10000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=200)
-end_time = time.time() - start_time
+# start_time = time.time()
+# hist = model.fit(x_train, y_train, epochs=10000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=200)
+# end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_5.h5')
+# model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5')
 
-# model = load_model('./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5')           # save model
+model = load_model('./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5')           # save model
 # model = load_model('./_save/ModelCheckPoint/face_age_MCP.hdf5')                # checkpoint
 
 # 4. 평가, 예측
-acc = hist.history['acc']
-val_acc = hist.history['val_acc']
-loss = hist.history['loss']
-val_loss = hist.history['val_loss']
-
-loss = model.evaluate(x_test, y_test)
-print("걸린시간 :", end_time)
-print('acc :',acc[-1])
-print('val_acc :',val_acc[-1])
-print('loss :',loss[-1])
-print('val_loss :',val_loss[-1])
-
+results = model.evaluate(x_test, y_test)
+ic(results)
 
 y_predict = model.predict(x_pred)
 ic(y_predict)
 y_predict = tf.argmax(y_predict)
 ic(y_predict)
 
-# 시각화 
-plt.figure(figsize=(9,5))
 
-# 1
-plt.subplot(2, 1, 1) # 2개의 플롯을 할건데, 1행 1열을 사용하겠다는 의미 
-plt.plot(hist.history['loss'], marker='.', c='red', label='loss')
-plt.plot(hist.history['val_loss'], marker='.', c='blue', label='val_loss')
-plt.grid()
-plt.title('loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(loc='upper right')
-
-# 2
-plt.subplot(2, 1, 2) # 2개의 플롯을 할건데, 1행 2열을 사용하겠다는 의미 
-plt.plot(hist.history['acc'])
-plt.plot(hist.history['val_acc'])
-plt.grid()
-plt.title('acc')
-plt.ylabel('acc')
-plt.xlabel('epoch')
-plt.legend(['acc', 'val_acc'])
-
-plt.show()
 
 
 '''
@@ -293,14 +261,4 @@ acc : 0.7695713043212891
 val_acc : 0.6855345964431763
 loss : 0.10000000149011612
 val_loss : 0.9884343147277832
-
-'./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5'
-걸린시간 : 242.25332069396973
-acc : 0.869745135307312
-val_acc : 0.7889150977134705
-loss : 0.12272727489471436
-val_loss : 0.7013579607009888
-[ 9,  2,  2,  8,  8,  3,  4,  0,  6,  9, 10]
 '''
-
-
