@@ -346,5 +346,6 @@ loss : 0.1090909093618393
 val_loss : 0.742839515209198
 [2, 8, 3, 9, 8, 8, 5, 1, 5, 5, 5]
 
+'./_save/ModelCheckPoint/face_age_model_save_aug5_7.h5'
 
 '''
