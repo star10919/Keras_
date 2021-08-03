@@ -9,6 +9,7 @@ from sklearn.preprocessing import MinMaxScaler, StandardScaler, RobustScaler, Po
 import time 
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import matplotlib.pyplot as plt
+from tensorflow.python.ops.math_ops import scalar_mul
 
 
 
@@ -19,11 +20,23 @@ import matplotlib.pyplot as plt
 #     vertical_flip=True,
 #     width_shift_range=0.1,
 #     height_shift_range=0.1,
-#     rotation_range=5,
-#     zoom_range=1.2,
+#     rotation_range=10,
+#     zoom_range=1.0,
 #     shear_range=0.7,
-#     fill_mode='nearest',
-#     validation_split=0.2
+#     fill_mode='constant',#'nearest',
+#     validation_split=0.20
+#     )
+
+# predictGen = ImageDataGenerator(
+#     rescale=1./255,
+#     horizontal_flip=True,
+#     vertical_flip=True,
+#     width_shift_range=0.1,
+#     height_shift_range=0.1,
+#     rotation_range=10,
+#     zoom_range=1.0,
+#     shear_range=0.7,
+#     fill_mode='constant',#'nearest',
 #     )
 
 
@@ -32,7 +45,8 @@ import matplotlib.pyplot as plt
 #     target_size=(32, 32),
 #     batch_size=2000,
 #     class_mode='categorical',
-#     subset='training'
+#     subset='training',
+#     shuffle=True
 # )
 # # Found 880 images belonging to 11 classes.
 # ic(xy_train[0][0].shape)     #  (880, 32, 32, 3)
@@ -44,17 +58,34 @@ import matplotlib.pyplot as plt
 #     target_size=(32, 32),
 #     batch_size=2000,
 #     class_mode='categorical',
-#     subset='validation'
+#     subset='validation',
+#     shuffle=True
 # )
 # # Found 220 images belonging to 11 classes.
 # ic(xy_test[0][0].shape)     # (220, 32, 32, 3)
 # ic(xy_test[0][1].shape)     # (220, 11)
 
 
+# xy_pred = predictGen.flow_from_directory(
+#     '../data/real_age_predict',
+#     target_size=(32, 32),
+#     batch_size=2000,
+#     class_mode='categorical',
+#     shuffle=False
+# )
+# # Found 11 images belonging to 11 classes.
+# ic(xy_pred[0][0].shape)     # (11, 32, 32, 3)
+# ic(xy_pred[0][1].shape)     # (11, 11)
+
+
 # x_train = xy_train[0][0]
 # y_train = xy_train[0][1]
 # x_test = xy_test[0][0]
 # y_test = xy_test[0][1]
+# x_pred = xy_pred[0][0]
+# y_pred = xy_pred[0][1]
+
+# ic(x_pred, y_pred)
 
 
 # #####랜덤
@@ -68,11 +99,6 @@ import matplotlib.pyplot as plt
 # ic(x_augment.shape, y_augment.shape)        # (50000, 32, 32, 3), (50000, 11)
 
 
-# #####4차원
-# # x_augment = x_augment.reshape(x_augment.shape[0], 32, 32, 3)
-# # x_train = x_train_cifar10.reshape(x_train_cifar10.shape[0], 32, 32, 3)
-# # x_test = x_test_cifar10.reshape(x_test_cifar10.shape[0], 32, 32, 3)
-
 # #####flow
 # x_augment = imageGen.flow(# x와 y를 각각 불러옴
 #             x_augment,  # x
@@ -85,6 +111,7 @@ import matplotlib.pyplot as plt
 # ic(x_train.shape, x_augment.shape)  #(880, 32, 32, 3), (50000, 32, 32, 3)
 # ic(y_train.shape, y_augment.shape)  #(880, 11), (50000, 11)
 
+
 # #####concatenate
 # x_train = np.concatenate((x_train, x_augment))
 # y_train = np.concatenate((y_train, y_augment))
@@ -95,13 +122,27 @@ import matplotlib.pyplot as plt
 # ic(x_test)
 # ic(y_train)
 # ic(y_test)
-# ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
+# ic(x_pred)
+# ic(y_pred)
+# ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape, x_pred.shape, y_pred.shape)
+
+# '''
+#     x_train.shape: (50880, 32, 32, 3)
+#     x_test.shape: (220, 32, 32, 3)
+#     y_train.shape: (50880, 11)
+#     y_test.shape: (220, 11)
+#     x_pred.shape: (11, 32, 32, 3)
+#     y_pred.shape: (11, 11)
+# '''
+
 
 # ### 넘파이로 세이브하기
 # np.save('./_save/_npy/proj_faceage_aug_x_train.npy', arr=x_train)
 # np.save('./_save/_npy/proj_faceage_aug_x_test.npy', arr=x_test)
 # np.save('./_save/_npy/proj_faceage_aug_y_train.npy', arr=y_train)
 # np.save('./_save/_npy/proj_faceage_aug_y_test.npy', arr=y_test)
+# np.save('./_save/_npy/proj_faceage_aug_x_pred.npy', arr=x_pred)
+# np.save('./_save/_npy/proj_faceage_aug_y_pred.npy', arr=y_pred)
 
 
 # ============================================================================================================
@@ -111,20 +152,25 @@ x_train = np.load('./_save/_npy/proj_faceage_aug_x_train.npy')
 x_test = np.load('./_save/_npy/proj_faceage_aug_x_test.npy')
 y_train = np.load('./_save/_npy/proj_faceage_aug_y_train.npy')
 y_test = np.load('./_save/_npy/proj_faceage_aug_y_test.npy')
+x_pred = np.load('./_save/_npy/proj_faceage_aug_x_pred.npy')
+y_pred = np.load('./_save/_npy/proj_faceage_aug_y_pred.npy')
 
 ic(x_train)
 ic(x_test)
 ic(y_train)
 ic(y_test)
-ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape)
+ic(x_pred)
+ic(y_pred)
+ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape, x_pred.shape, y_pred.shape)
 
 '''
     x_train.shape: (50880, 32, 32, 3)
     x_test.shape: (220, 32, 32, 3)
     y_train.shape: (50880, 11)
     y_test.shape: (220, 11)
+    x_pred.shape: (11, 32, 32, 3)
+    y_pred.shape: (11, 11)
 '''
-
 
 
 ic(np.unique(y_train))  # 0, 1 : 2개
@@ -132,13 +178,17 @@ ic(np.unique(y_train))  # 0, 1 : 2개
 # 단, 2차원 데이터만 가능하므로 4차원 -> 2차원
 x_train = x_train.reshape(x_train.shape[0], 32*32*3)
 x_test = x_test.reshape(x_test.shape[0], 32*32*3)
+x_pred = x_pred.reshape(x_pred.shape[0], 32*32*3)
 
 # 1-2. x 데이터 전처리
 scaler = RobustScaler()
 x_train = scaler.fit_transform(x_train)
 x_test = scaler.transform(x_test)
+x_pred = scaler.transform(x_pred)
 x_train = x_train.reshape(x_train.shape[0], 32, 32, 3)
 x_test = x_test.reshape(x_test.shape[0], 32, 32, 3)
+x_pred = x_pred.reshape(x_pred.shape[0], 32, 32, 3)
+ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape, x_pred.shape, y_pred.shape)
 
 
 
@@ -167,13 +217,14 @@ model.add(Dense(11, activation='softmax'))
 # 3. 컴파일(ES), 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
-cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True, filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_3.hdf5')
+cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
+                     filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_4.hdf5')
 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=10000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=200)
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5')
+model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5')
 
 # model = load_model('./_save/ModelCheckPoint/face_age_model_save.h5')           # save model
 # model = load_model('./_save/ModelCheckPoint/face_age_MCP.hdf5')                # checkpoint
@@ -192,9 +243,9 @@ print('loss :',loss[-1])
 print('val_loss :',val_loss[-1])
 
 
-# y_predict = model.predict(test_tf_text)
-# y_predict = np.argmax(y_predict, axis=1)
-
+y_predict = model.predict(x_pred)
+y_predict = np.argmax(y_predict, axis=1)
+ic(y_predict)
 
 # 시각화 
 plt.figure(figsize=(9,5))
@@ -228,7 +279,6 @@ plt.show()
 acc : 0.40430623292922974
 val_acc : 0.20454545319080353
 
-
 *augment 50000
 './_save/ModelCheckPoint/face_age_model_save_aug5_2.h5'
 걸린시간 : 197.54050087928772
@@ -237,5 +287,9 @@ val_acc : 0.7338836193084717
 val_loss : 0.9268954992294312
 
 './_save/ModelCheckPoint/face_age_model_save_aug5_3.h5'
-
+걸린시간 : 216.13762092590332
+acc : 0.7695713043212891
+val_acc : 0.6855345964431763
+loss : 0.10000000149011612
+val_loss : 0.9884343147277832
 '''
