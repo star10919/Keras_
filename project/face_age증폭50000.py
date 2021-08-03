@@ -18,10 +18,10 @@ import tensorflow as tf
 #     rescale=1./255,
 #     horizontal_flip=True,
 #     vertical_flip=True,
-#     width_shift_range=0.1,
-#     height_shift_range=0.1,
+#     width_shift_range=0.2,
+#     height_shift_range=0.2,
 #     rotation_range=10,
-#     zoom_range=1.0,
+#     zoom_range=1.2,
 #     shear_range=0.7,
 #     fill_mode='nearest',
 #     validation_split=0.20
@@ -36,7 +36,7 @@ import tensorflow as tf
 #     rotation_range=10,
 #     zoom_range=1.0,
 #     shear_range=0.7,
-#     fill_mode='constant',#'nearest',
+#     fill_mode='nearest',
 #     )
 
 
