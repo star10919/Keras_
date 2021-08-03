@@ -199,15 +199,15 @@ model.add(Conv2D(filters=64, kernel_size=(2,2), padding='same',
                         activation='relu' ,input_shape=(32, 32, 3)))
 model.add(MaxPool2D(2,2))
 model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.2))
-model.add(MaxPool2D(2,2))                                                     
+model.add(Dropout(0.5))
+# model.add(MaxPool2D(2,2))                                                     
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.2))
+model.add(Dropout(0.5))
 model.add(MaxPool2D(2,2))                  
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
 model.add(GlobalAveragePooling2D())                                              
 model.add(Dense(64, activation='relu'))
-# model.add(Dense(64, activation='relu'))
+model.add(Dense(64, activation='relu'))
 # model.add(Dense(64, activation='relu'))
 # model.add(Dense(32, activation='relu'))
 model.add(Dense(11, activation='softmax'))
@@ -218,13 +218,13 @@ model.add(Dense(11, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
 cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
-                     filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_5.hdf5')
+                     filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_7.hdf5')
 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=500)
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_5.h5')
+model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_7.h5')
 
 # model = load_model('./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5')           # save model
 # model = load_model('./_save/ModelCheckPoint/face_age_MCP.hdf5')                # checkpoint
@@ -245,36 +245,11 @@ print('val_loss :',val_loss[-1])
 
 y_predict = model.predict(x_pred)
 ic(y_predict)
-y_predict = tf.argmax(y_predict)
+y_predict = np.argmax(y_predict,0)
 ic(y_predict)
 
-# 시각화 
-plt.figure(figsize=(9,5))
 
-# 1
-plt.subplot(2, 1, 1) # 2개의 플롯을 할건데, 1행 1열을 사용하겠다는 의미 
-plt.plot(hist.history['loss'], marker='.', c='red', label='loss')
-plt.plot(hist.history['val_loss'], marker='.', c='blue', label='val_loss')
-plt.grid()
-plt.title('loss')
-plt.ylabel('loss')
-plt.xlabel('epoch')
-plt.legend(loc='upper right')
-
-# 2
-plt.subplot(2, 1, 2) # 2개의 플롯을 할건데, 1행 2열을 사용하겠다는 의미 
-plt.plot(hist.history['acc'])
-plt.plot(hist.history['val_acc'])
-plt.grid()
-plt.title('acc')
-plt.ylabel('acc')
-plt.xlabel('epoch')
-plt.legend(['acc', 'val_acc'])
-
-plt.show()
-
-
-real = y_predict
+real = np.array(y_predict)
 age = []
 def real_age():
     for i in range(11):
@@ -308,6 +283,33 @@ def real_age():
 real_age()
 
 
+
+# 시각화 
+plt.figure(figsize=(9,5))
+
+# 1
+plt.subplot(2, 1, 1) # 2개의 플롯을 할건데, 1행 1열을 사용하겠다는 의미 
+plt.plot(hist.history['loss'], marker='.', c='red', label='loss')
+plt.plot(hist.history['val_loss'], marker='.', c='blue', label='val_loss')
+plt.grid()
+plt.title('loss')
+plt.ylabel('loss')
+plt.xlabel('epoch')
+plt.legend(loc='upper right')
+
+# 2
+plt.subplot(2, 1, 2) # 2개의 플롯을 할건데, 1행 2열을 사용하겠다는 의미 
+plt.plot(hist.history['acc'])
+plt.plot(hist.history['val_acc'])
+plt.grid()
+plt.title('acc')
+plt.ylabel('acc')
+plt.xlabel('epoch')
+plt.legend(['acc', 'val_acc'])
+
+plt.show()
+
+
 '''
 *augment 전
 걸린시간 : 6.861128091812134
@@ -337,5 +339,12 @@ val_loss : 0.7013579607009888
 [ 9,  2,  2,  8,  8,  3,  4,  0,  6,  9, 10]
 
 './_save/ModelCheckPoint/face_age_model_save_aug5_5.h5'
+걸린시간 : 437.119788646698
+acc : 0.7983904480934143
+val_acc : 0.7802672982215881
+loss : 0.1090909093618393
+val_loss : 0.742839515209198
+[2, 8, 3, 9, 8, 8, 5, 1, 5, 5, 5]
+
 
 '''

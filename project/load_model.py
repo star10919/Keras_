@@ -227,7 +227,7 @@ ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape, x_pred.shape, y_pre
 
 # model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5')
 
-model = load_model('./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5')           # save model
+model = load_model('./_save/ModelCheckPoint/face_age_model_save_aug5_6.h5')           # save model
 # model = load_model('./_save/ModelCheckPoint/face_age_MCP.hdf5')                # checkpoint
 
 # 4. 평가, 예측
@@ -238,8 +238,6 @@ y_predict = model.predict(x_pred)
 ic(y_predict)
 y_predict = tf.argmax(y_predict)
 ic(y_predict)
-
-
 
 
 '''
@@ -263,7 +261,7 @@ loss : 0.10000000149011612
 val_loss : 0.9884343147277832
 '''
 
-real = y_predict
+real = np.array(y_predict,0)
 age = []
 def real_age():
     for i in range(11):
