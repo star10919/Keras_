@@ -199,10 +199,10 @@ model.add(Conv2D(filters=64, kernel_size=(2,2), padding='same',
                         activation='relu' ,input_shape=(32, 32, 3)))
 model.add(MaxPool2D(2,2))
 model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.5))
+model.add(Dropout(0.6))
 # model.add(MaxPool2D(2,2))                                                     
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.5))
+model.add(Dropout(0.4))
 model.add(MaxPool2D(2,2))                  
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
 model.add(GlobalAveragePooling2D())                                              
@@ -218,13 +218,13 @@ model.add(Dense(11, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
 cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
-                     filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_7.hdf5')
+                     filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_8.hdf5')
 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=500)
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_7.h5')
+model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_8.h5')
 
 # model = load_model('./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5')           # save model
 # model = load_model('./_save/ModelCheckPoint/face_age_MCP.hdf5')                # checkpoint
@@ -323,20 +323,13 @@ acc : 0.8777929544448853
 val_acc : 0.7338836193084717
 val_loss : 0.9268954992294312
 
-'./_save/ModelCheckPoint/face_age_model_save_aug5_3.h5'
-걸린시간 : 216.13762092590332
-acc : 0.7695713043212891
-val_acc : 0.6855345964431763
-loss : 0.10000000149011612
-val_loss : 0.9884343147277832
-
 './_save/ModelCheckPoint/face_age_model_save_aug5_4.h5'
 걸린시간 : 242.25332069396973
 acc : 0.869745135307312
 val_acc : 0.7889150977134705
 loss : 0.12272727489471436
 val_loss : 0.7013579607009888
-[ 9,  2,  2,  8,  8,  3,  4,  0,  6,  9, 10]
+[9, 2, 2, 8, 8, 3, 4, 0, 6, 9, 10]  3개
 
 './_save/ModelCheckPoint/face_age_model_save_aug5_5.h5'
 걸린시간 : 437.119788646698
@@ -344,8 +337,15 @@ acc : 0.7983904480934143
 val_acc : 0.7802672982215881
 loss : 0.1090909093618393
 val_loss : 0.742839515209198
-[2, 8, 3, 9, 8, 8, 5, 1, 5, 5, 5]
+[2, 8, 3, 9, 8, 8, 5, 1, 5, 5, 5]  0개
 
 './_save/ModelCheckPoint/face_age_model_save_aug5_7.h5'
+걸린시간 : 420.86218762397766
+acc : 0.7555652260780334
+val_acc : 0.7146226167678833
+loss : 0.08181817829608917
+val_loss : 0.9906694889068604
+[9, 8, 0, 3, 2, 3, 6, 6, 1, 8, 8] 2개
+
 
 '''
