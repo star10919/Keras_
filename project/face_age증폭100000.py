@@ -197,13 +197,13 @@ model.add(Conv2D(filters=64, kernel_size=(2,2), padding='same',
                         activation='relu' ,input_shape=(32, 32, 3)))
 model.add(MaxPool2D(2,2))
 model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.6))
+# model.add(Dropout(0.6))
 # model.add(MaxPool2D(2,2))                                                     
-model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.4))
+# model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
+# model.add(Dropout(0.4))
 model.add(MaxPool2D(2,2))                  
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-model.add(Flatten())                                              
+model.add(GlobalAveragePooling2D())                                              
 model.add(Dense(64, activation='relu'))
 model.add(Dense(64, activation='relu'))
 # model.add(Dense(64, activation='relu'))
@@ -216,13 +216,13 @@ model.add(Dense(11, activation='softmax'))
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 es = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='min')
 cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
-                    filepath='./_save/ModelCheckPoint/face_age_MCP2_aug10_3.hdf5')
+                    filepath='./_save/ModelCheckPoint/face_age_MCP2_aug10_4.hdf5')
 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=512)
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/face_age_model_save_aug10_3.h5')
+model.save('./_save/ModelCheckPoint/face_age_model_save_aug10_4.h5')
 
 # model = load_model('./_save/ModelCheckPoint/face_age_model_save.h5')           # save model
 # model = load_model('./_save/ModelCheckPoint/face_age_MCP.hdf5')                # checkpoint
@@ -322,5 +322,9 @@ val_acc : 0.8227596879005432
 val_loss : 0.6142908930778503
 
 './_save/ModelCheckPoint/face_age_model_save_aug10_3.h5'
-
+걸린시간 : 915.3549530506134
+acc : 0.8498998284339905
+val_acc : 0.8144329786300659
+loss : 0.09090909361839294
+val_loss : 0.6394946575164795
 '''
