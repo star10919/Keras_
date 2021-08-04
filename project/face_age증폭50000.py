@@ -216,15 +216,15 @@ model.add(Dense(11, activation='softmax'))
 
 # 3. 컴파일(ES), 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
+es = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='min')
 cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
-                     filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_9.hdf5')
+                     filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_12.hdf5')
 
 start_time = time.time()
 hist = model.fit(x_train, y_train, epochs=1000, verbose=2, callbacks=[es, cp], validation_split=0.05, shuffle=True, batch_size=500)
 end_time = time.time() - start_time
 
-model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_9.h5')
+model.save('./_save/ModelCheckPoint/face_age_model_save_aug5_12.h5')
 
 # model = load_model('./_save/ModelCheckPoint/face_age_model_save_aug5_4.h5')           # save model
 # model = load_model('./_save/ModelCheckPoint/face_age_MCP.hdf5')                # checkpoint
@@ -355,6 +355,27 @@ loss : 0.09090909361839294
 val_loss : 1.022216796875
 [1, 8, 8, 3, 3, 3, 6, 1, 1, 10, 7] 2개
 
+'./_save/ModelCheckPoint/face_age_model_save_aug5_9.h5'
+걸린시간 : 360.1509020328522
+acc : 0.7383109927177429
+val_acc : 0.6961477994918823
+loss : 0.07727272808551788
+val_loss : 0.9887475371360779
+[9, 7, 5, 9, 9, 9, 7, 7, 5, 6, 9] 1개
 
+'./_save/ModelCheckPoint/face_age_model_save_aug5_10.h5'
+걸린시간 : 486.0002839565277
+acc : 0.7687644958496094
+val_acc : 0.7146226167678833
+loss : 0.12272727489471436
+val_loss : 0.9266372919082642
+[9, 3, 6, 3, 10, 5, 5, 7, 1, 9, 3] 4개
 
+'./_save/ModelCheckPoint/face_age_model_save_aug5_11.h5'
+걸린시간 : 368.8459794521332
+acc : 0.7144985198974609
+val_acc : 0.6635220050811768
+loss : 0.07727272808551788
+val_loss : 1.0832685232162476
+[1, 1, 1, 2, 1, 3, 3, 0, 2, 3, 10] 2개
 '''
