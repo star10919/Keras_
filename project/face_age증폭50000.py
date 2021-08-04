@@ -201,10 +201,10 @@ model.add(MaxPool2D(2,2))
 model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
 model.add(Dropout(0.6))
 # model.add(MaxPool2D(2,2))                                                     
-model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
+model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
 model.add(Dropout(0.4))
 model.add(MaxPool2D(2,2))                  
-model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
+model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
 model.add(GlobalAveragePooling2D())                                              
 model.add(Dense(64, activation='relu'))
 model.add(Dense(64, activation='relu'))
@@ -216,7 +216,7 @@ model.add(Dense(11, activation='softmax'))
 
 # 3. 컴파일(ES), 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-es = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='min')
+es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
 cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
                      filepath='./_save/ModelCheckPoint/face_age_MCP3_aug5_12.hdf5')
 
