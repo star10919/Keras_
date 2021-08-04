@@ -14,124 +14,134 @@ import matplotlib.pyplot as plt
 
 
 ### ImageDataGenerator로 데이터 증폭시키기
-imageGen = ImageDataGenerator(
-    rescale=1./255,
-    horizontal_flip=True,
-    vertical_flip=True,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    rotation_range=5,
-    zoom_range=1.2,
-    shear_range=0.7,
-    fill_mode='nearest',
-    validation_split=0.2
-    )
+# imageGen = ImageDataGenerator(
+#     rescale=1./255,
+#     horizontal_flip=True,
+#     vertical_flip=True,
+#     width_shift_range=0.1,
+#     height_shift_range=0.1,
+#     rotation_range=5,
+#     zoom_range=1.2,
+#     shear_range=0.7,
+#     fill_mode='nearest',
+#     validation_split=0.2
+#     )
 
-predictGen = ImageDataGenerator(
-    rescale=1./255,
-    horizontal_flip=True,
-    vertical_flip=True,
-    width_shift_range=0.1,
-    height_shift_range=0.1,
-    rotation_range=10,
-    zoom_range=1.0,
-    shear_range=0.7,
-    fill_mode='nearest',
-    )
-
-
-
-xy_train = imageGen.flow_from_directory(
-    '../data/real_age',
-    target_size=(32, 32),
-    batch_size=2000,
-    class_mode='categorical',
-    subset='training'
-)
-# Found 880 images belonging to 11 classes.
-ic(xy_train[0][0].shape)     #  (880, 32, 32, 3)
-ic(xy_train[0][1].shape)     #  (880, 11)
-
-
-xy_test = imageGen.flow_from_directory(
-    '../data/real_age',
-    target_size=(32, 32),
-    batch_size=2000,
-    class_mode='categorical',
-    subset='validation'
-)
-# Found 220 images belonging to 11 classes.
-ic(xy_test[0][0].shape)     # (220, 32, 32, 3)
-ic(xy_test[0][1].shape)     # (220, 11)
-
-
-xy_pred = predictGen.flow_from_directory(
-    '../data/real_age_predict',
-    target_size=(32, 32),
-    batch_size=2000,
-    class_mode='categorical',
-    shuffle=False
-)
-# Found 11 images belonging to 11 classes.
-ic(xy_pred[0][0].shape)     # (11, 32, 32, 3)
-ic(xy_pred[0][1].shape)     # (11, 11)
-
-
-x_train = xy_train[0][0]
-y_train = xy_train[0][1]
-x_test = xy_test[0][0]
-y_test = xy_test[0][1]
-x_pred = xy_pred[0][0]
-y_pred = xy_pred[0][1]
-
-ic(x_pred, y_pred)
-
-
-#####랜덤
-# 데이터 증폭
-augment_size=100000
-
-randidx = np.random.randint(x_train.shape[0], size=augment_size)
-x_augment = x_train[randidx].copy()
-y_augment = y_train[randidx].copy()
-print('%%%%%%%%%%%%%%% 1 %%%%%%%%%%%%%%%%')
-ic(x_augment.shape, y_augment.shape)        # (100000, 32, 32, 3), (100000, 11)
-
-
-#####flow
-x_augment = imageGen.flow(# x와 y를 각각 불러옴
-            x_augment,  # x
-            np.zeros(augment_size),  # y
-            batch_size=augment_size,
-            save_to_dir='d:/temp/',
-            shuffle=False).next()[0]
-ic(type(x_augment), x_augment.shape)       # <class 'numpy.ndarray'>, (100000, 32, 32, 3)
-print('%%%%%%%%%%%%%%% 2 %%%%%%%%%%%%%%%%')
-ic(x_train.shape, x_augment.shape)  #(880, 32, 32, 3), (100000, 32, 32, 3)
-ic(y_train.shape, y_augment.shape)  #(880, 11), (100000, 11)
-
-#####concatenate
-x_train = np.concatenate((x_train, x_augment))
-y_train = np.concatenate((y_train, y_augment))
-print('%%%%%%%%%%%%%%% 3 %%%%%%%%%%%%%%%%')
-ic(x_train.shape, y_train.shape)        #  (100880, 32, 32, 3), (100880, 11)
-
-
-ic(x_train)
-ic(x_test)
-ic(y_train)
-ic(y_test)
-ic(x_pred)
-ic(y_pred)
-ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape, x_pred.shape, y_pred.shape)
+# predictGen = ImageDataGenerator(
+#     rescale=1./255,
+#     horizontal_flip=True,
+#     vertical_flip=True,
+#     width_shift_range=0.1,
+#     height_shift_range=0.1,
+#     rotation_range=10,
+#     zoom_range=1.0,
+#     shear_range=0.7,
+#     fill_mode='nearest',
+#     )
 
 
 
-### 넘파이로 세이브하기
-np.save('./_save/_npy/proj_faceage_aug10_x_train.npy', arr=x_train)
-np.save('./_save/_npy/proj_faceage_aug10_x_test.npy', arr=x_test)
-np.save('./_save/_npy/proj_faceage_aug10_y_train.npy', arr=y_train)
-np.save('./_save/_npy/proj_faceage_aug10_y_test.npy', arr=y_test)
+# xy_train = imageGen.flow_from_directory(
+#     '../data/real_age',
+#     target_size=(32, 32),
+#     batch_size=2000,
+#     class_mode='categorical',
+#     subset='training'
+# )
+# # Found 880 images belonging to 11 classes.
+# ic(xy_train[0][0].shape)     #  (880, 32, 32, 3)
+# ic(xy_train[0][1].shape)     #  (880, 11)
+
+
+# xy_test = imageGen.flow_from_directory(
+#     '../data/real_age',
+#     target_size=(32, 32),
+#     batch_size=2000,
+#     class_mode='categorical',
+#     subset='validation'
+# )
+# # Found 220 images belonging to 11 classes.
+# ic(xy_test[0][0].shape)     # (220, 32, 32, 3)
+# ic(xy_test[0][1].shape)     # (220, 11)
+
+
+# xy_pred = predictGen.flow_from_directory(
+#     '../data/real_age_predict',
+#     target_size=(32, 32),
+#     batch_size=2000,
+#     class_mode='categorical',
+#     shuffle=False
+# )
+# # Found 11 images belonging to 11 classes.
+# ic(xy_pred[0][0].shape)     # (11, 32, 32, 3)
+# ic(xy_pred[0][1].shape)     # (11, 11)
+
+
+# x_train = xy_train[0][0]
+# y_train = xy_train[0][1]
+# x_test = xy_test[0][0]
+# y_test = xy_test[0][1]
+# x_pred = xy_pred[0][0]
+# y_pred = xy_pred[0][1]
+
+# ic(x_pred, y_pred)
+
+
+
+# #####랜덤
+# # 데이터 증폭
+# augment_size=100000
+
+# randidx = np.random.randint(x_train.shape[0], size=augment_size)
+# x_augment = x_train[randidx].copy()
+# y_augment = y_train[randidx].copy()
+# print('%%%%%%%%%%%%%%% 1 %%%%%%%%%%%%%%%%')
+# ic(x_augment.shape, y_augment.shape)        # (100000, 32, 32, 3), (100000, 11)
+
+
+# #####flow
+# x_augment = imageGen.flow(# x와 y를 각각 불러옴
+#             x_augment,  # x
+#             np.zeros(augment_size),  # y
+#             batch_size=augment_size,
+#             save_to_dir='d:/temp/',
+#             shuffle=False).next()[0]
+# ic(type(x_augment), x_augment.shape)       # <class 'numpy.ndarray'>, (100000, 32, 32, 3)
+# print('%%%%%%%%%%%%%%% 2 %%%%%%%%%%%%%%%%')
+# ic(x_train.shape, x_augment.shape)  #(880, 32, 32, 3), (100000, 32, 32, 3)
+# ic(y_train.shape, y_augment.shape)  #(880, 11), (100000, 11)
+
+# #####concatenate
+# x_train = np.concatenate((x_train, x_augment))
+# y_train = np.concatenate((y_train, y_augment))
+# print('%%%%%%%%%%%%%%% 3 %%%%%%%%%%%%%%%%')
+# ic(x_train.shape, y_train.shape)        #  (100880, 32, 32, 3), (100880, 11)
+
+
+# ic(x_train)
+# ic(x_test)
+# ic(y_train)
+# ic(y_test)
+# ic(x_pred)
+# ic(y_pred)
+# ic(x_train.shape, x_test.shape, y_train.shape, y_test.shape, x_pred.shape, y_pred.shape)
+
+# '''
+#     x_train.shape: (100880, 32, 32, 3)
+#     x_test.shape: (220, 32, 32, 3)
+#     y_train.shape: (100880, 11)
+#     y_test.shape: (220, 11)
+#     x_pred.shape: (11, 32, 32, 3)
+#     y_pred.shape: (11, 11)
+# '''
+
+# ### 넘파이로 세이브하기
+# np.save('./_save/_npy/proj_faceage_aug10_x_train.npy', arr=x_train)
+# np.save('./_save/_npy/proj_faceage_aug10_x_test.npy', arr=x_test)
+# np.save('./_save/_npy/proj_faceage_aug10_y_train.npy', arr=y_train)
+# np.save('./_save/_npy/proj_faceage_aug10_y_test.npy', arr=y_test)
+# np.save('./_save/_npy/proj_faceage_aug10_x_predict.npy', arr=x_pred)
+# np.save('./_save/_npy/proj_faceage_aug10_y_predict.npy', arr=y_pred)
 
 
 # ============================================================================================================
@@ -141,6 +151,9 @@ x_train = np.load('./_save/_npy/proj_faceage_aug10_x_train.npy')
 x_test = np.load('./_save/_npy/proj_faceage_aug10_x_test.npy')
 y_train = np.load('./_save/_npy/proj_faceage_aug10_y_train.npy')
 y_test = np.load('./_save/_npy/proj_faceage_aug10_y_test.npy')
+x_pred = np.load('./_save/_npy/proj_faceage_aug10_x_predict.npy')
+y_pred = np.load('./_save/_npy/proj_faceage_aug10_y_predict.npy')
+
 
 ic(x_train)
 ic(x_test)
@@ -163,6 +176,8 @@ ic(np.unique(y_train))  # 0, 1 : 2개
 # 단, 2차원 데이터만 가능하므로 4차원 -> 2차원
 x_train = x_train.reshape(x_train.shape[0], 32*32*3)
 x_test = x_test.reshape(x_test.shape[0], 32*32*3)
+x_pred = x_pred.reshape(x_pred.shape[0], 32*32*3)
+
 
 # 1-2. x 데이터 전처리
 scaler = RobustScaler()
@@ -182,10 +197,10 @@ model.add(Conv2D(filters=64, kernel_size=(2,2), padding='same',
                         activation='relu' ,input_shape=(32, 32, 3)))
 model.add(MaxPool2D(2,2))
 model.add(Conv2D(32, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.2))
+model.add(Dropout(0.6))
 # model.add(MaxPool2D(2,2))                                                     
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
-model.add(Dropout(0.2))
+model.add(Dropout(0.4))
 model.add(MaxPool2D(2,2))                  
 model.add(Conv2D(64, (2,2), padding='same', activation='relu'))
 model.add(Flatten())                                              
@@ -199,7 +214,7 @@ model.add(Dense(11, activation='softmax'))
 
 # 3. 컴파일(ES), 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
-es = EarlyStopping(monitor='val_loss', patience=10, verbose=1, mode='min')
+es = EarlyStopping(monitor='val_loss', patience=20, verbose=1, mode='min')
 cp = ModelCheckpoint(monitor='val_loss', mode='auto', save_best_only=True,
                     filepath='./_save/ModelCheckPoint/face_age_MCP2_aug10_3.hdf5')
 
@@ -305,4 +320,7 @@ val_acc : 0.20454545319080353
 acc : 0.8959263563156128
 val_acc : 0.8227596879005432
 val_loss : 0.6142908930778503
+
+'./_save/ModelCheckPoint/face_age_model_save_aug10_3.h5'
+
 '''
