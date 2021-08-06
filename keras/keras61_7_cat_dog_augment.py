@@ -65,7 +65,7 @@ x_train = np.load('./_save/_npy/k59_8_train_x.npy')
 y_train = np.load('./_save/_npy/k59_8_train_y.npy')
 x_test = np.load('./_save/_npy/k59_8_test_x.npy')
 y_test = np.load('./_save/_npy/k59_8_test_y.npy')
-
+print('****************** 1 *****************')
 ic(x_train.shape, y_train.shape)    # (2000, 150, 150, 3), (2000, 2)
 ic(x_test.shape, y_test.shape)      # (1000, 150, 150, 3), (1000, 2)
 
