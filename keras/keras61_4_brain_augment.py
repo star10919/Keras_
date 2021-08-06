@@ -47,12 +47,12 @@ y_train = xy_train[0][1] # (160, )
 x_test = xy_test[0][0] # (120, 150, 150, 3)
 y_test = xy_test[0][1] # (120,)
 
-augment_size = 160
+augment_size = 32
 
 randidx = np.random.randint(x_train.shape[0], size=augment_size) # take 40000 feature from train in random
 x_augmented = x_train[randidx].copy()
 y_augmented = y_train[randidx].copy()
-ic(x_augmented.shape, y_augmented.shape)    #(160, 150, 150, 3), (160,)
+ic(x_augmented.shape, y_augmented.shape)    #(32, 150, 150, 3), (32,)
 
 x_augmented = x_augmented.reshape(x_augmented.shape[0], 150, 150, 3) # (32, 150, 150, 3)
 x_train = x_train.reshape(x_train.shape[0], 150, 150, 3) # (160, 150, 150, 3)
@@ -62,10 +62,10 @@ x_augmented = train_datagen.flow(x_augmented,
                                 np.zeros(augment_size),
                                 batch_size=augment_size,
                                 shuffle=False).next()[0]
-ic(type(x_augmented), x_augmented.shape)    #<class 'numpy.ndarray'>, (160, 150, 150, 3)
+ic(type(x_augmented), x_augmented.shape)    #<class 'numpy.ndarray'>, (32, 150, 150, 3)
 
-x_train = np.concatenate((x_train, x_augmented)) # (320, 150, 150, 3) 
-y_train = np.concatenate((y_train, y_augmented)) # (320,)
+x_train = np.concatenate((x_train, x_augmented)) # (192, 150, 150, 3) 
+y_train = np.concatenate((y_train, y_augmented)) # (192,)
 
 # 2. model
 from tensorflow.keras.models import Sequential
@@ -105,8 +105,9 @@ print('loss : ',loss[-1])
 print('val_loss : ',val_loss[-1])                             
 
 '''
-acc :  0.50390625
-val_acc :  0.53125
-loss :  0.5
-val_loss :  0.6926944255828857
+*augment 32(+20%)
+acc :  1.0
+val_acc :  0.5384615659713745
+loss :  0.5333333611488342
+val_loss :  0.7222238779067993
 '''
