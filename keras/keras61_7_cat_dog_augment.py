@@ -70,6 +70,7 @@ ic(x_train.shape, y_train.shape)    # (2000, 150, 150, 3), (2000, 2)
 ic(x_test.shape, y_test.shape)      # (1000, 150, 150, 3), (1000, 2)
 
 
+
 augment_size = 400
 
 randidx = np.random.randint(x_train.shape[0], size=augment_size) # take 40000 feature from train in random

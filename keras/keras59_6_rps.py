@@ -1,6 +1,4 @@
-### 실습1. - men women 데이터로 모델링을 구성할 것!
-
-### 실습2. - 본인 사진으로 predict 하시오! D 드라이브 안에 본인 사진 넣고, 내가 여자 몇%인지 acc -수치 넣는 거는 찾아서/ 결과값 스크린샷으로 만들어서 메일보내기
+### 실습1. - rps 데이터로 모델링을 구성할 것!
 
 import numpy as np
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
