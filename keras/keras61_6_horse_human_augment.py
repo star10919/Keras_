@@ -78,11 +78,8 @@ augment_size = 164
 randidx = np.random.randint(x_train.shape[0], size=augment_size) # take 40000 feature from train in random
 x_augmented = x_train[randidx].copy()
 y_augmented = y_train[randidx].copy()
-ic(x_augmented.shape, y_augmented.shape)    #(164, 150, 150, 3), (530,)
+ic(x_augmented.shape, y_augmented.shape)    #(164, 150, 150, 3), (164,)
 
-x_augmented = x_augmented.reshape(x_augmented.shape[0], 150, 150, 3) # (164, 150, 150, 3)
-x_train = x_train.reshape(x_train.shape[0], 150, 150, 3) # (822, 150, 150, 3)
-x_test = x_test.reshape(x_test.shape[0], 150, 150, 3) # (205, 150, 150, 3)
 print('****************** 2 *****************')
 ic(x_augmented.shape, x_train.shape, x_test.shape)
 
@@ -140,6 +137,6 @@ category : 3.395993709564209
 acc : 0.712195098400116
 
 * augment 164(+20%)
-category : 4.074365139007568
-acc : 0.6048780679702759
+category : 3.177659749984741
+acc : 0.6731707453727722
 '''
