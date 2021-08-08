@@ -22,7 +22,7 @@ imageGen = ImageDataGenerator(
     zoom_range=1.2,
     shear_range=0.7,
     fill_mode='nearest',
-    validation_split=0.21
+    validation_split=0.2
     )
 
 
