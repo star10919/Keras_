@@ -159,7 +159,7 @@ GlobalAveragePooling
 category:  1.959947109222412
 accuracy:  0.48559999465942383
 
-Reduce lr
+reduce lr
 걸린시간 : 1426.300992488861
 category : 4.59235954284668
 accuracy : 0.01899999938905239

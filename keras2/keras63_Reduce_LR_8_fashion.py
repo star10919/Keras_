@@ -46,7 +46,7 @@ model.add(Dense(10, activation='softmax'))
 model.summary()
 
 
-#3. 컴파일(ES), 훈련
+#3. 컴파일(ES, reduce_lr), 훈련
 from tensorflow.keras.optimizers import Adam, Nadam
 optimizer = Adam(lr=0.01)
 # optimizer = Nadam(lr=0.01)
@@ -89,5 +89,7 @@ category : 0.8386392593383789
 accuracy : 0.6711999773979187
 
 *reduce LR
-
+걸린시간 : 139.0958173274994
+category : 2.302793502807617
+accuracy : 0.10000000149011612
 '''
