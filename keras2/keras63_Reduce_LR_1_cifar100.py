@@ -73,8 +73,9 @@ model.add(Dense(100, activation='softmax'))
 
 
 # 3. 컴파일(ES), 훈련
-from tensorflow.keras.optimizers import Adam
-optimizer = Adam(lr=0.1)
+from tensorflow.keras.optimizers import Adam, Nadam
+# optimizer = Adam(lr=0.1)
+optimizer = Nadam(lr=0.01)
 # model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc'])
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['acc'])
 
@@ -84,7 +85,7 @@ reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbo
 
 
 start_time = time.time()
-hist = model.fit(x_train, y_train, epochs=300, verbose=1, callbacks=[es, reduce_lr], validation_split=0.25,
+hist = model.fit(x_train, y_train, epochs=200, verbose=1, callbacks=[es, reduce_lr], validation_split=0.25,
                  shuffle=True, batch_size=512)
 end_time = time.time() - start_time
 
