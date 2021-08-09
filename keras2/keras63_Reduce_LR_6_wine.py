@@ -85,7 +85,7 @@ model.add(Dense(60, activation='relu'))
 model.add(Dense(7, activation='softmax'))
 
 
-# 3. 컴파일(EalryStopping), 훈련
+# 3. 컴파일(ES, reduce_lr), 훈련
 from tensorflow.keras.optimizers import Adam, Nadam
 optimizer = Adam(lr=0.01)
 # optimizer = Nadam(lr=0.01)

@@ -45,7 +45,7 @@ model.add(Dense(64, activation='relu'))
 model.add(Dense(1, activation='sigmoid'))  # sigmoid : 0과 1사이의 값  # 스칼라 569인 벡터 1개
 
 
-# 3. 컴파일, 훈련
+# 3. 컴파일(ES, reduce_lr), 훈련
 from tensorflow.keras.optimizers import Adam, Nadam
 optimizer = Adam(lr=0.01)
 # optimizer = Nadam(lr=0.01)

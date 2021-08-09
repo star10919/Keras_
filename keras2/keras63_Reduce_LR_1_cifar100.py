@@ -72,7 +72,7 @@ model.add(GlobalAveragePooling2D())
 model.add(Dense(100, activation='softmax'))
 
 
-# 3. 컴파일(ES), 훈련
+# 3. 컴파일(ES, reduce_lr), 훈련
 from tensorflow.keras.optimizers import Adam, Nadam, SGD
 # optimizer = Adam(lr=0.1)
 # optimizer = Nadam(lr=0.01)

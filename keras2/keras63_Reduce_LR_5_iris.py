@@ -68,7 +68,7 @@ model.add(Dense(32, activation='relu'))
 model.add(Dense(3, activation='softmax'))  # softmax : 다중분류   # 0,1,2  3개라서 3개로 나와야 함(150, 3)
 
 
-# 3. 컴파일, 훈련
+# 3. 컴파일(ES, reduce_lr), 훈련
 from tensorflow.keras.optimizers import Adam, Nadam
 optimizer = Adam(lr=0.01)
 # optimizer = Nadam(lr=0.01)

@@ -46,7 +46,7 @@ model.add(Dense(16, activation='relu'))
 model.add(Dense(1))
 
 
-#3. 컴파일(ES), 훈련
+#3. 컴파일(ES, reduce_lr), 훈련
 from tensorflow.keras.optimizers import Adam, Nadam
 # optimizer = Adam(lr=0.1)
 optimizer = Nadam(lr=0.01)
