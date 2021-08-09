@@ -86,14 +86,18 @@ model.add(Dense(7, activation='softmax'))
 
 
 # 3. 컴파일(EalryStopping), 훈련
-model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['accuracy'])
+from tensorflow.keras.optimizers import Adam, Nadam
+optimizer = Adam(lr=0.01)
+# optimizer = Nadam(lr=0.01)
+model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
 
-from tensorflow.keras.callbacks import EarlyStopping
+from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
 es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.5)
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=10000, batch_size=512, validation_split=0.0024, callbacks=[es])
+model.fit(x_train, y_train, epochs=10000, batch_size=512, validation_split=0.0024, callbacks=[es, reduce_lr])
 end = time.time() - start
 
 # 4. 평가, 예측
@@ -129,5 +133,10 @@ accuracy : 0.6000000238418579
 *LSTM + Conv1D
 걸린시간 : 62.63808012008667
 category : 0.7918718457221985
+accuracy : 0.6399999856948853
+
+*reduce LR
+걸린시간 : 40.95983624458313
+category : 0.8441729545593262
 accuracy : 0.6399999856948853
 '''
