@@ -25,13 +25,6 @@ y = datasets.target
 
 # ic(x.shape, y.shape)  # (442, 10)  (442,)
 
-# ic(datasets.feature_names)   
-#['age', 'sex', 'bmi', 'bp', 's1', 's2', 's3', 's4', 's5', 's6']
-# ic(datasets.DESCR)
-
-# ic(x[:30])
-# ic(np.min(y), np.max(y))
-
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.8, shuffle=True, random_state=9)
 
 # x 데이터 전처리
