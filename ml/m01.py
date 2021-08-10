@@ -76,7 +76,7 @@ acc = accuracy_score(y_test, y_predict)
 print('accuracy_score :', acc)
 
 
-# print('================== 예측 ==================')
+# print('================= 예측 =================')
 # ic(y_test[:5])
 # y_predict2 = model.predict(x_test[:5])
 # ic(y_predict2)   # 소프트맥스 통과한 값
