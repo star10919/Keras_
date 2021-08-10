@@ -46,9 +46,15 @@ model.summary()
 
 
 # 3. 컴파일(ES, reduce_lr), 훈련
-from tensorflow.keras.optimizers import Adam, Nadam
-optimizer = Adam(lr=0.01)
-# optimizer = Nadam(lr=0.01)
+from tensorflow.keras.optimizers import Adam, Adagrad, Adadelta, Adamax
+from tensorflow.keras.optimizers import RMSprop, SGD, Nadam
+# optimizer = Adam(lr=0.01)    # learning_rate (커스터마이징)적용   /   learning_rate를 줄이면 epochs는 그만큼 늘려줘야 된다.(다 돌게 하려면)
+# optimizer = Adagrad(lr=0.01)
+# optimizer = Adadelta(lr=0.01)
+# optimizer = Adamax(lr=0.01)
+# optimizer = RMSprop(lr=0.01)
+# optimizer = SGD(lr=0.01)
+optimizer = Nadam(lr=0.01)
 model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics='accuracy')
 
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau

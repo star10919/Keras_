@@ -48,17 +48,17 @@ model.add(Dense(1))
 
 #3. 컴파일(ES, reduce_lr), 훈련
 from tensorflow.keras.optimizers import Adam, Nadam
-# optimizer = Adam(lr=0.1)
-optimizer = Nadam(lr=0.01)
+optimizer = Adam(lr=0.01)
+# optimizer = Nadam(lr=0.01)
 model.compile(loss='mse', optimizer=optimizer)
 
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-es = EarlyStopping(monitor='val_loss', mode='min', patience=5, verbose=1)
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.5)   # val_loss가 5만큼 감축이 없으면, lr 0.5 감소
+es = EarlyStopping(monitor='val_loss', mode='min', patience=10, verbose=1)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.1)   # val_loss가 5만큼 감축이 없으면, lr 0.5 감소
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=100, validation_split=0.2, batch_size=30, callbacks=[es, reduce_lr])
+model.fit(x_train, y_train, epochs=1000, validation_split=0.2, batch_size=30, callbacks=[es, reduce_lr])
 end = time.time() - start
 
 
@@ -103,8 +103,8 @@ ic| loss: 11.290112495422363
 ic| r2: 0.863344116663746
 
 *reduce LR
-걸린시간 : 11.542813301086426
-ic| loss: 43.15686798095703
-ic| r2: 0.4776279354606304
+걸린시간 : 19.585781574249268
+ic| loss: 12.71874713897705
+ic| r2: 0.8460518785190996
 '''
 

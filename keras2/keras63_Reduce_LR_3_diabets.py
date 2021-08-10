@@ -60,12 +60,12 @@ optimizer = Adam(lr=0.01)
 model.compile(loss='mse', optimizer=optimizer)
 
 from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-es = EarlyStopping(monitor='val_loss', mode='min', patience=10)
-reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.5)
+es = EarlyStopping(monitor='val_loss', mode='min', patience=16)
+reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=9, mode='auto', verbose=1, factor=0.1)
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=10, validation_split=0.1, callbacks=[es, reduce_lr], shuffle=True, verbose=1)
+model.fit(x_train, y_train, epochs=1000, batch_size=10, validation_split=0.1, callbacks=[es, reduce_lr], shuffle=True, verbose=1)
 end = time.time() - start
 
 #4. 평가, 예측(mse, r2)
@@ -108,7 +108,7 @@ ic| loss: 2080.7890625
 ic| r2: 0.6176408093415701
 
 *reduce LR
-걸린시간 : 23.0020911693573
-ic| loss: 3195.954345703125
-ic| r2: 0.4127215479712091
+걸린시간 : 23.658804655075073
+ic| loss: 2077.2978515625
+ic| r2: 0.6182823199819709
 '''
