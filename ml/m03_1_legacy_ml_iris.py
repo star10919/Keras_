@@ -56,7 +56,7 @@ from sklearn.ensemble import RandomForestClassifier # DecisionTree의 앙상블 
 # model = DecisionTreeClassifier()
 # accuracy_score : 0.9111111111111111
 
-# model = RandomForestClassifier()
+model = RandomForestClassifier()
 # accuracy_score : 0.9111111111111111
 
 
