@@ -60,7 +60,7 @@ from sklearn.ensemble import RandomForestClassifier # DecisionTree의 앙상블 
 # accuracy_score : 0.9111111111111111
 
 
-#통상적으로 RandomForest가 
+#통상적으로 RandomForest가 제일 좋음
 
 # model = Sequential()
 # model.add(Dense(128, activation='relu', input_shape=(4,)))
