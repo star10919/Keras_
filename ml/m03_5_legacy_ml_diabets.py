@@ -1,3 +1,4 @@
+from operator import mod
 from sklearn.preprocessing import MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
 # 실습 MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer 각 결과 적어놓기
 
@@ -40,11 +41,42 @@ x_test = scaler.transform(x_test)
 # x_test = x_test.reshape(89, 10, 1)
 
 #2. 모델구성(validation)
-from sklearn.svm import LinearSVC, SVC
-from sklearn.neighbors import KNeighborsClassifier      # 분류면 KNeighborsClassifier, 회귀면 KNeighborsRegressor
-from sklearn.linear_model import LogisticRegression     # *** LogisticRegression : 분류모델 임!!!!!!!!!!!!!!!!!(이름에 Regression이 들어간다고 회귀모델 아님!!!!!!!!!!!!!!)
-from sklearn.tree import DecisionTreeClassifier         # 의사결정나무
-from sklearn.ensemble import RandomForestClassifier     # DecisionTree의 앙상블 모델 : 숲(Foreset)
+from sklearn.svm import LinearSVC, SVC      # 먹히는지 확인
+from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor     # 분류면 KNeighborsClassifier, 회귀면 KNeighborsRegressor
+from sklearn.linear_model import LogisticRegression, LinearRegression     # *** LogisticRegression : 분류모델 임!!!!!!!!!!!!!!!!!(이름에 Regression이 들어간다고 회귀모델 아님!!!!!!!!!!!!!!)
+from sklearn.tree import DecisionTreeClassifier, DecisionTreeRegressor    # 의사결정나무
+from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
+
+# model = LinearSVC()
+# model.score : 0.011235955056179775
+
+# model = SVC()
+# model.score : 0.011235955056179775
+
+# model = KNeighborsClassifier()
+# model.score : 0.011235955056179775
+
+# model = KNeighborsRegress
+
+# model = LogisticRegression()
+# model.score : 0.011235955056179775
+
+# model = LinearRegression()
+# model.score : 0.5851141269959736
+
+# model = DecisionTreeClassifier()
+# model.score : 0.011235955056179775
+
+# model = DecisionTreeRegressor()
+# model.score : -0.1285518296551733
+
+# model = RandomForestClassifier()
+# model.score : 0.0
+
+model = RandomForestRegressor()
+# model.score : 0.5460313800399677
+
+
 
 
 
