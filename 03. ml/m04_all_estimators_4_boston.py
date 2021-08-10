@@ -1,9 +1,3 @@
-# 실습, 모델구성하고 완료하시오.
-# 회귀 데이터를 Classifier로 만들었을 경우에 에러 확인!!!
-
-# 클래시파이가 아니므로 에러가 날거임
-
-
 import warnings
 from sklearn.preprocessing import MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
 from sklearn.datasets import load_boston
@@ -14,6 +8,13 @@ from sklearn.metrics import r2_score
 import numpy as np
 from icecream import ic
 from tensorflow.python.keras.layers.core import Dropout
+
+### all_estimators(모든 알고리즘(모델) 사용)
+# 실습, 모델구성하고 완료하시오.
+# 회귀 데이터를 Classifier로 만들었을 경우에 에러 확인!!!
+
+# 클래시파이가 아니므로 에러가 날거임
+
 
 #1. 데이터
 datasets = load_boston()

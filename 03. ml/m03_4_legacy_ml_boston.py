@@ -1,7 +1,9 @@
+### 다양한 레거시 머신러닝(evaluate -> score)
 # 실습, 모델구성하고 완료하시오.
 # 회귀 데이터를 Classifier로 만들었을 경우에 에러 확인!!!
 
-# 클래시파이가 아니므로 에러가 날거임
+# 클래시파이(분류모델)가 아니므로 에러가 날거임
+# 리그레서(회귀모델) 임!!!!
 
 
 from sklearn.preprocessing import MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer

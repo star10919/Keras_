@@ -26,7 +26,7 @@ acc = accuracy_score(y_data, y_predict)
 print("accuracy_score :", acc)
 
 '''
-[[0, 0], [0, 1], [1, 0], [1, 1]] 의 예측결과 : [0 0 0 1]
+[[0, 0], [0, 1], [1, 0], [1, 1]] 의 예측결과 : [0 1 1 0]
 model.score : 1.0
 accuracy_score : 1.0
 '''

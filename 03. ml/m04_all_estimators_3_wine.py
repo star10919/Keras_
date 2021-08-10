@@ -5,9 +5,8 @@ from icecream import ic
 from pandas.core.tools.datetimes import Scalar
 from tensorflow.python.keras.layers.recurrent import LSTM
 
+### all_estimators(모든 알고리즘(모델) 사용)
 # 다중분류
-# 모델링하고
-# 0.8 이상 완성
 
 
 # 1. 데이터

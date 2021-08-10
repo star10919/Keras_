@@ -1,4 +1,4 @@
-### learning_rate를 감소시키겠다!!
+### reduce LR : learning_rate를 감소시키겠다!!
 
 '''
 1. 전체 훈련 데이터가 많이 있을수록 좋다

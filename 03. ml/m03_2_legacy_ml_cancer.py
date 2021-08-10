@@ -7,6 +7,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from tensorflow.python.keras.activations import linear
 
+### 다양한 레거시 머신러닝(evaluate -> score)
 # 2진 분류
 
 # 1. 데이터

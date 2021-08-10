@@ -1,8 +1,6 @@
 from operator import mod
 import warnings
 from sklearn.preprocessing import MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer
-# 실습 MaxAbsScaler, RobustScaler, QuantileTransformer, PowerTransformer 각 결과 적어놓기
-
 import numpy as np
 import pandas as pd
 from sklearn.datasets import load_diabetes
@@ -11,6 +9,12 @@ from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense, Conv2D, MaxPooling2D, GlobalAveragePooling2D, Flatten, LSTM, Conv1D
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import r2_score, accuracy_score
+
+### all_estimators(모든 알고리즘(모델) 사용)
+# 실습, 모델구성하고 완료하시오.
+# 회귀 데이터를 Classifier로 만들었을 경우에 에러 확인!!!
+
+# 클래시파이가 아니므로 에러가 날거임
 
 
 #1. 데이터

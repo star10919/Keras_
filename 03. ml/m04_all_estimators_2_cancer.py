@@ -8,7 +8,9 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from tensorflow.python.keras.activations import linear
 
+### all_estimators(모든 알고리즘(모델) 사용)
 # 2진 분류
+
 
 # 1. 데이터
 datasets = load_breast_cancer()
