@@ -62,14 +62,23 @@ model.fit(x_train, y_train)
 
 
 # 4. 평가(evaluate 대신 score 사용함!!), 예측
-results = model.score(x_test, y_test)       # accuracy
-print(results)
+# * case1(predict 코딩 생략, 알아서 predict해서 y_test랑 비교)
+results = model.score(x_test, y_test)       # score 로 나오는 값 : accuracy_score
+print("model.score :", results)
 # results = model.evaluate(x_test, y_test)
 # print('loss :', results[0])
 # print('accuracy :', results[1])
 
-ic(y_test[:5])
-y_predict = model.predict(x_test[:5])
-ic(y_predict)   # 소프트맥스 통과한 값
+# * case2
+from sklearn.metrics import r2_score, accuracy_score
+y_predict = model.predict(x_test)
+acc = accuracy_score(y_test, y_predict)
+print('accuracy_score :', acc)
+
+
+# print('================== 예측 ==================')
+# ic(y_test[:5])
+# y_predict2 = model.predict(x_test[:5])
+# ic(y_predict2)   # 소프트맥스 통과한 값
 
 
