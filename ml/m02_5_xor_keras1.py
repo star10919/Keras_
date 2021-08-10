@@ -25,10 +25,10 @@ y_predict = model.predict(x_data)
 print(x_data, "의 예측결과 :", y_predict)
 
 results = model.evaluate(x_data, y_data)
-print('model.score :', results[0])
+print('model.score :', results[1])
 
-acc = accuracy_score(y_data, y_predict)
-print("accuracy_score :", acc)
+# acc = accuracy_score(y_data, y_predict)
+# print("accuracy_score :", acc)
 
 '''
 [[0, 0], [0, 1], [1, 0], [1, 1]] 의 예측결과 : [0 0 0 1]

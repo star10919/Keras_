@@ -4,7 +4,7 @@ from sklearn.metrics import accuracy_score
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.layers import Dense
 
-### xor gate문제 단층 퍼셉트론으로 해결
+### xor gate문제 다층 퍼셉트론으로 해결
 
 # 1. 데이터
 x_data = [[0, 0], [0, 1], [1, 0], [1, 1]]
@@ -14,7 +14,13 @@ y_data = [0, 1, 1, 0]
 # model = LinearSVC()
 # model = SVC()   # SVC는 LinearSVC보다 향상됨(다층 포함됨)
 model = Sequential()
-model.add(Dense(1, input_dim=2, activation='sigmoid'))  # 단층 퍼셉트론(LinearSVC와 유사)
+model.add(Dense(10, input_dim=2, activation='relu'))  # 다층 퍼셉트론
+model.add(Dense(10, activation='linear'))
+model.add(Dense(10, activation='linear'))
+model.add(Dense(10, activation='linear'))
+model.add(Dense(1, activation='sigmoid'))
+
+
 
 # 3. 컴파일, 훈련
 model.compile(loss='binary_crossentropy', optimizer='adam', metrics='acc')
@@ -22,16 +28,20 @@ model.fit(x_data, y_data, batch_size=1, epochs=100)
 
 # 4. 평가, 예측
 y_predict = model.predict(x_data)
-print(x_data, "의 예측결과 :", y_predict)
+print(x_data, "의 예측결과 :\n", y_predict)
 
 results = model.evaluate(x_data, y_data)
-print('model.score :', results[0])
+print('model.score :', results[1])
 
-acc = accuracy_score(y_data, y_predict)
-print("accuracy_score :", acc)
+# acc = accuracy_score(y_data, y_predict)
+# print("accuracy_score :", acc)
 
 '''
-[[0, 0], [0, 1], [1, 0], [1, 1]] 의 예측결과 : [0 0 0 1]
+[[0, 0], [0, 1], [1, 0], [1, 1]] 의 예측결과 :
+ [[0.19257168]
+ [0.86751276]
+ [0.97922117]
+ [0.08903018]]
+1/1 [==============================] - 0s 101ms/step - loss: 0.1176 - acc: 1.0000
 model.score : 1.0
-accuracy_score : 1.0
 '''
