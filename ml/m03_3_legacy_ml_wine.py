@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 from icecream import ic
-from pandas.core.tools.datetimes import Scalar
 from tensorflow.python.keras.layers.recurrent import LSTM
 
 ### 다양한 레거시 머신러닝(evaluate -> score)
