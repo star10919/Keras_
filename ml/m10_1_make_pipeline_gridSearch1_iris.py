@@ -31,13 +31,13 @@ parameters = [ # pipeline에서 사용하는 모델명을 파라미터 앞에 �
     {'randomforestclassifier__min_samples_leaf':[3, 5, 7], 'randomforestclassifier__max_depth':[2, 3, 5, 10]},
     {'randomforestclassifier__min_samples_split':[6, 8, 10]}
 
-]# @@@2 파라미터 앞에 사용한 파라미터의 모델명(랜포) 소문자로 적어주기
+]# @@@2 파라미터에서 사용한 모델명(랜포) 소문자!!! 로 적어주기
 
 #2. 모델구성(validation)
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 pipe = make_pipeline(MinMaxScaler(), RandomForestClassifier())
 
-# @@@1 make_pipeline(pipe) 라는 모델 사용하고 있는데, 파라미터는 랜포 파라미터라서 에러남
+# @@@1 GridSearchCV 모델 사용하고 있는데, 파라미터는 랜포 파라미터라서 에러남(해결:@@@2)
 model = GridSearchCV(pipe, parameters, cv=kfold, verbose=1)
 
 
