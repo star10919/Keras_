@@ -17,7 +17,6 @@ warnings.filterwarnings('ignore')
 datasets = pd.read_csv('../_data/winequality-white.csv', sep=';',       # 경로잡기 중요!
                         index_col=None, header=0)    #header=0 첫번째라인   # (4898,12)
 
-
 datasets_np = datasets.to_numpy()   #1 판다스 -> 넘파이
 ic(datasets_np)
 x = datasets_np[:,0:11]
@@ -43,48 +42,32 @@ from sklearn.tree import DecisionTreeClassifier         # 의사결정나무
 from sklearn.ensemble import RandomForestClassifier     # DecisionTree의 앙상블 모델 : 숲(Foreset)
 
 # model = LinearSVC()
-# model.score : 0.6
+# Acc : [0.31692308 0.44717949 0.34564103 0.17453799 0.43737166]
+# 평균 Acc : 0.3443
 
 # model = SVC()
-# model.score : 0.64
+# Acc : [0.44410256 0.44923077 0.45128205 0.47433265 0.42299795]
+# 평균 Acc : 0.4484
 
 # model = KNeighborsClassifier()
-# model.score : 0.72
+# Acc : [0.46358974 0.47487179 0.48205128 0.48151951 0.48459959]
+# 평균 Acc : 0.4773
 
 # model = LogisticRegression()
-# model.score : 0.52
+# Acc : [0.47487179 0.46769231 0.46051282 0.46201232 0.4650924 ]
+# 평균 Acc : 0.466
 
 # model = DecisionTreeClassifier()
-# model.score : 0.52
+# Acc : [0.59179487 0.57435897 0.59384615 0.61396304 0.64271047]
+# 평균 Acc : 0.6033
 
 model = RandomForestClassifier()
-# model.score : 0.88
+# Acc : [0.69333333 0.66974359 0.66666667 0.6889117  0.69609856]
+# 평균 Acc : 0.683
 
 
 # 3. 컴파일(ES, reduce_lr), 훈련
-# from tensorflow.keras.optimizers import Adam, Nadam
-# optimizer = Adam(lr=0.01)
-# # optimizer = Nadam(lr=0.01)
-# model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['accuracy'])
-
-# from tensorflow.keras.callbacks import EarlyStopping, ReduceLROnPlateau
-# es = EarlyStopping(monitor='val_loss', patience=20, mode='min', verbose=1)
-# reduce_lr = ReduceLROnPlateau(monitor='val_loss', patience=5, mode='auto', verbose=1, factor=0.5)
-
-# import time
-# start = time.time()
-model.fit(x_train, y_train)
-# end = time.time() - start
-
-# 4. 평가, 예측
-# results = model.evaluate(x_test, y_test)
-# print('걸린시간 :', end)
-# print('category :', results[0])
-# print('accuracy :', results[1])
-
-# ic(y_test[-5:-1])
-# y_predict = model.predict(x_test)
-# ic(y_predict[-5:-1])
-
-results = model.score(x_test, y_test)       # score 로 나오는 값 : accuracy_score
-print("model.score :", results)
+# 4. 평가(evaluate 대신 score 사용함!!), 예측
+scores = cross_val_score(model, x_train, y_train, cv=kfold)       #cross_val_score(모델, train과 test를 분리하지 않은 데이터, kfold)
+print("Acc :", scores)      # 값이 n_splits의 개수로 나옴
+print("평균 Acc :", round(np.mean(scores),4))
