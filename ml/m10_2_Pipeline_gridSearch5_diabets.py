@@ -28,9 +28,9 @@ n_split = 5
 kfold = KFold(n_splits=n_split, shuffle=True, random_state=66)
 
 parameters = [{
-    "randomforestregressor__max_depth": [6, 8, 10, 12],
-    "randomforestregressor__min_samples_leaf": [3, 5, 7],
-    "randomforestregressor__min_samples_split": [2, 3, 5, 10],
+    "rf__max_depth": [6, 8, 10, 12],
+    "rf__min_samples_leaf": [3, 5, 7],
+    "rf__min_samples_split": [2, 3, 5, 10],
 }]
 
 
@@ -39,7 +39,9 @@ parameters = [{
 from sklearn.ensemble import RandomForestClassifier, RandomForestRegressor
 from sklearn.pipeline import make_pipeline, Pipeline
 
-pipe = make_pipeline(MinMaxScaler(), RandomForestRegressor())
+# pipe = make_pipeline(MinMaxScaler(), RandomForestRegressor())
+pipe = Pipeline([("sclaer", MinMaxScaler()), ("rf", RandomForestRegressor())])
+
 
 model = GridSearchCV(pipe, parameters, cv=kfold, verbose=1)
 
@@ -92,4 +94,15 @@ r2_score : 0.5265411480154842
 best_score : 0.4159586518036578
 model.score : 0.5547792214520815
 r2_score : 0.5547792214520815
+
+
+*Pipeline
+최적의 매개변수 : Pipeline(steps=[('sclaer', MinMaxScaler()),
+                ('rf',
+                 RandomForestRegressor(max_depth=12, min_samples_leaf=5,
+                                       min_samples_split=10))])
+최적의 매개변수 : {'rf__max_depth': 12, 'rf__min_samples_leaf': 5, 'rf__min_samples_split': 10}
+best_score : 0.4123829263948952
+model.score : 0.5523304848163617
+r2_score : 0.5523304848163617
 '''
