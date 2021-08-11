@@ -16,13 +16,6 @@ datasets = load_iris()
 x = datasets.data
 y = datasets.target
 
-# # 1-2. 데이터 전처리
-# from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
-# scaler = StandardScaler()
-# scaler.fit(x_train)
-# x_train = scaler.transform(x_train)
-# x_test = scaler.transform(x_test)
-
 from sklearn.model_selection import train_test_split
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.7, shuffle=True, random_state=9)
 
@@ -54,4 +47,9 @@ print("model.score :", model.score(x_test, y_test))
 
 y_predict = model.predict(x_test)
 print("accuracy_score :", accuracy_score(y_test, y_predict))
+
+'''
+model.score : 1.0
+accuracy_score : 1.0
+'''
 
