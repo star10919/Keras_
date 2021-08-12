@@ -4,7 +4,7 @@ from sklearn.decomposition import PCA
 from sklearn.model_selection import train_test_split
 from icecream import ic
 
-### pca.explained_variance_ratio_ : 피쳐임포턴스가 낮은순서대로 압축됨. 피쳐임포턴스 높은순서대로 보여줌
+### pca.explained_variance_ratio_ : 피쳐임포턴스가 낮은순서대로 압축됨. 피쳐임포턴스 높은 순서대로 보여줌
 
 # 1. 데이터
 
@@ -26,7 +26,7 @@ cumsum = np.cumsum(pca_EVR)     # 피쳐 임포턴스 낮은거부터 누적해�
 ic(cumsum)
 # [0.40242142 0.55165324 0.67224947 0.76779711 0.83401567 0.89428759 0.94794364 0.99131196 0.99914395 1.        ]
 
-ic(np.argmax(cumsum >= 0.94)+1) # 원하는 피쳐임포턴스 수치의 컬럼 수 보여줌(n_components에서 넣어주면 됨)
+ic(np.argmax(cumsum >= 0.94)+1) # 전체 컬럼 수 n_components에 넣어서 원하는 피쳐임포턴스 수치의 컬럼 수 찾고, 나온 수 n_components에서 넣어주면 됨
 
 import matplotlib.pyplot as plt
 plt.plot(cumsum)

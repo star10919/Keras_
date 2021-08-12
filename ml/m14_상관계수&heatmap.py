@@ -18,7 +18,7 @@ y = datasets.target
 ic(x.shape, y.shape)        # x.shape: (150, 4), y.shape: (150,)
 
 # df = pd.DataFrame(x, columns=datasets.featur_names)
-df = pd.DataFrame(x, columns=datasets['feature_names'])
+df = pd.DataFrame(x, columns=datasets['feature_names'])     # 데이터프레임 컬럼에 피쳐명 넣기
 ic(df)
 
 # df에 Target이라는  y컬럼 추가

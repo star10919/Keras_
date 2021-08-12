@@ -22,10 +22,10 @@ x = x.reshape(x.shape[0], 28*28)
 ic(x.shape)     # (70000, 784)
 
 
-pca = PCA(n_components=154)
+pca = PCA(n_components=154)  # 전체컬럼수 넣고, 아그맥스에서 추출된 값 넣어서 돌리기
 x = pca.fit_transform(x)
 ic(x)
-ic(x.shape)                # (70000, 784)
+ic(x.shape)                # (70000, 154)
 
 pca_EVR = pca.explained_variance_ratio_     # 피쳐임포턴스가 낮은순서대로 압축됨. 피쳐임포턴스 높은순서대로 보여줌
 ic(pca_EVR)
