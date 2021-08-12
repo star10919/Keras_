@@ -58,7 +58,7 @@ model = LogisticRegression()
 
 # 3. 훈련(cross_val_score 은 fit과 score가 포함되어 있음)
 # 4. 평가(evaluate 대신 score 사용함!!), 예측
-scores = cross_val_score(model, x, y, cv=kfold)       #cross_val_score(모델, train과 test를 분리하지 않은 데이터, kfold)
+scores = cross_val_score(model, x, y, cv=kfold)       #cross_val_score(모델, train과 test를 분리하지 않은 데이터, kfold)        # cross_val_score : 교차검증
 print("Acc :", scores)      # 값이 n_splits의 개수로 나옴
 print("평균 Acc :", round(np.mean(scores),4))
 
