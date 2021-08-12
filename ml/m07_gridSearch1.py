@@ -25,7 +25,7 @@ y = datasets.target
 ic(x.shape, y.shape)  # (150, 4), (150,)->(150, 3)
 ic(y)   # (0,0,0, ... ,1,1,1, ... ,2,2,2, ...)
 
-from sklearn.model_selection import train_test_split, KFold, cross_val_score, GridSearchCV         # GridSearchCV : 체로 걸러서 찾겠다, CV(cross_val_score)까지 하겠다!!
+from sklearn.model_selection import train_test_split, KFold, cross_val_score, GridSearchCV         # GridSearchCV : 체로 걸러서 제일 좋은거 찾겠다, CV(cross_val_score)까지 하겠다!!
 x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.7, shuffle=True, random_state=66)
 n_split = 5
 kfold = KFold(n_splits=n_split, shuffle=True, random_state=66)     # n_splits=5   5등분하겠다!  ->   값도 5(n)개로 나옴
