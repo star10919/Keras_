@@ -33,6 +33,24 @@ print(model.feature_importances_)       # feature_importances(컬럼의 중요�
 # [0.0125026  0.         0.03213177 0.95536562] :  두번째 컬럼을 삭제해도 acc는 0.9333333333333333이 나옴
 
 
+
+# 시각화
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_feature_importances_dataset(model):
+    n_features = datasets.data.shape[1]
+    plt.barh(np.arange(n_features), model.feature_importances_,
+             align='center')
+    plt.yticks(np.arange(n_features), datasets.feature_names)
+    plt.xlabel("Feature Importances")
+    plt.ylabel("Features")
+    plt.ylim(-1, n_features)
+
+plot_feature_importances_dataset(model)
+plt.show()
+
+
 '''
 * DecisionTreeClassifier
 acc : 0.9666666666666667

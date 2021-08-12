@@ -31,6 +31,21 @@ print('acc :', acc)
 print(model.feature_importances_)       # feature_importances(컬럼의 중요도)_ : tree 계열에서 제공되는 강력한 애
 
 
+# 시각화
+import matplotlib.pyplot as plt
+import numpy as np
+
+def plot_feature_importances_dataset(model):
+    n_features = datasets.data.shape[1]
+    plt.barh(np.arange(n_features), model.feature_importances_,
+             align='center')
+    plt.yticks(np.arange(n_features), datasets.feature_names)
+    plt.xlabel("Feature Importances")
+    plt.ylabel("Features")
+    plt.ylim(-1, n_features)
+
+plot_feature_importances_dataset(model)
+plt.show()
 
 '''
 * DecisionTreeClassifier
