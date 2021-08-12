@@ -1,7 +1,8 @@
 # feature = column = 열
 
 from sklearn.tree import DecisionTreeRegressor
-from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from xgboost import XGBClassifier, XGBRegressor
 from sklearn.datasets import load_diabetes
 from sklearn.model_selection import train_test_split
 
@@ -19,6 +20,9 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.8, shuffl
 # 2. 모델
 # model = DecisionTreeRegressor(max_depth=5)
 model = RandomForestRegressor()
+model = GradientBoostingRegressor()
+# model = XGBRegressor()
+
 
 # 3. 훈련
 model.fit(x_train, y_train)

@@ -1,7 +1,8 @@
 # feature = column = 열
 
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.ensemble import RandomForestClassifier     # RandomForestClassifier는 DecisionTreeClassifier의 앙상블 모델
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier     # RandomForestClassifier는 DecisionTreeClassifier의 앙상블 모델
+from xgboost import XGBClassifier, XGBRegressor
 from sklearn.datasets import load_breast_cancer
 from sklearn.model_selection import train_test_split
 
@@ -18,7 +19,9 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.8, shuffl
 
 # 2. 모델
 # model = DecisionTreeClassifier(max_depth=5)
-model = RandomForestClassifier()
+# model = RandomForestClassifier()
+model = GradientBoostingClassifier()
+# model = XGBClassifier()
 
 # 3. 훈련
 model.fit(x_train, y_train)
