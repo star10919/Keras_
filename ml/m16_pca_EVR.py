@@ -22,16 +22,18 @@ pca_EVR = pca.explained_variance_ratio_     # 피쳐임포턴스가 낮은순서
 ic(pca_EVR)
 ic(sum(pca_EVR))
 
-cumsum = np.cumsum(pca_EVR)     # 피쳐 임포턴스 누적해서 보여줌
-print(cumsum)
+cumsum = np.cumsum(pca_EVR)     # 피쳐 임포턴스 낮은거부터 누적해서 보여줌
+ic(cumsum)
 # [0.40242142 0.55165324 0.67224947 0.76779711 0.83401567 0.89428759 0.94794364 0.99131196 0.99914395 1.        ]
 
-print(np.argmax(cumsum >= 0.94)+1)
+ic(np.argmax(cumsum >= 0.94)+1) # 원하는 피쳐임포턴스 수치의 컬럼 수 보여줌(n_components에서 넣어주면 됨)
 
 import matplotlib.pyplot as plt
 plt.plot(cumsum)
 plt.grid()
 plt.show()
+
+
 
 
 
