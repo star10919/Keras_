@@ -21,7 +21,7 @@ x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.8, shuffl
 # 2. 모델
 # model = DecisionTreeClassifier(max_depth=5)
 model = RandomForestClassifier()
-model = GradientBoostingClassifier()
+# model = GradientBoostingClassifier()
 # model = XGBClassifier()
 
 # 3. 훈련
