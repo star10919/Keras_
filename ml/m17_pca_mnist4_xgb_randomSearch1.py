@@ -99,8 +99,8 @@ parameters = [
 
 
 # 2. 모델
-# model = RandomizedSearchCV(XGBRegressor(), parameters, cv=kfold, verbose=1)
-model = XGBRegressor(n_jobs=1, n_estimators=90, max_depth=6, learning_rate=0.1, colsample_bytree=0.9, colsample_bylevel=0.6)
+# model = RandomizedSearchCV(XGBClassifier(), parameters, cv=kfold, verbose=1)
+model = XGBClassifier(n_jobs=1, n_estimators=90, max_depth=6, learning_rate=0.1, colsample_bytree=0.9, colsample_bylevel=0.6)
 
 
 # 3. 훈련

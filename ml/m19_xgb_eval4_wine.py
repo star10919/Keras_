@@ -52,26 +52,33 @@ ic(acc)
 
 
 print("=================================================================")
-hist = model.evals_result()
-ic(hist)    # XGB에서 제공
+hist = model.evals_result()    # XGB에서 제공
+ic(hist)
 
 
 # eval_results의 그래프를 그려라.
 import matplotlib.pyplot as plt
 import numpy as np
 
-results = model.evals_result()
-epochs = len(results['validation_0']['mlogloss'])
+epochs = len(results['validation_0']['merror'])
 x_axis = range(0, epochs)
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['merror'], label='Train')
+ax.plot(x_axis, results['validation_1']['merror'], label='Test')
+ax.legend()
+plt.ylabel('merror')
+plt.title('XGBoost merror')
 
 fig, ax = plt.subplots()
 ax.plot(x_axis, results['validation_0']['mlogloss'], label='Train')
 ax.plot(x_axis, results['validation_1']['mlogloss'], label='Test')
-
 ax.legend()
-plt.ylabel('ACC')
-plt.title('XGBoost ACC')
+plt.ylabel('mlogloss')
+plt.title('XGBoost mlogloss')
 plt.show()
+
+
 '''
 ic| results: 1.0
 ic| acc: 1.0

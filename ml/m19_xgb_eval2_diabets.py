@@ -37,7 +37,7 @@ model = XGBRegressor(n_estimators=13, learing_rate=0.1, n_jobs=1)        # n_est
 # 3. 훈련
 model.fit(x_train, y_train, verbose=1,                           # verbose=1 : eval_set 보여줌
          eval_set=[(x_train, y_train), (x_test, y_test)],         # eval_set=[(훈련set, 검증set)] : 훈련되는거 보여줌
-         eval_metric='rmse',# 'mae', 'logloss']
+         eval_metric=['rmse', 'mae'] # 'logloss']
 )
 
 
@@ -51,25 +51,30 @@ ic(r2)
 
 
 print("=================================================================")
-hist = model.evals_result()
-ic(hist)    # XGB에서 제공
+hist = model.evals_result()    # XGB에서 제공
+ic(hist)
 
 
 # eval_results의 그래프를 그려라.
 import matplotlib.pyplot as plt
 import numpy as np
 
-results = model.evals_result()
 epochs = len(results['validation_0']['rmse'])
 x_axis = range(0, epochs)
 
 fig, ax = plt.subplots()
 ax.plot(x_axis, results['validation_0']['rmse'], label='Train')
 ax.plot(x_axis, results['validation_1']['rmse'], label='Test')
-
 ax.legend()
-plt.ylabel('r2')
-plt.title('XGBoost r2')
+plt.ylabel('rmse')
+plt.title('XGBoost rmse')
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['mae'], label='Train')
+ax.plot(x_axis, results['validation_1']['mae'], label='Test')
+ax.legend()
+plt.ylabel('mae')
+plt.title('XGBoost mae')
 plt.show()
 
 '''

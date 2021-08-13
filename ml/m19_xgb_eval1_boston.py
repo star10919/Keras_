@@ -54,7 +54,6 @@ hist = model.evals_result()    # XGB에서 제공
 ic(hist)
 
 
-
 # eval_results의 그래프를 그려라.
 import matplotlib.pyplot as plt
 import numpy as np
@@ -66,37 +65,16 @@ fig, ax = plt.subplots()
 ax.plot(x_axis, results['validation_0']['rmse'], label='Train')
 ax.plot(x_axis, results['validation_1']['rmse'], label='Test')
 ax.legend()
-plt.ylabel('Log Loss')
-plt.title('XGBoost Log Loss')
-# plt.show()
+plt.ylabel('rmse')
+plt.title('XGBoost rmse')
 
 fig, ax = plt.subplots()
 ax.plot(x_axis, results['validation_0']['mae'], label='Train')
 ax.plot(x_axis, results['validation_1']['mae'], label='Test')
 ax.legend()
-plt.ylabel('Rmse')
-plt.title('XGBoost RMSE')
+plt.ylabel('mae')
+plt.title('XGBoost mae')
 plt.show()
-
-
-
-
-#han
-results = model.evals_result()
-epochs = len(results['validation_0']['rmse'])
-x_axis = range(0, epochs)
-
-fig, ax = pyplot.subplots()
-ax.plot(x_axis, results['validation_0']['rmse'], label='rmse_Train')
-ax.plot(x_axis, results['validation_1']['rmse'], label='rmes_Test')
-ax.plot(x_axis, results['validation_0']['mae'], label='mae_Train')
-ax.plot(x_axis, results['validation_1']['mae'], label='mae_Test')
-
-ax.legend()
-pyplot.ylabel('rmse')
-pyplot.title('XGBoost rmse')
-pyplot.show()
-
 
 '''
 ic| results: 0.9220259407074536

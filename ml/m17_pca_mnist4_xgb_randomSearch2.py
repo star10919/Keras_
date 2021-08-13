@@ -85,8 +85,8 @@ parameters = [
 
 
 # 2. 모델
-# model = RandomizedSearchCV(XGBRegressor(), parameters, cv=kfold, verbose=1)
-model = XGBRegressor(n_estimators=300, max_depth=6, learning_rate=0.1)
+# model = RandomizedSearchCV(XGBClassifier(), parameters, cv=kfold, verbose=1)
+model = XGBClassifier(n_estimators=300, max_depth=6, learning_rate=0.1)
 
 
 
