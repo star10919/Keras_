@@ -46,10 +46,33 @@ results = model.score(x_test, y_test)
 ic(results)
 
 y_predict = model.predict(x_test)
-r2 = accuracy_score(y_test, y_predict)
-ic(r2)
+acc = accuracy_score(y_test, y_predict)
+ic(acc)
 
+
+
+print("=================================================================")
+hist = model.evals_result()
+ic(hist)    # XGB에서 제공
+
+
+# eval_results의 그래프를 그려라.
+import matplotlib.pyplot as plt
+import numpy as np
+
+results = model.evals_result()
+epochs = len(results['validation_0']['mlogloss'])
+x_axis = range(0, epochs)
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['mlogloss'], label='Train')
+ax.plot(x_axis, results['validation_1']['mlogloss'], label='Test')
+
+ax.legend()
+plt.ylabel('ACC')
+plt.title('XGBoost ACC')
+plt.show()
 '''
 ic| results: 1.0
-ic| r2: 1.0
+ic| acc: 1.0
 '''

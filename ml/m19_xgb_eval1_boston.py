@@ -59,16 +59,18 @@ ic(hist)    # XGB에서 제공
 import matplotlib.pyplot as plt
 import numpy as np
 
-def plot_feature_importances_dataset(model):
-    plt.barh(np.arange(hist), model.feature_importances_,
-             align='center')
-    plt.yticks(np.arange(hist), hist)
-    plt.xlabel("n_estimators")
-    plt.ylabel("hist")
-    plt.ylim(-1, hist)
+results = model.evals_result()
+epochs = len(results['validation_0']['rmse'])
+x_axis = range(0, epochs)
 
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['rmse'], label='Train')
+ax.plot(x_axis, results['validation_1']['rmse'], label='Test')
+
+ax.legend()
+plt.ylabel('r2')
+plt.title('XGBoost r2')
 plt.show()
-
 
 '''
 ic| results: 0.9220259407074536

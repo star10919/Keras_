@@ -49,6 +49,29 @@ y_predict = model.predict(x_test)
 r2 = r2_score(y_test, y_predict)
 ic(r2)
 
+
+print("=================================================================")
+hist = model.evals_result()
+ic(hist)    # XGB에서 제공
+
+
+# eval_results의 그래프를 그려라.
+import matplotlib.pyplot as plt
+import numpy as np
+
+results = model.evals_result()
+epochs = len(results['validation_0']['rmse'])
+x_axis = range(0, epochs)
+
+fig, ax = plt.subplots()
+ax.plot(x_axis, results['validation_0']['rmse'], label='Train')
+ax.plot(x_axis, results['validation_1']['rmse'], label='Test')
+
+ax.legend()
+plt.ylabel('r2')
+plt.title('XGBoost r2')
+plt.show()
+
 '''
 ic| results: 0.3034412307718999
 ic| r2: 0.3034412307718999
