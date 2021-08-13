@@ -1,4 +1,3 @@
-from math import pi
 from sklearn import datasets
 from  xgboost import XGBRegressor
 from sklearn.datasets import load_boston
@@ -8,7 +7,7 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from icecream import ic
 
-### pickle 사용해서 저장한거 load하기 - 모델 훈련 주석처리하기
+### joblib 사용해서 저장
 
 # 1. 데이터
 datasets = load_boston()
@@ -30,7 +29,7 @@ x_test = scaler.transform(x_test)
 
 
 
-# # 2. 모델
+# 2. 모델
 # model = XGBRegressor(n_estimators=20, learing_rate=0.05, n_jobs=1)        # n_estimators = epochs
 #                     # (xgboost에서 알아야 할 파라미터들)
 
@@ -41,18 +40,16 @@ x_test = scaler.transform(x_test)
 # )
 
 
-############################### pickle ################################
+############################### joblib ################################
 # # 저장
-# import pickle
-# pickle.dump(model, open('./_save/xgb_save/m21.pickle.dat', 'wb'))
-
+# import joblib
+# joblib.dump(model, './_save/xgb_save/m22_joblib.dat')
 
 # 불러오기
-import pickle
-model = pickle.load(open('./_save/xgb_save/m21.pickle.dat', 'rb'))
-print('불러왔다!')
-#######################################################################
+import joblib
+model = joblib.load('./_save/xgb_save/m22_joblib.dat')
 
+#######################################################################
 
 
 # 4. 평가, 예측
@@ -66,6 +63,8 @@ ic(r2)
 print("=================================================================")
 hist = model.evals_result()    # XGB에서 제공
 ic(hist)
+
+
 
 
 
