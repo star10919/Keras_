@@ -7,8 +7,7 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from icecream import ic
 
-### eval_set, eval_metric
-# 회귀 eval_metric=['rmse', 'mae', 'logloss'],  default : rmse
+### pickle 사용해서 저장
 
 # 1. 데이터
 datasets = load_boston()
@@ -54,48 +53,9 @@ hist = model.evals_result()    # XGB에서 제공
 ic(hist)
 
 
-
-# eval_results의 그래프를 그려라.
-import matplotlib.pyplot as plt
-import numpy as np
-
-epochs = len(results['validation_0']['rmse'])
-x_axis = range(0, epochs)
-
-fig, ax = plt.subplots()
-ax.plot(x_axis, results['validation_0']['rmse'], label='Train')
-ax.plot(x_axis, results['validation_1']['rmse'], label='Test')
-ax.legend()
-plt.ylabel('Log Loss')
-plt.title('XGBoost Log Loss')
-# plt.show()
-
-fig, ax = plt.subplots()
-ax.plot(x_axis, results['validation_0']['mae'], label='Train')
-ax.plot(x_axis, results['validation_1']['mae'], label='Test')
-ax.legend()
-plt.ylabel('Rmse')
-plt.title('XGBoost RMSE')
-plt.show()
-
-
-
-
-#han
-results = model.evals_result()
-epochs = len(results['validation_0']['rmse'])
-x_axis = range(0, epochs)
-
-fig, ax = pyplot.subplots()
-ax.plot(x_axis, results['validation_0']['rmse'], label='rmse_Train')
-ax.plot(x_axis, results['validation_1']['rmse'], label='rmes_Test')
-ax.plot(x_axis, results['validation_0']['mae'], label='mae_Train')
-ax.plot(x_axis, results['validation_1']['mae'], label='mae_Test')
-
-ax.legend()
-pyplot.ylabel('rmse')
-pyplot.title('XGBoost rmse')
-pyplot.show()
+# 저장
+import pickle
+pickle.dump(model, open('./_save/xgb_save/m21.pickle.dat', 'wb'))
 
 
 '''
