@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from icecream import ic
 
-### joblib 사용해서 저장
+### save_model 사용해서 저장
 
 # 1. 데이터
 datasets = load_boston()
