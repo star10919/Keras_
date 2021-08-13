@@ -39,16 +39,15 @@ x_test = scaler.transform(x_test)
 #          eval_metric=['rmse', 'mae']#, 'logloss']
 # )
 
-
-############################### joblib ################################
 # # 저장
-# import joblib
-# joblib.dump(model, './_save/xgb_save/m22_joblib.dat')
+# model.save_model('./_save/xgb_save/m23_xgb.dat')
 
+############################# load_model ##############################
 # 불러오기
-import joblib
-model = joblib.load('./_save/xgb_save/m22_joblib.dat')
+model = XGBRegressor()
+model.load_model('./_save/xgb_save/m23_xgb.dat')
 #######################################################################
+
 
 
 

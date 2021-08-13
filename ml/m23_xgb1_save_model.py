@@ -30,25 +30,29 @@ x_test = scaler.transform(x_test)
 
 
 # 2. 모델
-# model = XGBRegressor(n_estimators=20, learing_rate=0.05, n_jobs=1)        # n_estimators = epochs
-#                     # (xgboost에서 알아야 할 파라미터들)
+model = XGBRegressor(n_estimators=20, learing_rate=0.05, n_jobs=1)        # n_estimators = epochs
+                    # (xgboost에서 알아야 할 파라미터들)
 
-# # 3. 훈련
-# model.fit(x_train, y_train, verbose=1,                           # verbose=1 : eval_set 보여줌
-#          eval_set=[(x_train, y_train), (x_test, y_test)],        # eval_set=[(훈련set, 검증set)] : 훈련되는거 보여줌    # train set 명시해야 validation 지정 가능
-#          eval_metric=['rmse', 'mae']#, 'logloss']
-# )
+# 3. 훈련
+model.fit(x_train, y_train, verbose=1,                           # verbose=1 : eval_set 보여줌
+         eval_set=[(x_train, y_train), (x_test, y_test)],        # eval_set=[(훈련set, 검증set)] : 훈련되는거 보여줌    # train set 명시해야 validation 지정 가능
+         eval_metric=['rmse', 'mae']#, 'logloss']
+)
+
+############################# save_model ##############################
+# 저장
+model.save_model('./_save/xgb_save/m23_xgb.dat')
+#######################################################################
 
 
-############################### joblib ################################
 # # 저장
 # import joblib
 # joblib.dump(model, './_save/xgb_save/m22_joblib.dat')
 
-# 불러오기
-import joblib
-model = joblib.load('./_save/xgb_save/m22_joblib.dat')
-#######################################################################
+# # 불러오기
+# import joblib
+# model = joblib.load('./_save/xgb_save/m22_joblib.dat')
+
 
 
 
