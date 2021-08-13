@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from icecream import ic
 
-### joblib 사용해서 저장
+### joblib 사용해서 저장한거 불러오기 - 모델, 훈련 주석처리하기
 
 # 1. 데이터
 datasets = load_boston()

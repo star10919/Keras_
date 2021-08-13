@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from icecream import ic
 
-### joblib 사용해서 저장
+### save_model 한 거 불러오기 - 모델, 훈련 주석처리하기
 
 # 1. 데이터
 datasets = load_boston()
@@ -38,6 +38,8 @@ x_test = scaler.transform(x_test)
 #          eval_set=[(x_train, y_train), (x_test, y_test)],        # eval_set=[(훈련set, 검증set)] : 훈련되는거 보여줌    # train set 명시해야 validation 지정 가능
 #          eval_metric=['rmse', 'mae']#, 'logloss']
 # )
+
+
 
 # # 저장
 # model.save_model('./_save/xgb_save/m23_xgb.dat')

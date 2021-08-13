@@ -7,8 +7,9 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from icecream import ic
 
-### CPU, GPU 선택할 수 있음
+### CPU(머신러닝 디폴트), GPU 선택할 수 있음
 #  GPU : (#2.모델에서) tree_method='gpu_hist', gpu_id=0, predictor='gpu_predictor'
+
 
 # 1. 데이터
 datasets = load_boston()

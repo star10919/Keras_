@@ -7,7 +7,7 @@ from sklearn.metrics import r2_score
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from icecream import ic
 
-### pickle 사용해서 저장
+### pickle 사용해서 저장 - 통상적으로 제일 많이 사용!!
 
 # 1. 데이터
 datasets = load_boston()
