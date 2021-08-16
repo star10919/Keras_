@@ -11,7 +11,7 @@ from icecream import ic
 #  GPU : (#2.모델에서) tree_method='gpu_hist', gpu_id=0, predictor='gpu_predictor'
 
 
-# 1. 데
+# 1. 데이
 datasets = load_boston()
 x = datasets.data       #datasets['data'] 도 가능
 y = datasets.target
