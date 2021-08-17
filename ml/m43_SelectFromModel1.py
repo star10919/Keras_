@@ -59,6 +59,7 @@ for thresh in threshold:
 
     print("Thres=%.3f, n=%d, R2: %.2f%%" %(thresh, select_x_train.shape[1], score*100))
 
+
 '''
 (506, 13) (506,)
 model.score : 0.9221188601856797
