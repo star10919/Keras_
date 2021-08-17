@@ -33,16 +33,16 @@ n_split = 5
 kfold = KFold(n_splits=n_split, shuffle=True, random_state=66)
 
 parameters = [
-    {'n_estimators':[100, 150, 200], 'max_depth':[6, 8], 'min_samples_split':[3, 5]},
+    {'n_estimators':[100, 150, 200], 'max_depth':[5, 6, 8], 'min_samples_split':[3, 5]},
     {'max_depth':[6, 8, 12], 'min_samples_split':[2, 3, 5]},
-    {'min_samples_leaf':[5], 'min_samples_split':[5, 10], 'max_depth':[6, 8, 10]},
-    {'n_jobs':[-1, 2, 4], 'min_samples_split':[2, 3, 5, 10]}
+    {'min_samples_leaf':[3, 5], 'min_samples_split':[5, 10], 'max_depth':[6, 8, 10]},
+    {'n_jobs':[-1, 2, 4], 'min_samples_split':[2, 3, 5, 10], 'min_samples_leaf':[3, 5]}
 ]
 
 
 # 2. 모델
 # model = GridSearchCV(RandomForestRegressor(), parameters, cv=kfold, verbose=1)    #best_score : 0.49495939028073366
-model = RandomForestRegressor(max_depth=6, min_samples_split=3, n_estimators=200)
+model = RandomForestRegressor(max_depth=8, min_samples_leaf=5, min_samples_split=10)
 
 # 3. 훈련
 model.fit(x_train, y_train)
@@ -82,4 +82,29 @@ for thresh in threshold:
 
     print("Thres=%.3f, n=%d, R2: %.2f%%" %(thresh, select_x_train.shape[1], score*100))
 
-
+'''
+model.score : 0.38951552014301427
+[0.01153035 0.01296703 0.02775416 0.03786588 0.04168775 0.04259152
+ 0.05712396 0.10942973 0.31795934 0.34109027]
+======================================
+(353, 10) (89, 10)
+Thres=0.012, n=10, R2: 23.80%
+(353, 9) (89, 9)
+Thres=0.013, n=9, R2: 26.29%
+(353, 8) (89, 8)
+Thres=0.028, n=8, R2: 20.75%
+(353, 7) (89, 7)
+Thres=0.038, n=7, R2: 20.13%
+(353, 6) (89, 6)
+Thres=0.042, n=6, R2: 30.09%
+(353, 5) (89, 5)
+Thres=0.043, n=5, R2: 32.42%
+(353, 4) (89, 4)
+Thres=0.057, n=4, R2: 23.17%
+(353, 3) (89, 3)
+Thres=0.109, n=3, R2: 29.43%
+(353, 2) (89, 2)
+Thres=0.318, n=2, R2: 12.78%
+(353, 1) (89, 1)
+Thres=0.341, n=1, R2: 13.48%
+'''
