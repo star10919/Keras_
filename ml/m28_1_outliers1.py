@@ -5,6 +5,9 @@ aaa = np.array([1,2,-1000, 4, 5, 6, 7, 8, 90, 100, 500])
 # 1. 삭제
 # 2. Nan 처리후 -> 보간         // linear기준으로 보간 됨
 # 3.             ................. (결측치 처리 방법과 유사)
+# 4. scaler -> Rubstscalor, QuantileTransformer ... 등등  ...
+# 5. 모델링 : tree계열.. DT, RF, XG, LGBM...은 이상치에 자유롭다
+
 # iqr = 3사분위 - 1사분위
 # iqr +- 50%
 
