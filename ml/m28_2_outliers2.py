@@ -22,5 +22,4 @@ def outliers(data_out):
 outliers_loc = outliers(aaa)
 
 
-
 print('이상치의 위치 :', outliers_loc)
