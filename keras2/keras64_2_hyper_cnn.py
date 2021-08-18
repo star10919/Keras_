@@ -79,5 +79,6 @@ print("최종 스코어 :", acc)
 최종 스코어 : 0.9631999731063843
 
 <cnn>
-
+{'opt': <class 'tensorflow.python.keras.optimizer_v2.adam.Adam'>, 'node3': 4, 'node2': 6, 'node1': 10, 'lr': 0.03, 'epochs': 2, 'batch_size': 20000}
+최종 스코어 : 0.3483000099658966
 '''
