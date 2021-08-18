@@ -1,6 +1,5 @@
 import numpy as np
 import pandas as pd
-from pandas.core.tools.datetimes import Scalar
 from sklearn.datasets import load_wine    # 정제된 데이터
 from xgboost import XGBClassifier
 
