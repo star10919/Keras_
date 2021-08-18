@@ -1,32 +1,45 @@
 import numpy as np
 from tensorflow.keras.datasets import mnist
+from sklearn.datasets import load_iris
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Dropout, Input, Conv2D
+from icecream import ic
+import warnings
+warnings.filterwarnings('ignore')
 
-# 실습 : CNN으로 변경 / 파라미터 변경 / 노드의 갯수 / activation 추가 / epochs = [1, 2, 3] / learning_rate 추가
-### 사이킷런모델(그리드서치,랜덤서치) 안에     케라스모델(텐서플로우) 사용하려면      KerasClassifier,KerasRegressor로     케라스모델 감싸줘야 함.
+### 다중 분류 (0,1,2를 명목척도로 바꿔줘야 함 <- 원핫인코딩 사용(to_categorical))
+### Output activation = 'softmax', 컴파일 loss = 'categorical_crossentropy'
+
+datasets = load_iris()
+print(datasets.DESCR)
+print(datasets.feature_names)
 
 # 1. 데이터
-(x_train, y_train), (x_test, y_test) = mnist.load_data()
+x = datasets.data
+y = datasets.target
+ic(x.shape, y.shape)  # (150, 4), (150,)->(150, 3)
+ic(y)   # (0,0,0, ... ,1,1,1, ... ,2,2,2, ...)
+ic(np.unique(y))    # 0,1,2
+
+from sklearn.model_selection import train_test_split
+x_train, x_test, y_train, y_test = train_test_split(x, y, train_size=0.7, random_state=9)
 
 from tensorflow.keras.utils import to_categorical
 y_train = to_categorical(y_train)
 y_test = to_categorical(y_test)
 
-x_train = x_train.reshape(60000, 28*28).astype('float32')/255
-x_test = x_test.reshape(10000, 28*28).astype('float32')/255
 
 
 # 2. 모델
 def build_model(drop=0.5, optimizer='adam'):
-    inputs = Input(shape=(28*28), name='input')
+    inputs = Input(shape=(4,), name='input')
     x = Dense(512, activation='relu', name='hidden1')(inputs)
     x = Dropout(drop)(x)
     x = Dense(256, activation='relu', name='hidden2')(x)
     x = Dropout(drop)(x)
     x = Dense(128, activation='relu', name='hidden3')(x)
     x = Dropout(drop)(x)
-    outputs = Dense(10, activation='softmax', name='outputs')(x)
+    outputs = Dense(3, activation='softmax', name='outputs')(x)
     model = Model(inputs=inputs, outputs=outputs)
     model.compile(loss='categorical_crossentropy', optimizer=optimizer, metrics=['acc'])
     return model
@@ -63,7 +76,6 @@ acc = model.score(x_test, y_test)
 print("최종 스코어 :", acc)
 
 '''
-{'batch_size': 1000, 'drop': 0.3, 'optimizer': 'adam'}
-0.9412000179290771
-최종 스코어 : 0.9631999731063843
+{'batch_size': 1000, 'drop': 0.4, 'optimizer': 'rmsprop'}
+최종 스코어 : 0.9333333373069763
 '''

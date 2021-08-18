@@ -38,13 +38,13 @@ def build_model(node1, node2, node3, opt, lr):
     return model
 
 def create_hyperparameter():
-    batches = [3000, 4000, 5000]
+    batches = [20000, 30000]
     optimizer = [Adam, Adadelta]
     epochs = [1, 2, 3]
-    learningrate = [0.01, 0.03, 0.05]
-    node1 = [6, 8, 16]
-    node2 = [6, 8, 16]
-    node3 = [6, 8, 16]
+    learningrate = [0.01, 0.03]
+    node1 = [10]
+    node2 = [2, 4, 6]
+    node3 = [2, 4, 6]
     return {"batch_size" : batches, "opt": optimizer, 'epochs': epochs, "lr": learningrate,
             "node1": node1, "node2": node2, "node3": node3}
 
@@ -60,9 +60,9 @@ model2 = KerasClassifier(build_fn=build_model, verbose=1, validation_split=0.2) 
 
 
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
-# model = RandomizedSearchCV(model2, hyperparameters, cv=5)        # (모델, 하파튜, 크로스발리데이션) 
+# model = RandomizedSearchCV(model2, hyperparameters, cv=5)        # (모델, 하이퍼파라미터, 크로스발리데이션) 
                             #텐서플로우 모델이라 에러뜸 -> 사이킷런으로 텐서플로우 모델 래핑해야 함!
-model = GridSearchCV(model2, hyperparameters, cv=2)   
+model = RandomizedSearchCV(model2, hyperparameters, cv=2)           # (모델, 하이퍼파라미터, 크로스발리데이션) 
 
 model.fit(x_train, y_train, verbose=1, epochs=3)#, validation_split=0.2)  # ***epochs는 2군데 먹힘-2  /  둘이 같이 주면 2가 먹힘 /  validation_split도 2군데 먹힘
 
