@@ -2,6 +2,7 @@ import numpy as np
 from tensorflow.keras.datasets import mnist
 from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Dropout, Input, Conv2D, Flatten, MaxPooling2D, GlobalAveragePooling2D
+from tensorflow.keras.optimizers import Adam, Adagrad, Adamax, Adadelta
 import warnings
 warnings.filterwarnings('ignore')
 
@@ -21,31 +22,31 @@ x_test = x_test.reshape(10000, 28, 28, 1).astype('float32')/255
 
 # 2. 모델
 # <cnn>
-def build_model(layer1, layer2, layer3, optimizer, learning_rate):
+def build_model(node1, node2, node3, opt, lr):
     inputs = Input(shape=(28, 28, 1), name='input')
-    x = Conv2D(layer1, (2,2), padding='same', activation='relu', name='hidden1')(inputs)
+    x = Conv2D(node1, (2,2), activation='relu', name='hidden1')(inputs)
     x = MaxPooling2D()(x)
-    x = Conv2D(layer2, (2,2), padding='same', activation='relu', name='hidden2')(x)
+    x = Conv2D(node2, (2,2), activation='relu', name='hidden2')(x)
     x = MaxPooling2D()(x)
-    x = Conv2D(layer3, (2,2), padding='same', activation='relu', name='hidden3')(x)
+    x = Conv2D(node3, (2,2), activation='relu', name='hidden3')(x)
     x = MaxPooling2D()(x)
-    x = GlobalAveragePooling2D()(x)
+    x = Flatten()(x)
     outputs = Dense(10, activation='softmax', name='outputs')(x)
     model = Model(inputs=inputs, outputs=outputs)
 
-    model.compile(loss='categorical_crossentropy', optimizer=optimizer(learing_rate=learning_rate), metrics=['acc'])
+    model.compile(optimizer=opt(learning_rate=lr), metrics=['acc'], loss='categorical_crossentropy')
     return model
 
 def create_hyperparameter():
     batches = [3000, 4000, 5000]
-    optimizer = ['rmsprop', 'adam', 'adadelta']
+    optimizer = [Adam, Adadelta]
     epochs = [1, 2, 3]
-    learning_rate = [0.1, 0.01, 0.05]
-    layer1 = [6, 8, 16]
-    layer2 = [6, 8, 16]
-    layer3 = [6, 8, 16]
-    return {"batch_size" : batches, "optimizer": optimizer, 'epochs' : epochs, 'learning_rate' : learning_rate,
-            "layer1" : layer1, "layer2" : layer2, "layer3" : layer3}
+    learningrate = [0.01, 0.03, 0.05]
+    node1 = [6, 8, 16]
+    node2 = [6, 8, 16]
+    node3 = [6, 8, 16]
+    return {"batch_size" : batches, "opt": optimizer, 'epochs': epochs, "lr": learningrate,
+            "node1": node1, "node2": node2, "node3": node3}
 
 
 hyperparameters = create_hyperparameter()
@@ -78,4 +79,5 @@ print("최종 스코어 :", acc)
 최종 스코어 : 0.9631999731063843
 
 <cnn>
+
 '''
