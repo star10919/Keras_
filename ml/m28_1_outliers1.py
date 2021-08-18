@@ -6,6 +6,7 @@ aaa = np.array([1,2,-1000, 4, 5, 6, 7, 8, 90, 100, 500])
 # 2. Nan 처리후 -> 보간         // linear기준으로 보간 됨
 # 3.             ................. (결측치 처리 방법과 유사)
 # iqr = 3사분위 - 1사분위
+# iqr +- 50%
 
 def outliers(data_out):
     quartile_1, q2, quartile_3 = np.percentile(data_out, [25, 50, 75])

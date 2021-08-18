@@ -24,7 +24,7 @@ import pandas as pd
 
 # datetime 형식으로 리스트 만들기
 datastrs = ['8/13/2021', '8/14/2021', '8/15/2021', '8/16/2021', '8/17/2021']
-dates = pd.to_datetime(datastrs)
+dates = pd.to_datetime(datastrs)    # 판다스에서 쓸 수 있는 날짜형식으로 정렬이 가능함
 print(dates)
 print(type(dates))      # <class 'pandas.core.indexes.datetimes.DatetimeIndex'>
 print('===================================')
@@ -35,7 +35,7 @@ ts = Series([1, np.nan, np.nan, 8, 10], index=dates)
 print(ts)
 
 
-### 결측치 채움!(linear기준)
+### 결측치 채움!(linear기준)    #interpolate 쓰려면 시리즈 형식으로 만들어야 함!!
 ts_intp_linear = ts.interpolate()       # interpolate : linear기준으로 결측치 채워줌
 print(ts_intp_linear)
 
