@@ -22,6 +22,7 @@ x = datasets[:, :11]
 y = datasets[:, 11] 
 print(y.shape)  # (4898,)
 
+############################################################################
 newlist = []
 for i in list(y):
     if i<= 4:
@@ -32,7 +33,7 @@ for i in list(y):
         newlist +=[2]
 y = np.array(newlist)       # 리스트를 넘파이로 전환
 print(y.shape)  # (4898,)
-
+############################################################################
 
 from sklearn.preprocessing import StandardScaler, MinMaxScaler, RobustScaler
 from sklearn.model_selection import train_test_split
