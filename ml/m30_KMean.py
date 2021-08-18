@@ -30,6 +30,7 @@ print(datasets.feature_names)
 iris_results = irisDF.groupby(['target', 'cluster'])['petal length (cm)'].count()       # target, cluster로 그룹화하고 개수세기
 print(iris_results)
 
+
 '''
 target  cluster
 0       0          50
