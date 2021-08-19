@@ -39,6 +39,7 @@ outliers_loc = outliers(x_train)
 
 print('이상치의 위치 :', outliers_loc)
 ##### 아웃라이어의 개수를 count 하는 기능 추가할 것!!!
+print('이상치의 개수 :', len(outliers_loc[0]))       # Length: 6752  (4898 * 12 중 6752개가 이상치)
 
 
 
