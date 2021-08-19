@@ -42,7 +42,7 @@ print(pd.Series(y_train).value_counts())
 # 2    14
 
 model = XGBClassifier(n_jobs=-1)
-model.fit(x_train, y_train, eval_metric='mlogloss')
+model.fit(x_train, y_train, eval_metric='mlogloss')     # xgboost 쓰면 이발메트릭스 사용해야 함!
 
 score = model.score(x_test, y_test)
 print("model.score :", score)       # model.score : 0.9459459459459459
@@ -70,5 +70,5 @@ print("smote후 레이블 값 분포 :\n", pd.Series(y_smote_train).value_counts
 model2 = XGBClassifier(n_jobs=-1)
 model2.fit(x_smote_train, y_smote_train, eval_metric='mlogloss')
 
-score = model2.score(x_test, y_test)
-print("model2.score :", score)      # model2.score : 0.972972972972973
+score2 = model2.score(x_test, y_test)
+print("model2.score :", score2)      # model2.score : 0.972972972972973
