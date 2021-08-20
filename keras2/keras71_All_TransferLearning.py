@@ -9,7 +9,7 @@ from tensorflow.keras.applications import MobileNet, MobileNetV2, MobileNetV3Lar
 from tensorflow.keras.applications import NASNetLarge, NASNetMobile
 from tensorflow.keras.applications import EfficientNetB0, EfficientNetB1, EfficientNetB7
 
-# model = Xception()
+model = Xception()
 # model = ResNet50()
 # model = ResNet50V2()
 # model = ResNet101()
@@ -19,7 +19,7 @@ from tensorflow.keras.applications import EfficientNetB0, EfficientNetB1, Effici
 # model = DenseNet121()
 # model = DenseNet169()
 # model = DenseNet201()
-model = InceptionV3()
+# model = InceptionV3()
 # model = InceptionResNetV2()
 # model = MobileNet()
 # model = MobileNetV2()
@@ -115,33 +115,78 @@ print("훈련가능 가중치 갯수 :", len(model.trainable_weights))
 # 훈련가능 가중치 갯수 : 0
 
 # <InceptionV3>
-
+# Total params: 23,851,784
+# Trainable params: 0
+# Non-trainable params: 23,851,784
+# 전체 가중치 갯수    : 378
+# 훈련가능 가중치 갯수 : 0
 
 # <InceptionResNetV2>
-
+# Total params: 55,873,736
+# Trainable params: 0
+# Non-trainable params: 55,873,736
+# 전체 가중치 갯수    : 898
+# 훈련가능 가중치 갯수 : 0
 
 # <MobileNet>
-
+# Total params: 4,253,864
+# Trainable params: 0
+# Non-trainable params: 4,253,864
+# 전체 가중치 갯수    : 137
+# 훈련가능 가중치 갯수 : 0
 
 # <MobileNetV2>
-
+# Total params: 3,538,984
+# Trainable params: 0
+# Non-trainable params: 3,538,984
+# 전체 가중치 갯수    : 262
+# 훈련가능 가중치 갯수 : 0
 
 # <MobileNetV3Large>
-
+# Total params: 5,507,432
+# Trainable params: 0
+# Non-trainable params: 5,507,432
+# 전체 가중치 갯수    : 266
+# 훈련가능 가중치 갯수 : 0
 
 # <MobileNetV3Small>
-
+# Total params: 2,554,968
+# Trainable params: 0
+# Non-trainable params: 2,554,968
+# 전체 가중치 갯수    : 210
+# 훈련가능 가중치 갯수 : 0
 
 # <NASNetLarge>
-
+# Total params: 88,949,818
+# Trainable params: 0
+# Non-trainable params: 88,949,818
+# 전체 가중치 갯수    : 1546
+# 훈련가능 가중치 갯수 : 0
 
 # <NASNetMobile>
-
+# Total params: 5,326,716
+# Trainable params: 0
+# Non-trainable params: 5,326,716
+# 전체 가중치 갯수    : 1126
+# 훈련가능 가중치 갯수 : 0
 
 # <EfficientNetB0>
-
+# Total params: 5,330,571
+# Trainable params: 0
+# Non-trainable params: 5,330,571
+# 전체 가중치 갯수    : 314
+# 훈련가능 가중치 갯수 : 0
 
 # <EfficientNetB1>
-
+# Total params: 7,856,239
+# Trainable params: 0
+# Non-trainable params: 7,856,239
+# 전체 가중치 갯수    : 442
+# 훈련가능 가중치 갯수 : 0
 
 # <EfficientNetB7>
+# Total params: 66,658,687
+# Trainable params: 0
+# Non-trainable params: 66,658,687
+# 전체 가중치 갯수    : 1040
+# 훈련가능 가중치 갯수 : 0
