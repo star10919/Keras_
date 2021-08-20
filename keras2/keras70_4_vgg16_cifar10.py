@@ -60,3 +60,7 @@ results = model.evaluate(x_test, y_test)
 print('걸린시간 :', end)
 print('category :', results[0])
 print('accuracy :', results[1])
+
+'''
+
+'''
