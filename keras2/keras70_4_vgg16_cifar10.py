@@ -49,6 +49,9 @@ print(len(model.trainable_weights))     # 0 -> 4
 # 3. 컴파일, 훈련
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='accuracy')
 
+from tensorflow.keras.callbacks import EarlyStopping
+es = EarlyStopping(monitor='val_loss', mode='min', patience=5, verbose=1)
+
 import time
 start = time.time()
 model.fit(x_train, y_train, epochs=100, batch_size=512, validation_split=0.012)
@@ -62,5 +65,7 @@ print('category :', results[0])
 print('accuracy :', results[1])
 
 '''
-
+걸린시간 : 942.1133370399475
+category : 1.2838554382324219
+accuracy : 0.8041999936103821
 '''

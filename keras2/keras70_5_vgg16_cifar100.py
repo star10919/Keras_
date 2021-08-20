@@ -33,7 +33,7 @@ vgg16.trainable=True   # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(vgg16)
-model.add(GlobalAveragePooling2D(2,2))
+model.add(Flatten())
 model.add(Dense(100))        # *layer 1 추가
 model.add(Dense(100, activation='softmax'))         # *layer 2 추가
 
@@ -54,7 +54,7 @@ es = EarlyStopping(monitor='val_loss', patience=5, verbose=1, mode='auto')
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=512, validation_split=0.012, callbacks=['acc'])
+model.fit(x_train, y_train, epochs=100, batch_size=512, validation_split=0.012, callbacks=[es])
 end = time.time() - start
 
 
