@@ -65,5 +65,7 @@ print('category :', results[0])
 print('accuracy :', results[1])
 
 '''
-
+걸린시간 : 258.81250262260437
+category : 2.5375332832336426
+accuracy : 0.41510000824928284
 '''
