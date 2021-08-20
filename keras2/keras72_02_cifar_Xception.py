@@ -27,11 +27,11 @@ from tensorflow.keras.datasets import cifar10, cifar100
 # FC를 모델로 하고, GlobalAveragepooling2D으로 하고
 
 # 1. 데이터
-(x_train,y_train), (x_test, y_test) = cifar10.load_data()
+# (x_train,y_train), (x_test, y_test) = cifar10.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
-# (x_train,y_train), (x_test, y_test) = cifar100.load_data()
+(x_train,y_train), (x_test, y_test) = cifar100.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
@@ -54,18 +54,18 @@ y_test = one.transform(y_test).toarray()
 transferlearning = Xception(weights='imagenet', include_top=False, input_shape=(96,96,3))   # include_top=False : input_shape 조정 가능
 # *** ValueError: Input size must be at least 71x71; got `input_shape=(32, 32, 3)`   최소 71이어야 하므로 (이왕이면 배수로) 높여주기
 
-# transferlearning.trainable=True
-transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+transferlearning.trainable=True
+# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(UpSampling2D(size=(3,3), input_shape=(32,32,3)))
 model.add(transferlearning)
-# model.add(Flatten())
-model.add(GlobalAveragePooling2D())
+model.add(Flatten())
+# model.add(GlobalAveragePooling2D())
 model.add(Dropout(0.9))
 model.add(Dense(100))        # *layer 1 추가
-model.add(Dense(10, activation='softmax'))         # *layer 2 추가
-# model.add(Dense(100, activation='softmax'))
+# model.add(Dense(10, activation='softmax'))         # *layer 2 추가
+model.add(Dense(100, activation='softmax'))
 
 # model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)
 
@@ -103,7 +103,7 @@ print('accuracy :', results[1])
 category : 0.5313512086868286
 accuracy : 0.8776999711990356
 
-*trainable = True, GAP
+*trainable = True, GAP          ***
 걸린시간 : 1350.9225783348083
 category : 0.4360618591308594
 accuracy : 0.9009000062942505
@@ -122,7 +122,9 @@ accuracy : 0.34610000252723694
 
 <cifar 100>
 *trainable = True, Flatten
-
+걸린시간 : 975.6288940906525
+category : 1.6256664991378784
+accuracy : 0.6686000227928162
 
 *trainable = True, GAP
 

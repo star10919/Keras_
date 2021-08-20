@@ -127,7 +127,7 @@ accuracy : 0.009999999776482582
 category : 2.939389944076538
 accuracy : 0.32420000433921814
 
-*trainable = False, Gap
+*trainable = False, Gap         ***
 걸린시간 : 91.73789048194885
 category : 2.94810152053833
 accuracy : 0.32829999923706055
