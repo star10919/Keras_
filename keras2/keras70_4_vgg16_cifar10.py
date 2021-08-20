@@ -29,7 +29,7 @@ y_test = one.transform(y_test).toarray()
 # 2. 모델
 vgg16 = VGG16(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
 
-vgg16.trainable=True   # False: vgg훈련을 동결한다
+vgg16.trainable=True   # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(vgg16)
@@ -37,7 +37,7 @@ model.add(Flatten())
 model.add(Dense(100))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 
-# model.trainable=False   # False: 전체 모델 훈련을 동결한다.
+# model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)
 
 model.summary()
 
