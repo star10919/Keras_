@@ -54,14 +54,14 @@ y_test = one.transform(y_test).toarray()
 transferlearning = Xception(weights='imagenet', include_top=False, input_shape=(96,96,3))   # include_top=False : input_shape 조정 가능
 # *** ValueError: Input size must be at least 71x71; got `input_shape=(32, 32, 3)`   최소 71이어야 하므로 (이왕이면 배수로) 높여주기
 
-transferlearning.trainable=True
-# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+# transferlearning.trainable=True
+transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(UpSampling2D(size=(3,3), input_shape=(32,32,3)))
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
 model.add(Dropout(0.9))
 model.add(Dense(100))        # *layer 1 추가
 # model.add(Dense(10, activation='softmax'))         # *layer 2 추가
@@ -121,17 +121,23 @@ accuracy : 0.34610000252723694
 
 
 <cifar 100>
-*trainable = True, Flatten
+*trainable = True, Flatten          ***
 걸린시간 : 975.6288940906525
 category : 1.6256664991378784
 accuracy : 0.6686000227928162
 
 *trainable = True, GAP
-
+걸린시간 : 1735.1499490737915
+category : 2.6373519897460938
+accuracy : 0.5401999950408936
 
 *trainable = False, Flatten
-
+걸린시간 : 358.8423228263855
+category : 3.917011022567749
+accuracy : 0.1031000018119812
 
 *trainable = False, Gap
-
+걸린시간 : 312.2257218360901
+category : 4.027853488922119
+accuracy : 0.10540000349283218
 '''
