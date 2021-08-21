@@ -16,11 +16,11 @@ from tensorflow.keras.applications import EfficientNetB0, EfficientNetB1, Effici
 from tensorflow.keras.datasets import cifar10, cifar100
 
 # 1. 데이터
-(x_train,y_train), (x_test, y_test) = cifar10.load_data()
+# (x_train,y_train), (x_test, y_test) = cifar10.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
-# (x_train,y_train), (x_test, y_test) = cifar100.load_data()
+(x_train,y_train), (x_test, y_test) = cifar100.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
@@ -47,11 +47,11 @@ transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 d
 
 model = Sequential()
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
-model.add(Dense(10, activation='softmax'))         # *layer 2 추가
-# model.add(Dense(100, activation='softmax'))
+# model.add(Dense(10, activation='softmax'))         # *layer 2 추가
+model.add(Dense(100, activation='softmax'))
 
 
 # model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)
@@ -96,10 +96,14 @@ category : 1.0339107513427734
 accuracy : 0.7828999757766724
 
 *trainable = False, Flatten
-
+걸린시간 : 93.53797006607056
+category : 1.3185454607009888
+accuracy : 0.5407999753952026
 
 *trainable = False, Gap
-
+걸린시간 : 70.61392450332642
+category : 1.3340404033660889
+accuracy : 0.5432999730110168
 
 
 
@@ -111,7 +115,9 @@ accuracy : 0.7828999757766724
 
 
 *trainable = False, Flatten
-
+걸린시간 : 76.2135157585144
+category : 2.9471278190612793
+accuracy : 0.29739999771118164
 
 *trainable = False, Gap
 
