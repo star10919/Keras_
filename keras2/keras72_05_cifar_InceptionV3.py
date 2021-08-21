@@ -3,7 +3,7 @@
 # trainable=True, False
 # FC로 만든 것과 GlobalAveragePooling으로 만든 것 비교
 
-from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, UpSampling2D
+from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, UpSampling2D, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.applications import VGG16, VGG19, Xception
 from tensorflow.keras.applications import ResNet50, ResNet50V2
@@ -51,10 +51,13 @@ transferlearning.trainable=True
 
 model = Sequential()
 model.add(UpSampling2D((3,3), input_shape=(32,32,3)))
+model.add(Dropout(0.9))
 model.add(transferlearning)
+model.add(Dropout(0.9))
 model.add(Flatten())
 # model.add(GlobalAveragePooling2D())
-model.add(Dense(100))        # *layer 1 추가
+model.add(Dropout(0.9))
+model.add(Dense(10))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 # model.add(Dense(100, activation='softmax'))
 

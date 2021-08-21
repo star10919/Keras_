@@ -6,7 +6,7 @@
 # trainable=True, False
 # FC로 만든 것과 GlobalAveragePooling으로 만든 것 비교
 
-from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D
+from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.applications import VGG16, VGG19, Xception
 from tensorflow.keras.applications import ResNet50, ResNet50V2
