@@ -17,11 +17,11 @@ from tensorflow.keras.datasets import cifar10, cifar100
 
 
 # 1. 데이터
-(x_train,y_train), (x_test, y_test) = cifar10.load_data()
+# (x_train,y_train), (x_test, y_test) = cifar10.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
-# (x_train,y_train), (x_test, y_test) = cifar100.load_data()
+(x_train,y_train), (x_test, y_test) = cifar100.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
@@ -43,16 +43,16 @@ y_test = one.transform(y_test).toarray()
 # 2. 모델
 transferlearning = ResNet101(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
 
-transferlearning.trainable=True
-# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+# transferlearning.trainable=True
+transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
-model.add(Dense(10, activation='softmax'))         # *layer 2 추가
-# model.add(Dense(100, activation='softmax'))
+# model.add(Dense(10, activation='softmax'))         # *layer 2 추가
+model.add(Dense(100, activation='softmax'))
 
 
 # model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)
@@ -86,30 +86,46 @@ print('accuracy :', results[1])
 #결과출력
 '''
 <cifar 10>
-*trainable = True, Flatten
-
+*trainable = True, Flatten          ***
+걸린시간 : 205.41930079460144
+category : 1.017120599746704
+accuracy : 0.7642999887466431
 
 *trainable = True, GAP
-
+걸린시간 : 254.53516626358032
+category : 1.020358681678772
+accuracy : 0.6646999716758728
 
 *trainable = False, Flatten
-
+걸린시간 : 71.1706657409668
+category : 1.3452637195587158
+accuracy : 0.5828999876976013
 
 *trainable = False, Gap
-
+걸린시간 : 85.1605474948883
+category : 1.2910833358764648
+accuracy : 0.5972999930381775
 
 
 
 <cifar 100>
 *trainable = True, Flatten
+걸린시간 : 205.15047550201416
+category : 3.574073553085327
+accuracy : 0.3864000141620636
 
-
-*trainable = True, GAP
-
+*trainable = True, GAP          ***
+걸린시간 : 241.72242832183838
+category : 2.7042086124420166
+accuracy : 0.4772999882698059
 
 *trainable = False, Flatten
-
+걸린시간 : 67.52339744567871
+category : 2.83028507232666
+accuracy : 0.35569998621940613
 
 *trainable = False, Gap
-
+걸린시간 : 72.30664587020874
+category : 2.8789143562316895
+accuracy : 0.35089999437332153
 '''
