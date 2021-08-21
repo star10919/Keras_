@@ -6,7 +6,7 @@
 # trainable=True, False
 # FC로 만든 것과 GlobalAveragePooling으로 만든 것 비교
 
-from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, Dropout
+from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, Dropout, Conv2D, MaxPooling2D
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.applications import VGG16, VGG19, Xception
 from tensorflow.keras.applications import ResNet50, ResNet50V2
@@ -23,26 +23,20 @@ from icecream import ic
 
 
 # 1. 데이터
-# (x_train,y_train), (x_test, y_test) = cifar10.load_data()
-# ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
-# ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
+x_train = np.load('./_save/_npy/k59_5_train_x.npy')
+y_train = np.load('./_save/_npy/k59_5_train_y.npy')
+x_test = np.load('./_save/_npy/k59_5_test_x.npy')
+y_test = np.load('./_save/_npy/k59_5_test_y.npy')
 
-(x_train,y_train), (x_test, y_test) = cifar100.load_data()
-# ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
-# ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
+# ic(x_train.shape, y_train.shape)    # (2649, 150, 150, 3), y_train.shape: (2649,)
+# ic(x_test.shape, y_test.shape)      # (662, 150, 150, 3), y_test.shape: (662,)
 
-
-# ic(np.unique(y_train))   # [0, 1, 2, 3, 4, 5, 6, 7, 8, 9] - 10개
-y_train = y_train.reshape(-1,1)
-y_test = y_test.reshape(-1,1)
-
-# 1-2. 데이터전처리
-from sklearn.preprocessing import OneHotEncoder
-one = OneHotEncoder()
-one.fit(y_train)
-y_train = one.transform(y_train).toarray()
-y_test = one.transform(y_test).toarray()
-# ic(y_train.shape, y_test.shape)   # (50000, 10), (10000, 10)
+x_train = x_train[:-1,:,:,:]
+x_pred = x_train[-1,:,:,:].reshape(1,150,150,3)
+y_train = y_train[:-1]
+y_pred = y_train[-1].reshape(1)
+ic(x_train.shape, y_train.shape)      # x_train.shape: (2648, 150, 150, 3), y_train.shape: (2648,)
+ic(x_pred.shape, y_pred)        # x_pred.shape: (1, 150, 150, 3),  y_pred: 1.0
 
 
 
@@ -54,11 +48,11 @@ transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 d
 
 model = Sequential()
 model.add(transferlearning)
-# model.add(Flatten())
-model.add(GlobalAveragePooling2D())
+model.add(Flatten())
+# model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
 # model.add(Dense(10, activation='softmax'))         # *layer 2 추가
-model.add(Dense(100, activation='softmax'))
+model.add(Dense(1, activation='sigmoid'))
 
 
 # model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)

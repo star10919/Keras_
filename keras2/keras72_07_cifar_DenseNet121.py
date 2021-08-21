@@ -47,8 +47,8 @@ transferlearning.trainable=True
 
 model = Sequential()
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 # model.add(Dense(100, activation='softmax'))
@@ -86,7 +86,9 @@ print('accuracy :', results[1])
 '''
 <cifar 10>
 *trainable = True, Flatten
-
+걸린시간 : 156.5967559814453
+category : 0.9979033470153809
+accuracy : 0.7994999885559082
 
 *trainable = True, GAP
 

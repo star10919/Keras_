@@ -3,6 +3,43 @@
 # trainable=True, False
 # FC로 만든 것과 GlobalAveragePooling으로 만든 것 비교
 
+#결과출력
+# cifar 10
+# trainable = True, FC : loss=?, acc=?
+# trainable = True, GAP : loss=?, acc=?
+# trainable = False, FC : loss=?, acc=?
+# trainable = Flase, GAP : loss=?, acc=?
+
+# cifar 100
+# trainable = True, FC : loss=?, acc=?
+# trainable = True, GAP : loss=?, acc=?
+# trainable = False, FC : loss=?, acc=?
+# trainable = Flase, GAP : loss=?, acc=?
+
+# 실습
+# cifar10 과  cifar100 으로 모델 만들 것
+# trainable=True, False
+# FC로 만든 것과 GlobalAveragePooling으로 만든 것 비교
+
+#결과출력
+# cifar 10
+# trainable = True, FC : loss=?, acc=?
+# trainable = True, GAP : loss=?, acc=?
+# trainable = False, FC : loss=?, acc=?
+# trainable = Flase, GAP : loss=?, acc=?
+
+# cifar 100
+# trainable = True, FC : loss=?, acc=?
+# trainable = True, GAP : loss=?, acc=?
+# trainable = False, FC : loss=?, acc=?
+# trainable = Flase, GAP : loss=?, acc=?
+
+# 실습
+# cifar10 과  cifar100 으로 모델 만들 것
+# trainable=True, False(동결하고, 안하고 비교)
+# FC(Flatten)로 만든 것과 GlobalAveragePooling으로 만든 것 비교
+
+
 from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, UpSampling2D, Dropout
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.applications import VGG16, VGG19, Xception
@@ -15,9 +52,6 @@ from tensorflow.keras.applications import NASNetLarge, NASNetMobile
 from tensorflow.keras.applications import EfficientNetB0, EfficientNetB1, EfficientNetB7
 from tensorflow.keras.datasets import cifar10, cifar100
 
-
-# 동결하고, 안하고 비교
-# FC를 모델로 하고, GlobalAveragepooling2D으로 하고
 
 # 1. 데이터
 (x_train,y_train), (x_test, y_test) = cifar10.load_data()
@@ -44,7 +78,7 @@ y_test = one.transform(y_test).toarray()
 
 
 # 2. 모델
-transferlearning = InceptionV3(weights='imagenet', include_top=False, input_shape=(96,96,3))   # include_top=False : input_shape 조정 가능
+transferlearning = InceptionResNetV2(weights='imagenet', include_top=False)#, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
 
 transferlearning.trainable=True
 # transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
@@ -53,12 +87,11 @@ model = Sequential()
 model.add(UpSampling2D((3,3), input_shape=(32,32,3)))
 model.add(Dropout(0.9))
 model.add(transferlearning)
-model.add(Dropout(0.9))
-model.add(Dropout(0.9))
 model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
 model.add(Dropout(0.9))
-# model.add(Dense(10))        # *layer 1 추가
+# model.add(GlobalAveragePooling2D())
+# model.add(Dense(100))        # *layer 1 추가
+model.add(Dropout(0.9))
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 # model.add(Dense(100, activation='softmax'))
 
