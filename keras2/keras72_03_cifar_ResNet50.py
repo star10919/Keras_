@@ -43,8 +43,8 @@ y_test = one.transform(y_test).toarray()
 # 2. 모델
 transferlearning = ResNet50(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
 
-transferlearning.trainable=True
-# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+# transferlearning.trainable=True
+transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(transferlearning)
@@ -85,7 +85,7 @@ print('accuracy :', results[1])
 #결과출력
 '''
 <cifar 10>
-*trainable = True, Flatten
+*trainable = True, Flatten          ***
 걸린시간 : 144.7040410041809
 category : 1.230865478515625
 accuracy : 0.771399974822998
@@ -108,17 +108,23 @@ accuracy : 0.6092000007629395
 
 
 <cifar 100>
-*trainable = True, Flatten
+*trainable = True, Flatten          ***
 걸린시간 : 153.67007613182068
 category : 2.8015284538269043
 accuracy : 0.4700999855995178
 
 *trainable = True, GAP
-
+걸린시간 : 145.11948823928833
+category : 3.5657968521118164
+accuracy : 0.3474999964237213
 
 *trainable = False, Flatten
-
+걸린시간 : 48.18695425987244
+category : 2.748786449432373
+accuracy : 0.3646000027656555
 
 *trainable = False, Gap
-
+걸린시간 : 37.50916004180908
+category : 2.6858832836151123
+accuracy : 0.3637999892234802
 '''

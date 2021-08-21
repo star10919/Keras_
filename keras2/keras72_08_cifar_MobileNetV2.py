@@ -51,6 +51,8 @@ model.add(Flatten())
 # model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
+# model.add(Dense(100, activation='softmax'))
+
 
 # model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)
 
