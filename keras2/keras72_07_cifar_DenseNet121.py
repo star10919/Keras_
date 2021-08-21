@@ -42,8 +42,8 @@ y_test = one.transform(y_test).toarray()
 # 2. 모델
 transferlearning = DenseNet121(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
 
-# transferlearning.trainable=True
-transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+transferlearning.trainable=True
+# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(transferlearning)
@@ -85,7 +85,7 @@ print('accuracy :', results[1])
 #결과출력
 '''
 <cifar 10>
-*trainable = True, Flatten
+*trainable = True, Flatten          ***
 걸린시간 : 156.5967559814453
 category : 0.9979033470153809
 accuracy : 0.7994999885559082
@@ -109,10 +109,14 @@ accuracy : 0.5432999730110168
 
 <cifar 100>
 *trainable = True, Flatten
+걸린시간 : 120.80545330047607
+category : 2.4021618366241455
+accuracy : 0.525600016117096
 
-
-*trainable = True, GAP
-
+*trainable = True, GAP          ***
+걸린시간 : 136.15213179588318
+category : 2.548996925354004
+accuracy : 0.5411999821662903
 
 *trainable = False, Flatten
 걸린시간 : 76.2135157585144
@@ -120,5 +124,7 @@ category : 2.9471278190612793
 accuracy : 0.29739999771118164
 
 *trainable = False, Gap
-
+걸린시간 : 86.39826345443726
+category : 2.880398750305176
+accuracy : 0.3109000027179718
 '''

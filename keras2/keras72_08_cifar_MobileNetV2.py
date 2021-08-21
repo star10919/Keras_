@@ -16,11 +16,11 @@ from tensorflow.keras.applications import EfficientNetB0, EfficientNetB1, Effici
 from tensorflow.keras.datasets import cifar10, cifar100
 
 # 1. 데이터
-(x_train,y_train), (x_test, y_test) = cifar10.load_data()
+# (x_train,y_train), (x_test, y_test) = cifar10.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
-# (x_train,y_train), (x_test, y_test) = cifar100.load_data()
+(x_train,y_train), (x_test, y_test) = cifar100.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
@@ -50,8 +50,8 @@ model.add(transferlearning)
 model.add(Flatten())
 # model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
-model.add(Dense(10, activation='softmax'))         # *layer 2 추가
-# model.add(Dense(100, activation='softmax'))
+# model.add(Dense(10, activation='softmax'))         # *layer 2 추가
+model.add(Dense(100, activation='softmax'))
 
 
 # model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)
@@ -86,16 +86,24 @@ print('accuracy :', results[1])
 '''
 <cifar 10>
 *trainable = True, Flatten
-
+걸린시간 : 61.8699312210083
+category : 24.965557098388672
+accuracy : 0.12680000066757202
 
 *trainable = True, GAP
+걸린시간 : 66.25755596160889
+category : 21.943267822265625
+accuracy : 0.21379999816417694
 
-
-*trainable = False, Flatten
-
+*trainable = False, Flatten         ***
+걸린시간 : 63.532527685165405
+category : 2.091285467147827
+accuracy : 0.23360000550746918
 
 *trainable = False, Gap
-
+걸린시간 : 50.741971492767334
+category : 2.0910391807556152
+accuracy : 0.23160000145435333
 
 
 
