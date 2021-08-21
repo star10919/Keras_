@@ -42,13 +42,13 @@ y_test = one.transform(y_test).toarray()
 # 2. 모델
 transferlearning = DenseNet121(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
 
-transferlearning.trainable=True
-# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+# transferlearning.trainable=True
+transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(transferlearning)
-# model.add(Flatten())
-model.add(GlobalAveragePooling2D())
+model.add(Flatten())
+# model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 # model.add(Dense(100, activation='softmax'))
@@ -91,7 +91,9 @@ category : 0.9979033470153809
 accuracy : 0.7994999885559082
 
 *trainable = True, GAP
-
+걸린시간 : 125.64718389511108
+category : 1.0339107513427734
+accuracy : 0.7828999757766724
 
 *trainable = False, Flatten
 

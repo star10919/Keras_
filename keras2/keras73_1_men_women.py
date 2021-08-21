@@ -50,8 +50,8 @@ model = Sequential()
 model.add(transferlearning)
 model.add(Flatten())
 # model.add(GlobalAveragePooling2D())
-model.add(Dense(100))        # *layer 1 추가
-# model.add(Dense(10, activation='softmax'))         # *layer 2 추가
+model.add(Dense(128, activation= 'relu'))
+model.add(Dense(64, activation= 'relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 
@@ -68,19 +68,24 @@ print(len(model.trainable_weights))     # 0 -> 4
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='accuracy')
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', mode='min', patience=5, verbose=1)
+es = EarlyStopping(monitor='val_loss', mode='min', patience=10, verbose=1)
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=1024, validation_split=0.012, callbacks=[es])
+hist = model.fit(x_train, y_train, epochs=100, steps_per_epoch=32, validation_data=(x_test, y_test), validation_steps=4, callbacks=[es])
 end = time.time() - start
 
 
 # 4. 평가, 예측
 results = model.evaluate(x_test, y_test)
-print('걸린시간 :', end)
-print('category :', results[0])
-print('accuracy :', results[1])
+print('binary :', results[0])
+print('acc :', results[1])
+
+y_predict = model.predict(x_pred)
+
+res = results[1] * 100
+print('여자일 확률 :', res, '%')
+ic(y_predict, y_predict.shape)
 
 
 #결과출력
