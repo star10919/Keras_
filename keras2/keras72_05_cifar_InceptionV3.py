@@ -54,10 +54,11 @@ model.add(UpSampling2D((3,3), input_shape=(32,32,3)))
 model.add(Dropout(0.9))
 model.add(transferlearning)
 model.add(Dropout(0.9))
+model.add(Dropout(0.9))
 model.add(Flatten())
 # model.add(GlobalAveragePooling2D())
 model.add(Dropout(0.9))
-model.add(Dense(10))        # *layer 1 추가
+# model.add(Dense(10))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 # model.add(Dense(100, activation='softmax'))
 
