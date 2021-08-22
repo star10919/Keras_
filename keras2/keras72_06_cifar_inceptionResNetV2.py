@@ -54,11 +54,11 @@ from tensorflow.keras.datasets import cifar10, cifar100
 
 
 # 1. 데이터
-(x_train,y_train), (x_test, y_test) = cifar10.load_data()
+# (x_train,y_train), (x_test, y_test) = cifar10.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
-# (x_train,y_train), (x_test, y_test) = cifar100.load_data()
+(x_train,y_train), (x_test, y_test) = cifar100.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
@@ -87,13 +87,13 @@ model = Sequential()
 model.add(UpSampling2D((3,3), input_shape=(32,32,3)))
 model.add(Dropout(0.9))
 model.add(transferlearning)
-model.add(Flatten())
+# model.add(Flatten())
 model.add(Dropout(0.9))
-# model.add(GlobalAveragePooling2D())
+model.add(GlobalAveragePooling2D())
 # model.add(Dense(100))        # *layer 1 추가
 model.add(Dropout(0.9))
-model.add(Dense(10, activation='softmax'))         # *layer 2 추가
-# model.add(Dense(100, activation='softmax'))
+# model.add(Dense(10, activation='softmax'))         # *layer 2 추가
+model.add(Dense(100, activation='softmax'))
 
 
 # model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)
@@ -132,29 +132,41 @@ print('accuracy :', results[1])
 category : 2.31429386138916
 accuracy : 0.10270000249147415
 
-*trainable = True, GAP
+*trainable = True, GAP          ***
 걸린시간 : 594.5940029621124
 category : 4.50607442855835
 accuracy : 0.11559999734163284
 
 *trainable = False, Flatten
-
+걸린시간 : 318.1835608482361
+category : 61.91223907470703
+accuracy : 0.08669999986886978
 
 *trainable = False, Gap
-
+걸린시간 : 194.71557927131653
+category : 80.87918090820312
+accuracy : 0.10000000149011612
 
 
 
 <cifar 100>
 *trainable = True, Flatten
-
+걸린시간 : 1186.1097021102905
+category : 4.605396270751953
+accuracy : 0.009999999776482582
 
 *trainable = True, GAP
+걸린시간 : 976.053827047348
+category : 2177.185302734375
+accuracy : 0.009999999776482582
 
-
-*trainable = False, Flatten
-
+*trainable = False, Flatten         ***
+걸린시간 : 315.6615722179413
+category : 227.47975158691406
+accuracy : 0.013899999670684338
 
 *trainable = False, Gap
-
+걸린시간 : 194.94028329849243
+category : 223.3076934814453
+accuracy : 0.013700000010430813
 '''

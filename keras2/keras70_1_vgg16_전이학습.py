@@ -48,8 +48,10 @@ Non-trainable params: 0
 # Trainable params: 143,667,240
 # Non-trainable params: 0 
 
+#############################################
 # FC(fully connected) <- 용어정리하기
-
+# Flatten 사용
+#############################################
 
 # * model.trainable=False
 # Total params: 14,714,688

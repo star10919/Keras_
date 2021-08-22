@@ -45,7 +45,7 @@ y_test = one.transform(y_test).toarray()
 
 
 # 2. 모델
-transferlearning = NASNetMobile(weights='imagenet')#, include_top=False, input_shape=(224,224,3))   # include_top=False : input_shape 조정 가능
+transferlearning = NASNetMobile(weights='imagenet', include_top=False, input_shape=(224,224,3))   # include_top=False : input_shape 조정 가능
 # ValueError: When setting `include_top=True` and loading `imagenet` weights, `input_shape` should be (224, 224, 3).
 
 transferlearning.trainable=True
@@ -54,8 +54,8 @@ transferlearning.trainable=True
 model = Sequential()
 model.add(UpSampling2D((7,7), input_shape=(32,32,3)))
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 # model.add(Dense(100, activation='softmax'))
@@ -93,7 +93,9 @@ print('accuracy :', results[1])
 '''
 <cifar 10>
 *trainable = True, Flatten
-
+걸린시간 : 2501.4734745025635
+category : 7.954424858093262
+accuracy : 0.09989999979734421
 
 *trainable = True, GAP
 
