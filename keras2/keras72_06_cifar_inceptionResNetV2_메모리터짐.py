@@ -80,8 +80,8 @@ y_test = one.transform(y_test).toarray()
 # 2. 모델
 transferlearning = InceptionResNetV2(weights='imagenet', include_top=False)#, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
 
-transferlearning.trainable=True
-# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+# transferlearning.trainable=True
+transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(UpSampling2D((3,3), input_shape=(32,32,3)))
@@ -109,7 +109,7 @@ print(len(model.trainable_weights))     # 0 -> 4
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='accuracy')
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', mode='min', patience=5, verbose=1)
+es = EarlyStopping(monitor='val_loss', mode='min', patience=2, verbose=1)
 
 import time
 start = time.time()
@@ -128,10 +128,14 @@ print('accuracy :', results[1])
 '''
 <cifar 10>
 *trainable = True, Flatten
-
+걸린시간 : 1980.6585354804993
+category : 2.31429386138916
+accuracy : 0.10270000249147415
 
 *trainable = True, GAP
-
+걸린시간 : 594.5940029621124
+category : 4.50607442855835
+accuracy : 0.11559999734163284
 
 *trainable = False, Flatten
 

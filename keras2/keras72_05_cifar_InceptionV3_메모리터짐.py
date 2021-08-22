@@ -59,8 +59,8 @@ x_test = x_test.reshape(x_test.shape[0], 32, 32, 3)
 # 2. 모델
 transferlearning = InceptionV3(weights='imagenet', include_top=False, input_shape=(96,96,3))   # include_top=False : input_shape 조정 가능
 
-transferlearning.trainable=True
-# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+# transferlearning.trainable=True
+transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(UpSampling2D((3,3), input_shape=(32,32,3)))
@@ -112,7 +112,7 @@ print('accuracy :', results[1])
 category : 2.3026676177978516
 accuracy : 0.10000000149011612
 
-*trainable = True, GAP
+*trainable = True, GAP          ***
 걸린시간 : 465.6171078681946
 category : 133.4356231689453
 accuracy : 0.1136000007390976
@@ -130,17 +130,23 @@ accuracy : 0.10350000113248825
 
 
 <cifar 100>
-*trainable = True, Flatten
+*trainable = True, Flatten          ***
 걸린시간 : 839.7203347682953
 category : 7.593351364135742
 accuracy : 0.010200000368058681
 
 *trainable = True, GAP
-
+걸린시간 : 528.8599574565887
+category : 4.605205059051514
+accuracy : 0.009999999776482582
 
 *trainable = False, Flatten
-
+걸린시간 : 140.64321279525757
+category : 5.6840057373046875
+accuracy : 0.008299999870359898
 
 *trainable = False, Gap
-
+걸린시간 : 143.16111826896667
+category : 5.485367774963379
+accuracy : 0.00989999994635582
 '''
