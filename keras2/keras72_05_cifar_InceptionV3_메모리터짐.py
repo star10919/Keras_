@@ -68,8 +68,8 @@ model.add(Dropout(0.9))
 model.add(transferlearning)
 model.add(Dropout(0.9))
 model.add(Dropout(0.9))
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
 model.add(Dropout(0.9))
 # model.add(Dense(10))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
@@ -93,7 +93,7 @@ es = EarlyStopping(monitor='val_loss', mode='min', patience=5, verbose=1)
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=1024, validation_split=0.012, callbacks=[es])
+model.fit(x_train, y_train, epochs=100, batch_size=50, validation_split=0.012, callbacks=[es])
 end = time.time() - start
 
 
@@ -108,7 +108,9 @@ print('accuracy :', results[1])
 '''
 <cifar 10>
 *trainable = True, Flatten
-
+걸린시간 : 461.880916595459
+category : 2.3026676177978516
+accuracy : 0.10000000149011612
 
 *trainable = True, GAP
 
