@@ -75,7 +75,7 @@ model.compile(loss='categorical_crossentropy', optimizer='adam', metrics=['acc']
 
 from tensorflow.keras.callbacks import EarlyStopping
 es = EarlyStopping(monitor='val_loss', mode='min', patience=10, verbose=1)
-hist = model.fit(x_train, y_train, epochs=100, steps_per_epoch=32, validation_data=(x_test, y_test), validation_steps=4)
+hist = model.fit(x_train, y_train, epochs=100, callbacks=[es], steps_per_epoch=32, validation_data=(x_test, y_test), validation_steps=4)
 
 
 results = model.evaluate(x_test, y_test)
