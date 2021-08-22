@@ -78,7 +78,7 @@ es = EarlyStopping(monitor='val_loss', mode='min', patience=5, verbose=1)
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=256, validation_split=0.012, callbacks=[es])
+model.fit(x_train, y_train, epochs=100, batch_size=50, validation_split=0.012, callbacks=[es])
 end = time.time() - start
 
 
