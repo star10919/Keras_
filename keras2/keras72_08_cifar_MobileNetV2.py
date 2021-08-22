@@ -42,13 +42,13 @@ y_test = one.transform(y_test).toarray()
 # 2. 모델
 transferlearning = MobileNetV2(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
 
-transferlearning.trainable=True
-# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+# transferlearning.trainable=True
+transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
 # model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 model.add(Dense(100, activation='softmax'))
@@ -109,14 +109,22 @@ accuracy : 0.23160000145435333
 
 <cifar 100>
 *trainable = True, Flatten
+걸린시간 : 44.16945147514343
+category : 22.1771183013916
+accuracy : 0.01549999974668026
 
-
-*trainable = True, GAP
-
+*trainable = True, GAP          ***
+걸린시간 : 35.706923723220825
+category : 17.95515251159668
+accuracy : 0.016200000420212746
 
 *trainable = False, Flatten
-
+걸린시간 : 47.22781157493591
+category : 4.403281211853027
+accuracy : 0.0406000018119812
 
 *trainable = False, Gap
-
+걸린시간 : 36.560505867004395
+category : 4.402990341186523
+accuracy : 0.03909999877214432
 '''

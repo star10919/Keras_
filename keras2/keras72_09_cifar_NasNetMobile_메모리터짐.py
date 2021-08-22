@@ -4,7 +4,7 @@
 # FC로 만든 것과 GlobalAveragePooling으로 만든 것 비교
 
 
-from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D
+from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, UpSampling2D
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.applications import VGG16, VGG19, Xception
 from tensorflow.keras.applications import ResNet50, ResNet50V2
@@ -45,12 +45,14 @@ y_test = one.transform(y_test).toarray()
 
 
 # 2. 모델
-transferlearning = NASNetMobile(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
+transferlearning = NASNetMobile(weights='imagenet')#, include_top=False, input_shape=(224,224,3))   # include_top=False : input_shape 조정 가능
+# ValueError: When setting `include_top=True` and loading `imagenet` weights, `input_shape` should be (224, 224, 3).
 
 transferlearning.trainable=True
 # transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
+model.add(UpSampling2D((7,7), input_shape=(32,32,3)))
 model.add(transferlearning)
 model.add(Flatten())
 # model.add(GlobalAveragePooling2D())
@@ -76,7 +78,7 @@ es = EarlyStopping(monitor='val_loss', mode='min', patience=5, verbose=1)
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=1024, validation_split=0.012, callbacks=[es])
+model.fit(x_train, y_train, epochs=100, batch_size=256, validation_split=0.012, callbacks=[es])
 end = time.time() - start
 
 
