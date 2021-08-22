@@ -32,17 +32,18 @@ y_test = np.load('./_save/_npy/k59_8_test_y.npy')
 
 
 # 2. 모델
-transferlearning = ResNet101(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
+transferlearning = Xception(weights='imagenet', include_top=False, input_shape=(150,150,3))   # include_top=False : input_shape 조정 가능
 
-# transferlearning.trainable=True
-transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+transferlearning.trainable=True
+# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
-model.add(Dense(128, activation= 'relu'))
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
+model.add(Dropout(0.4))
 model.add(Dense(64, activation= 'relu'))
+model.add(Dense(16, activation= 'relu'))
 model.add(Dense(2, activation='sigmoid'))
 
 
@@ -86,5 +87,7 @@ print('acc :', results[1])
 
 #결과출력
 '''
-
+걸린시간 : 1109.9586334228516
+category : 0.7871810793876648
+acc : 0.8799999952316284
 '''

@@ -6,7 +6,7 @@
 # trainable=True, False
 # FC로 만든 것과 GlobalAveragePooling으로 만든 것 비교
 
-from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, Dropout, Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Dense, Flatten, GlobalAveragePooling2D, UpSampling2D, Dropout, Conv2D, MaxPooling2D
 from tensorflow.keras.models import Sequential
 from tensorflow.keras.applications import VGG16, VGG19, Xception
 from tensorflow.keras.applications import ResNet50, ResNet50V2
@@ -41,17 +41,18 @@ ic(x_pred.shape, y_pred)        # x_pred.shape: (1, 150, 150, 3),  y_pred: 1.0
 
 
 # 2. 모델
-transferlearning = ResNet101(weights='imagenet', include_top=False, input_shape=(32,32,3))   # include_top=False : input_shape 조정 가능
+transferlearning = Xception(weights='imagenet', include_top=False, input_shape=(150,150,3))   # include_top=False : input_shape 조정 가능
 
-# transferlearning.trainable=True
-transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+transferlearning.trainable=True
+# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
-model.add(Dense(128, activation= 'relu'))
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
+model.add(Dropout(0.4))
 model.add(Dense(64, activation= 'relu'))
+model.add(Dense(16, activation= 'relu'))
 model.add(Dense(1, activation='sigmoid'))
 
 
@@ -90,5 +91,8 @@ ic(y_predict, y_predict.shape)
 
 #결과출력
 '''
-
+binary : 0.0
+acc : 0.42598187923431396
+여자일 확률 : 42.5981879234314 %
+ic| y_predict: array([[0.]], dtype=float32), y_predict.shape: (1, 1)
 '''
