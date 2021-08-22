@@ -48,14 +48,14 @@ y_test = one.transform(y_test).toarray()
 transferlearning = NASNetMobile(weights='imagenet', include_top=False, input_shape=(224,224,3))   # include_top=False : input_shape 조정 가능
 # ValueError: When setting `include_top=True` and loading `imagenet` weights, `input_shape` should be (224, 224, 3).
 
-transferlearning.trainable=True
-# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+# transferlearning.trainable=True
+transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(UpSampling2D((7,7), input_shape=(32,32,3)))
 model.add(transferlearning)
-# model.add(Flatten())
-model.add(GlobalAveragePooling2D())
+model.add(Flatten())
+# model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 # model.add(Dense(100, activation='softmax'))
@@ -74,11 +74,11 @@ print(len(model.trainable_weights))     # 0 -> 4
 model.compile(loss='categorical_crossentropy', optimizer='adam', metrics='accuracy')
 
 from tensorflow.keras.callbacks import EarlyStopping
-es = EarlyStopping(monitor='val_loss', mode='min', patience=5, verbose=1)
+es = EarlyStopping(monitor='val_loss', mode='min', patience=2, verbose=1)
 
 import time
 start = time.time()
-model.fit(x_train, y_train, epochs=100, batch_size=50, validation_split=0.012, callbacks=[es])
+model.fit(x_train, y_train, epochs=13, batch_size=50, validation_split=0.012, callbacks=[es], verbose=2)
 end = time.time() - start
 
 
@@ -98,7 +98,9 @@ category : 7.954424858093262
 accuracy : 0.09989999979734421
 
 *trainable = True, GAP
-
+걸린시간 : 5863.720641136169
+category : 2.4339160919189453
+accuracy : 0.45399999618530273
 
 *trainable = False, Flatten
 
