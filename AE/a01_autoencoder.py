@@ -16,8 +16,8 @@ from tensorflow.keras.models import Model
 from tensorflow.keras.layers import Dense, Input
 
 input_img = Input(shape=(784,))                     # 784로 들어가서
-# encoded = Dense(64, activation='relu')(input_img)   # 중요하지 않은 컬럼 삭제되고
-encoded = Dense(1064, activation='relu')(input_img)   # 확 늘림
+encoded = Dense(64, activation='relu')(input_img)   # 중요하지 않은 컬럼 삭제되고
+# encoded = Dense(1064, activation='relu')(input_img)   # 확 늘림
 
 decoded = Dense(784, activation='sigmoid')(encoded) # 다시 784로 나옴     # 최소 0, 최대 1        *** 결과값이 제일 좋음
 # decoded = Dense(784, activation='relu')(encoded)                         # 최소 0, 최대 무한
