@@ -54,8 +54,8 @@ transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 d
 model = Sequential()
 model.add(UpSampling2D((7,7), input_shape=(32,32,3)))
 model.add(transferlearning)
-model.add(Flatten())
-# model.add(GlobalAveragePooling2D())
+# model.add(Flatten())
+model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
 model.add(Dense(10, activation='softmax'))         # *layer 2 추가
 # model.add(Dense(100, activation='softmax'))
@@ -103,7 +103,9 @@ category : 2.4339160919189453
 accuracy : 0.45399999618530273
 
 *trainable = False, Flatten
-
+걸린시간 : 303.26136565208435
+category : 1.8013070821762085
+accuracy : 0.38179999589920044
 
 *trainable = False, Gap
 
