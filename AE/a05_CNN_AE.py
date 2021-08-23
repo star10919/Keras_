@@ -28,33 +28,31 @@ from tensorflow.keras.datasets import mnist
 
 x_train = x_train.reshape(60000, 28, 28, 1).astype('float')/255
 x_test = x_test.reshape(10000, 28, 28, 1).astype('float')/255
-x_train2 = x_train.reshape(60000, 28 * 28)
+x_train2 = x_train.reshape(60000, 28 * 28)/255
 
 
 # 2. 모델
 from tensorflow.keras.models import Model, Sequential
-from tensorflow.keras.layers import Dense, Input, Conv2D, MaxPool2D, UpSampling2D
+from tensorflow.keras.layers import Dense, Input, Conv2D, MaxPool2D, UpSampling2D, Flatten
 
-def autoencoder(hidden_layer_size1, hidden_layer_size2, kernel_size):
+def autoencoder(hidden_layer_size1):
     model = Sequential()
-    model.add(Conv2D(hidden_layer_size1, kernel_size, input_shape=(28, 28, 1), activation='relu'))
-    model.add(MaxPool2D(hidden_layer_size2))
-    model.add(Conv2D(hidden_layer_size1, kernel_size, activation='relu'))
-    model.add(MaxPool2D(hidden_layer_size2))
-    model.add(Conv2D(hidden_layer_size1, kernel_size, activation='relu'))
-    model.add(Dense(units=784, activation='sigmoid'))
+    model.add(Conv2D(hidden_layer_size1, kernel_size=(2,2), input_shape=(28, 28, 1), padding='same', activation='relu'))
+    model.add(MaxPool2D())
+    model.add(Conv2D(hidden_layer_size1, kernel_size=(2,2), padding='same', activation='relu'))
+    model.add(MaxPool2D())
+    model.add(Conv2D(hidden_layer_size1, kernel_size=(2,2), padding='same', activation='relu'))
     return model
 
 
-model = autoencoder(512, (2,2), (2,2))      # pca 95% : 154
+model = autoencoder(154)      # pca 95% : 154
 model.add(Conv2D(8, (2,2), padding='same'))
-model.add(UpSampling2D(2,2))
+model.add(UpSampling2D())
 model.add(Conv2D(4, (2,2), padding='same'))
-model.add(UpSampling2D(4,4))
-model.add(Conv2D(2, (2,2), padding='same'))
-model.add(UpSampling2D(7,7))
-model.add(Conv2D((1,)))
-
+model.add(UpSampling2D())
+model.add(Conv2D(1, (2,2), padding='same'))
+model.add(Flatten())
+model.add(Dense(units=784, activation='sigmoid'))
 
 
 model.compile(optimizer='adam', loss='mse')
