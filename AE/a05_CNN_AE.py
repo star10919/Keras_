@@ -28,6 +28,7 @@ from tensorflow.keras.datasets import mnist
 
 x_train = x_train.reshape(60000, 28, 28, 1).astype('float')/255
 x_test = x_test.reshape(10000, 28, 28, 1).astype('float')/255
+x_train2 = x_train.reshape(60000, 28 * 28)
 
 
 # 2. 모델
@@ -50,15 +51,15 @@ model.add(Conv2D(8, (2,2), padding='same'))
 model.add(UpSampling2D(2,2))
 model.add(Conv2D(4, (2,2), padding='same'))
 model.add(UpSampling2D(4,4))
-model.add(Conv2D(2, (7,7), padding='same'))
-model.add(UpSampling2D(2,2))
+model.add(Conv2D(2, (2,2), padding='same'))
+model.add(UpSampling2D(7,7))
 model.add(Conv2D((1,)))
 
 
 
 model.compile(optimizer='adam', loss='mse')
 
-model.fit(x_train, x_train, epochs=10)
+model.fit(x_train, x_train2, epochs=10)
 
 output = model.predict(x_test)
 

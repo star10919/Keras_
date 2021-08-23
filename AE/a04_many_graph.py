@@ -1,4 +1,5 @@
 ### 앞뒤가 똑같은 오~토인코더~(중요하지 않은 특성들은 도태됨)    / (특징이 강한 것을 더 강하게 해주는 것은 아님)
+### 노드가 많은게 가장 뚜렷하게 나옴
 
 import numpy as np
 from tensorflow.keras.datasets import mnist
@@ -18,6 +19,10 @@ from tensorflow.keras.layers import Dense, Input
 def autoencoder(hidden_layer_size):
     model = Sequential()
     model.add(Dense(units=hidden_layer_size, input_shape=(784,), activation='relu'))
+    # model.add(Dense(units=hidden_layer_size, activation='relu'))
+    # model.add(Dense(units=hidden_layer_size, activation='relu'))
+    # model.add(Dense(units=hidden_layer_size, activation='relu'))
+    # model.add(Dense(units=hidden_layer_size, activation='relu'))
     model.add(Dense(units=784, activation='sigmoid'))
     return model
 
@@ -48,7 +53,7 @@ print("############## node 16개 시작 ##############")
 model_16.compile(optimizer='adam', loss='binary_crossentropy')
 model_16.fit(x_train, x_train,  epochs=10)
 
-print("############## node 32개 시작 ##############")
+print("############## node 32개 시작 ##############")           ### 가장 뚜렷
 model_32.compile(optimizer='adam', loss='binary_crossentropy')
 model_32.fit(x_train, x_train,  epochs=10)
 
