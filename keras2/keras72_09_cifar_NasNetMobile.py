@@ -21,11 +21,11 @@ from tensorflow.keras.datasets import cifar10, cifar100
 # FC를 모델로 하고, GlobalAveragepooling2D으로 하고
 
 # 1. 데이터
-(x_train,y_train), (x_test, y_test) = cifar10.load_data()
+# (x_train,y_train), (x_test, y_test) = cifar10.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
-# (x_train,y_train), (x_test, y_test) = cifar100.load_data()
+(x_train,y_train), (x_test, y_test) = cifar100.load_data()
 # ic(x_train.shape, y_train.shape)   # (50000, 32, 32, 3), (50000, 1)
 # ic(x_test.shape, y_test.shape)     # (10000, 32, 32, 3), (10000, 1)
 
@@ -48,17 +48,17 @@ y_test = one.transform(y_test).toarray()
 transferlearning = NASNetMobile(weights='imagenet', include_top=False, input_shape=(224,224,3))   # include_top=False : input_shape 조정 가능
 # ValueError: When setting `include_top=True` and loading `imagenet` weights, `input_shape` should be (224, 224, 3).
 
-# transferlearning.trainable=True
-transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
+transferlearning.trainable=True
+# transferlearning.trainable=False    # False: vgg훈련을 동결한다(True가 default)
 
 model = Sequential()
 model.add(UpSampling2D((7,7), input_shape=(32,32,3)))
 model.add(transferlearning)
-# model.add(Flatten())
-model.add(GlobalAveragePooling2D())
+model.add(Flatten())
+# model.add(GlobalAveragePooling2D())
 model.add(Dense(100))        # *layer 1 추가
-model.add(Dense(10, activation='softmax'))         # *layer 2 추가
-# model.add(Dense(100, activation='softmax'))
+# model.add(Dense(10, activation='softmax'))         # *layer 2 추가
+model.add(Dense(100, activation='softmax'))
 
 
 # model.trainable=False   # False: 전체 모델 훈련을 동결한다.(True가 default)
@@ -108,7 +108,9 @@ category : 1.8013070821762085
 accuracy : 0.38179999589920044
 
 *trainable = False, Gap
-
+걸린시간 : 417.87746381759644
+category : 1.7630566358566284
+accuracy : 0.3734000027179718
 
 
 
@@ -120,8 +122,12 @@ accuracy : 0.38179999589920044
 
 
 *trainable = False, Flatten
-
+걸린시간 : 305.3029828071594
+category : 4.757012367248535
+accuracy : 0.13249999284744263
 
 *trainable = False, Gap
-
+걸린시간 : 477.19129395484924
+category : 3.78521990776062
+accuracy : 0.1429000049829483
 '''
