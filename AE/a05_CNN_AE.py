@@ -41,7 +41,7 @@ def autoencoder(hidden_layer_size1):
     model.add(MaxPool2D())
     model.add(Conv2D(hidden_layer_size1, kernel_size=(2,2), padding='same', activation='relu'))
     model.add(MaxPool2D())
-    model.add(Conv2D(hidden_layer_size1, kernel_size=(2,2), padding='same', activation='relu'))
+    # model.add(Conv2D(hidden_layer_size1, kernel_size=(2,2), padding='same', activation='relu'))
     return model
 
 
@@ -49,15 +49,15 @@ model = autoencoder(154)      # pca 95% : 154
 model.add(Conv2D(8, (2,2), padding='same'))
 model.add(UpSampling2D())
 model.add(Conv2D(4, (2,2), padding='same'))
-model.add(UpSampling2D())
-model.add(Conv2D(1, (2,2), padding='same'))
+# model.add(UpSampling2D())
+# model.add(Conv2D(1, (2,2), padding='same'))
 model.add(Flatten())
 model.add(Dense(units=784, activation='sigmoid'))
 
 
 model.compile(optimizer='adam', loss='mse')
 
-model.fit(x_train, x_train2, epochs=10)
+model.fit(x_train, x_train2, epochs=8)
 
 output = model.predict(x_test)
 
@@ -72,7 +72,7 @@ random_images = random.sample(range(output.shape[0]), 5)
 
 # 원본(입력) 이미지를 맨 위에 그린다.
 for i, ax in enumerate([ax1, ax2, ax3, ax4, ax5]):
-    ax.imshow(x_test[random_images[i]].reshape(28, 28), cmap='gray')
+    ax.imshow(x_test[random_images[i]].reshape(28, 28)*255, cmap='gray')
     if i == 0:
         ax.set_ylabel("INPUT", size=20)
         ax.grid(False)
@@ -81,7 +81,7 @@ for i, ax in enumerate([ax1, ax2, ax3, ax4, ax5]):
 
 # 오토인코더가 출력한 이미지를 아래에 그린다.
 for i, ax in enumerate([ax6, ax7, ax8, ax9, ax10]):
-    ax.imshow(output[random_images[i]].reshape(28, 28), cmap='gray')
+    ax.imshow(output[random_images[i]].reshape(28, 28)*255, cmap='gray')
     if i == 0:
         ax.set_ylabel("OUTPUT", size=20)
         ax.grid(False)
