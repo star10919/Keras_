@@ -7,14 +7,8 @@
 # w, b : 변수
 # x, y : placeholder
 
-### 실습
-# predict 하는 코드 추가! & x_test라는 placeholder생성
-# 1. [4]
-# 2. [5, 6]
-# 3. [6, 7, 8]
-
-
 # wx + b  ->  hypothesis  ->  loss  ->  train
+
 
 import tensorflow as tf
 tf.set_random_seed(77)
@@ -69,4 +63,8 @@ print(pred_1)
 print(pred_2)
 print(pred_3)
 
+
+'''
+2000 0.0 [1.9999999] [1.0000002]
+'''
 
