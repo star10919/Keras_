@@ -11,7 +11,7 @@
 
 
 import tensorflow as tf
-tf.set_random_seed(77)
+tf.set_random_seed(55)
 
 x_train = tf.compat.v1.placeholder(tf.float32, shape=[None])
 y_train = tf.compat.v1.placeholder(tf.float32, shape=[None])
@@ -31,9 +31,9 @@ hypothesis = x_train * W + b    # 모델 구현
 
 loss = tf.reduce_mean(tf.square(hypothesis - y_train)) # mse
 
-optimizer = tf.train.AdamOptimizer(learning_rate=0.821)
-# optimizer = tf.train.AdagradOptimizer(learning_rate=6)
-# optimizer = tf.train.RMSPropOptimizer(learning_rate=0.429998)
+# optimizer = tf.train.AdagradOptimizer(learning_rate=3.567)
+optimizer = tf.train.AdamOptimizer(learning_rate=0.6221792)
+# optimizer = tf.train.RMSPropOptimizer(learning_rate=0.023)
 
 train = optimizer.minimize(loss)
 
@@ -42,7 +42,7 @@ sess = tf.Session()        # 방법1
 
 sess.run(tf.global_variables_initializer()) # 변수초기화(반드시 해줘야 함!!)
 
-for step in range(2001):
+for step in range(101):
     # sess.run(train)
     _, loss_val, W_val, b_val = sess.run([train, loss, W, b],
                             feed_dict={x_train:[1,2,3], y_train:[3,5,7]})     #  _, loss_val : train값은 보지 않고, loss의 값만 보겠다.
@@ -65,6 +65,6 @@ print(pred_3)
 
 
 '''
-2000 0.0 [1.9999999] [1.0000002]
+100 0.0008314429 [2.000002] [0.98113334]
 '''
 
