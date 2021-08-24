@@ -1,6 +1,7 @@
 import tensorflow as tf
 
 ### placeholder : 빈공간
+# placeholer & feed_dict 세트임!!(빈공간(placeholer)에 값(feed_dict) 넣어줘야 하니까)
 
 node1 = tf.constant(3.0, tf.float32)
 node2 = tf.constant(4.0)
