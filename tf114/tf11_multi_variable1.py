@@ -18,7 +18,7 @@ w2 = tf.Variable(tf.random_normal([1]), name='weight2')
 w3 = tf.Variable(tf.random_normal([1]), name='weight3')
 b = tf.Variable(tf.random_normal([1]), name='bias')
 
-hypothesis = x1*w1 + x2*w2 +x3*w3 + b
+hypothesis = x1*w1 + x2*w2 + x3*w3 + b
 
 cost = tf.reduce_mean(tf.square(hypothesis-y))      # mse
 

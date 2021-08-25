@@ -8,7 +8,7 @@ W = tf.placeholder(tf.float32)
 
 hypothesis = x * W
 
-cost = tf.reduce_mean(tf.square(hypothesis - y))     # loss = cost
+cost = tf.reduce_mean(tf.square(hypothesis - y))  # mse    # loss = cost
 
 w_history = []
 cost_history = []
@@ -28,6 +28,7 @@ print(cost_history)
 print("==================================")
 
 
+# 시각화
 plt.plot(w_history, cost_history)   # (x값, y값)
 plt.xlabel("Weight")
 plt.ylabel("loss")
