@@ -16,7 +16,7 @@ print(x_data.shape, y_data.shape)     # (569, 30) (569,)
 
 # 2. 모델 구성
 x = tf.compat.v1.placeholder(tf.float32, shape=[None, 30])
-y = tf.compat.v1.placeholder(tf.float32, shape=[None,])
+y = tf.compat.v1.placeholder(tf.float32, shape=[None, ])
 
 W = tf.compat.v1.Variable(tf.random.normal([30,1]), name='weight')       # x_data(5, 3) * w(3, 1) = hypothesis(5, 1)
 b = tf.compat.v1.Variable(tf.random.normal([1]), name='bias')                      # 3      3 동일해야 함 
