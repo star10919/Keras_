@@ -19,21 +19,21 @@ tf.set_random_seed(66)
 print(x_train.shape, y_train.shape)  # (60000, 28, 28) (60000,)
 print(x_test.shape, y_test.shape)  #  (10000, 28, 28) (10000,)
 
-x_train = x_train.reshape(x_train.shape[0], 28*28)
-x_test = x_test.reshape(x_test.shape[0], 28*28)
+x_train = x_train.reshape(x_train.shape[0], 28*28)/255.
+x_test = x_test.reshape(x_test.shape[0], 28*28)/255.
 y_train = y_train.reshape(y_train.shape[0], 1)
 y_test = y_test.reshape(y_test.shape[0], 1)
 
-print(x_train.shape, y_train.shape)  # (60000, 784) (60000, 1)
-print(x_test.shape, y_test.shape)    # (10000, 784) (10000, 1)
+# print(x_train.shape, y_train.shape)  # (60000, 784) (60000, 1)
+# print(x_test.shape, y_test.shape)    # (10000, 784) (10000, 1)
 
 from sklearn.preprocessing import OneHotEncoder
 one = OneHotEncoder()
 one.fit(y_train)
 y_train = one.transform(y_train).toarray()      # toarray : list자료형태로 바꿔줌
 y_test = one.transform(y_test).toarray()
-print(y_train, y_train.shape)   # (60000, 10)
-print(y_test, y_test.shape)     # (10000, 10)
+# print(y_train, y_train.shape)   # (60000, 10)
+# print(y_test, y_test.shape)     # (10000, 10)
 
 
 # 2. 모델 구성
