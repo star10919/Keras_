@@ -8,7 +8,7 @@ tf.set_random_seed(66)
 
 # 1. 데이터
 x_data = np.array([[0, 0], [0, 1], [1, 0], [1, 1]], dtype=np.float32)       # (4, 2)
-y_data = np.array([[0], [1], [1], [0]], dtype=np.float32)                    # (4, 1)
+y_data = np.array([[0], [1], [1], [0]], dtype=np.float32)                   # (4, 1)
 
 
 
