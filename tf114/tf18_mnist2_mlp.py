@@ -74,7 +74,7 @@ w4 = tf.compat.v1.Variable(tf.random.normal([46,10]), name='weight3')      # 아
 b4 = tf.compat.v1.Variable(tf.random.normal([1, 10]), name='bias3')  
 
 # hypothesis = x * w + b
-layers4 = tf.nn.softmax(tf.matmul(layers3, w3) + b3) 
+output = tf.nn.softmax(tf.matmul(layers3, w3) + b3) 
 
 
 
@@ -92,7 +92,7 @@ layers = tf.nn.dropout(layers4, keep_prob=0.3)    # Dropout
 # cost = tf.reduce_mean(tf.square(hypothesis-y))      # mse
 # cost = -tf.reduce_mean(y*tf.log(hypothesis)+(1-y)*tf.log(1-hypothesis))     # binary_crossentropy :  y 값이 0과 1 사이로 바꼈으니까
 # cost = tf.reduce_mean(-tf.reduce_sum(y * tf.log(hypothesis), axis=1))         # categorical_crossentropy
-cost = tf.losses.softmax_cross_entropy(y, hypothesis)
+cost = tf.losses.softmax_cross_entropy(y, output)
 
 # optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
 optimizer = tf.train.GradientDescentOptimizer(learning_rate=1e-5)
@@ -105,14 +105,14 @@ sess.run(tf.global_variables_initializer())
 
 # 3. 훈련
 for epochs in range(200):
-    cost_val, hy_val, _ = sess.run([cost, hypothesis, train],
+    cost_val, hy_val, _ = sess.run([cost, output, train],
                         feed_dict={x:x_train, y:y_train})
     if epochs % 10 == 0:        # 10번에 1번씩 출력
         print(epochs, "cost :", cost_val, "\n", hy_val)
 
 
 # 4. 평가, 예측
-predicted = tf.cast(hypothesis > 0.5, dtype=tf.float32) # 0.5보다 크면 1, 작으면 0      # cast : 조건에 부합하면 1, 부합하지 않으면 0
+predicted = tf.cast(output > 0.5, dtype=tf.float32) # 0.5보다 크면 1, 작으면 0      # cast : 조건에 부합하면 1, 부합하지 않으면 0
 accuracy = tf.reduce_mean(tf.cast(tf.equal(predicted, y), dtype=tf.float32))    # tf.equal : predicted, y이 동일하면 1, 아니면 0    # reduce_mean : 평균
 
 c, a = sess.run([predicted, accuracy], feed_dict={x:x_test, y:y_test})
