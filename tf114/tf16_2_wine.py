@@ -38,8 +38,8 @@ b = tf.compat.v1.Variable(tf.random.normal([1, 3]), name='bias')
 hypothesis = tf.nn.softmax(tf.matmul(x, w) + b)     # softmax : 0과 1사이 (나올 3개의 값의 합은 1)
 
 
-# categorical_crossentropy
-loss = tf.reduce_mean(-tf.reduce_sum(y * tf.log(hypothesis), axis=1))       
+
+loss = tf.reduce_mean(-tf.reduce_sum(y * tf.log(hypothesis), axis=1))       # categorical_crossentropy
 
 # optimizer = tf.train.GradientDescentOptimizer(learning_rate=1e-1)
 # train = optimizer.minimize(cost)

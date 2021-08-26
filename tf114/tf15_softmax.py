@@ -31,7 +31,7 @@ x = tf.compat.v1.placeholder(tf.float32, shape=[None, 4])   # input
 y = tf.compat.v1.placeholder(tf.float32, shape=[None, 3])   # output
 
 w = tf.compat.v1.Variable(tf.random.normal([4, 3]), name='weight')       # [x열, y열]
-b = tf.compat.v1.Variable(tf.random.normal([1, 3]), name='bias')
+b = tf.compat.v1.Variable(tf.random.normal([3]), name='bias')       # [3] = [1, 3]
 
 hypothesis = tf.nn.softmax(tf.matmul(x, w) + b)     # softmax : 0과 1사이 (나올 3개의 값의 합은 1)
 
