@@ -44,16 +44,16 @@ x = tf.compat.v1.placeholder(tf.float32, shape=[None, 28*28])
 y = tf.compat.v1.placeholder(tf.float32, shape=[None, 10])
 
 # 히든레이어1
-w1 = tf.compat.v1.Variable(tf.random.normal([28*28, 100]), name='weight1')      # 아웃풋 열은 최종 열로 맞춰줘야 함
-b1 = tf.compat.v1.Variable(tf.random.normal([1, 100]), name='bias1')  
+w1 = tf.compat.v1.Variable(tf.random.normal([28*28, 512]), name='weight1')      # 아웃풋 열은 최종 열로 맞춰줘야 함
+b1 = tf.compat.v1.Variable(tf.random.normal([512]), name='bias1')  
 
 layers1 = tf.sigmoid(tf.matmul(x, w1) + b1)    # sigmoid
 
 
 
 # 히든레이어 2
-w2 = tf.compat.v1.Variable(tf.random.normal([100,96]), name='weight2')       # [윗 레이어의 열, 내가 주고 싶은 노드의 개수]
-b2 = tf.compat.v1.Variable(tf.random.normal([1, 96]), name='bias2')                     
+w2 = tf.compat.v1.Variable(tf.random.normal([512,256]), name='weight2')       # [윗 레이어의 열, 내가 주고 싶은 노드의 개수]
+b2 = tf.compat.v1.Variable(tf.random.normal([256]), name='bias2')                     
 
 # hypothesis = x * w + b
 layers2 = tf.sigmoid(tf.matmul(layers1, w2) + b2)    # sigmoid
@@ -61,20 +61,20 @@ layers2 = tf.sigmoid(tf.matmul(layers1, w2) + b2)    # sigmoid
 
 
 # 히든레이어 3
-w3 = tf.compat.v1.Variable(tf.random.normal([96,46]), name='weight2')       # [윗 레이어의 열, 내가 주고 싶은 노드의 개수]
-b3 = tf.compat.v1.Variable(tf.random.normal([1, 46]), name='bias2')                     
+w3 = tf.compat.v1.Variable(tf.random.normal([256,46]), name='weight2')       # [윗 레이어의 열, 내가 주고 싶은 노드의 개수]
+b3 = tf.compat.v1.Variable(tf.random.normal([46]), name='bias2')                     
 
 # hypothesis = x * w + b
-layers3 = tf.sigmoid(tf.matmul(layers2, w2) + b2)    # sigmoid
+layers3 = tf.sigmoid(tf.matmul(layers2, w3) + b3)    # sigmoid
 
 
 
 # 아웃풋레이어
 w4 = tf.compat.v1.Variable(tf.random.normal([46,10]), name='weight3')      # 아웃풋 열은 최종 열로 맞춰줘야 함
-b4 = tf.compat.v1.Variable(tf.random.normal([1, 10]), name='bias3')  
+b4 = tf.compat.v1.Variable(tf.random.normal([10]), name='bias3')  
 
 # hypothesis = x * w + b
-output = tf.nn.softmax(tf.matmul(layers3, w3) + b3) 
+output = tf.nn.softmax(tf.matmul(layers3, w4) + b4) 
 
 
 
@@ -95,7 +95,8 @@ layers = tf.nn.dropout(layers4, keep_prob=0.3)    # Dropout
 cost = tf.losses.softmax_cross_entropy(y, output)
 
 # optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
-optimizer = tf.train.GradientDescentOptimizer(learning_rate=1e-5)
+# optimizer = tf.train.GradientDescentOptimizer(learning_rate=1e-5)
+optimizer = tf.train.AdamOptimizer(learning_rate=0.01)
 
 train = optimizer.minimize(cost)
 
@@ -104,10 +105,10 @@ sess.run(tf.global_variables_initializer())
 
 
 # 3. 훈련
-for epochs in range(200):
+for epochs in range(120):
     cost_val, hy_val, _ = sess.run([cost, output, train],
                         feed_dict={x:x_train, y:y_train})
-    if epochs % 10 == 0:        # 10번에 1번씩 출력
+    if epochs % 30 == 0:        # 10번에 1번씩 출력
         print(epochs, "cost :", cost_val, "\n", hy_val)
 
 
@@ -124,5 +125,5 @@ print("예측값 :\n", hy_val,
 sess.close()
 
 '''
-
+ Accruacy : 0.97486
 '''
