@@ -1,7 +1,7 @@
 # DNN
 # sigmid, linear
 # 다층 퍼셉트론(multi layer perceptron)으로 구성
-# accuracy 넣기 : 0.97 넘기기
+# accuracy 넣기 : 0.97 넘기
 ### activation
 
 
