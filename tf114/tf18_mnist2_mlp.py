@@ -78,6 +78,8 @@ output = tf.nn.softmax(tf.matmul(layers3, w4) + b4)
 
 
 
+
+
 # activation
 '''
 # hypothesis = x * w + b
@@ -89,9 +91,11 @@ layers = tf.nn.dropout(layers4, keep_prob=0.3)    # Dropout
 '''
 
 
-# cost = tf.reduce_mean(tf.square(hypothesis-y))      # mse
+
+
+# cost = tf.reduce_mean(tf.square(hypothesis-y))                              # mse
 # cost = -tf.reduce_mean(y*tf.log(hypothesis)+(1-y)*tf.log(1-hypothesis))     # binary_crossentropy :  y 값이 0과 1 사이로 바꼈으니까
-# cost = tf.reduce_mean(-tf.reduce_sum(y * tf.log(hypothesis), axis=1))         # categorical_crossentropy
+# cost = tf.reduce_mean(-tf.reduce_sum(y * tf.log(hypothesis), axis=1))       # categorical_crossentropy
 cost = tf.losses.softmax_cross_entropy(y, output)
 
 # optimizer = tf.train.GradientDescentOptimizer(learning_rate=0.01)
