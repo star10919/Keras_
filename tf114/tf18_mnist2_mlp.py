@@ -2,7 +2,7 @@
 # sigmid, linear
 # 다층 퍼셉트론(multi layer perceptron)으로 구성
 # accuracy 넣기 : 0.97 넘기
-### acticate
+### activation
 
 
 # from tensorflow.keras.datasets import mnist     # 노란줄은 나오지만 먹히긴 먹힘
