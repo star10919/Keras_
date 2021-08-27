@@ -1,7 +1,7 @@
 # DNN
 # sigmid, linear
 # 다층 퍼셉트론(multi layer perceptron)으로 구성
-# accuracy 넣기 : 0.97 넘기
+# accuracy 넣기 : 0.97 넘기기
 ### activation
 
 
@@ -78,7 +78,7 @@ output = tf.nn.softmax(tf.matmul(layers3, w4) + b4)
 
 
 
-# activate
+# activation
 '''
 # hypothesis = x * w + b
 layers1 = tf.nn.relu(tf.matmul(x, w) + b)    # relu
