@@ -35,7 +35,7 @@ model.add(Dense(40, activation='sigmoid'))  # sigmoid : 0~1까지의 값으로 �
 model.add(Dense(30, activation='relu'))
 model.add(Dense(10, activation='relu'))
 model.add(Dense(5, activation='relu'))
-model.add(Dense(1))   # 마지막행에 고정되어 있는 activation이 있어서 활성화함수 쓰면 안됨.
+model.add(Dense(1))   # 마지막행에 고정되어 있는 activation이 있어서 활성화함수 쓰면 안됨.(default : linear)
 
 #3. 컴파일, 훈련
 model.compile(loss='mse', optimizer='adam')
