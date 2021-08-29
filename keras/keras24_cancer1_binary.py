@@ -5,7 +5,7 @@ from tensorflow.keras.models import Sequential, Model
 from tensorflow.keras.layers import Dense, Input
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
-# 2진 분류
+# 2진 분류 : sigmoid, binary_crossentropy
 
 # 1. 데이터
 datasets = load_breast_cancer()

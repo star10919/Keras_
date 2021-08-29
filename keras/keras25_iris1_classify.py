@@ -33,6 +33,7 @@ from tensorflow.keras.utils import to_categorical    # 원핫인코딩
 y = to_categorical(y)
 ic(y[:5])
 # [0,0,0,0,0]
+
 # [[1. 0. 0.]
 #  [1. 0. 0.]
 #  [1. 0. 0.]
