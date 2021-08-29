@@ -28,7 +28,7 @@ print(y.shape)   #(10,) = 스칼라 10개
 
 #1-2. 2행 10열을   10행 2열로 바꿔라
 x = np.transpose(x)
-print(x.shape)   #(10, 2)
+print(x, x.shape)   #(10, 2)
 
 #2. 모델구성
 model = Sequential()
