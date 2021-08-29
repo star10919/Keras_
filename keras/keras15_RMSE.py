@@ -53,7 +53,7 @@ ic(r2)
 
 # RMSE
 def RMSE(y_test, y_predict):
-    return np.sqrt(mean_squared_error(y_test, y_predict))   # np.sqrt : 루트씌우겠다(RMS :루트MSE)
+    return np.sqrt(mean_squared_error(y_test, y_predict))   # np.sqrt : 루트씌우겠다(RMS:루트MSE)
 rmse = RMSE(y_test, y_predict)
 ic(rmse)
 
