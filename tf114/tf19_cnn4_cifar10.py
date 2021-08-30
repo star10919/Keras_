@@ -125,7 +125,7 @@ b7 = tf.Variable(tf.random_normal([10]), name='b3')
 layer7 = tf.matmul(layer6_dropout, w7) + b7
 hypothesis = tf.nn.softmax(layer7)
 
-print(hypothesis)      # (?, 10)
+print(hypothesis)            # (?, 10)
 
 
 # 3. 컴파일 , 훈련
