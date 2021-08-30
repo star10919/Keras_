@@ -7,7 +7,7 @@ from keras.layers import Conv2D, MaxPool2D
 
 tf.compat.v1.disable_eager_execution()      # tensorflow2 사용가능해짐
 print(tf.executing_eagerly())               # False
-print(tf.__version__)                       # 1.14.0  ->  2.6.0(2.4.1)
+print(tf.__version__)                       # 1.14.0  ->  2.4.1
 
 tf.compat.v1.set_random_seed(66)
 
