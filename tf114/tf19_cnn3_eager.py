@@ -3,7 +3,7 @@ import numpy as np
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPool2D
 
-### disable_eager_execution / compat.v1 : tensorflow1에서 2사용가능
+### disable_eager_execution / compat.v1 : tensorflow2에서 1사용하려고!!
 
 tf.compat.v1.disable_eager_execution()      # tensorflow2 사용가능해짐
 print(tf.executing_eagerly())               # False
