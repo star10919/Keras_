@@ -1,3 +1,6 @@
+# 실습
+# 0.7 이상
+
 import tensorflow as tf
 import numpy as np
 from keras.models import Sequential
