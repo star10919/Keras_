@@ -11,6 +11,8 @@ class Nutrition(object):
     food_name = []
     food_nut = []
     new_food_nut = []
+    new_food_gram = []
+    new_food_kcal = []
     one_nut = []
     
 
