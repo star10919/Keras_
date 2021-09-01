@@ -60,7 +60,7 @@ class Nutrition(object):
                 # print('i,j :\n',i, j)
                 # print('name :\n',self.food_name[i])
                 # print('nutrition :\n',self.food_nut[i])
-                self.dict[self.food_name[i]] = [self.new_food_nut[i], self.new_food_gram[j.text], self.new_food_kcal[j.text]]
+                self.dict[self.food_name[i]] = self.new_food_nut[i]
             
             driver.close()
 
