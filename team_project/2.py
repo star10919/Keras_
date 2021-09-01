@@ -52,15 +52,19 @@ class Nutrition(object):
             # print(len(self.food_nut))   # 15
             self.food_name.remove('인문과학')     # 불필요한 요소 제거
             # print(len(self.food_name))  # 15
-            for i in self.food_nut:
-                temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
-                self.new_food_nut.append(temp)
+            # for i in self.food_nut:
+            #     temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
+            #     self.new_food_nut.append(temp)
             
 
             for i, j, k in zip(self.new_food_nut, self.new_food_gram, self.new_food_kcal):
                 temp = i + ',' + j + ',' + k
                 self.final_food_nut.append(temp)                # nutrition
             # print(self.final_food_nut)
+
+            for i in self.final_food_nut:
+                temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
+                self.final_food_nut.append(temp)
 
             for i, j in enumerate(self.food_name):
                 self.dict[self.food_name[i]] = self.final_food_nut[i]
