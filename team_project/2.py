@@ -47,22 +47,20 @@ class Nutrition(object):
                 temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
                 self.new_food_nut.append(temp)
             
-            for word in self.one_nut:
-                if '1회제공량' in word:
-                    self.one_nut.append(word)
-                elif '칼로리' in word:
-                    self.one_nut.append(word)
+            for i, j in enumerate(self.one_nut):
+                if '1회제공량' in j.text:
+                    self.new_food_gram.append(j.text)
+                elif '칼로리' in j.text:
+                    self.new_food_kcal.append(j.text)
                 else:
-                    self.one_nut.remove
-            print(self.one_nut)
+                    pass
 
-            
 
             for i, j in enumerate(self.food_name):
                 # print('i,j :\n',i, j)
                 # print('name :\n',self.food_name[i])
                 # print('nutrition :\n',self.food_nut[i])
-                self.dict[self.food_name[i]] = [self.new_food_nut[i], self.one_nut[word]]
+                self.dict[self.food_name[i]] = [self.new_food_nut[i], self.new_food_gram[j.text], self.new_food_kcal[j.text]]
             
             driver.close()
 
