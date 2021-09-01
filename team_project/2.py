@@ -18,7 +18,7 @@ class Nutrition(object):
 
     def scrap_name(self):
 
-        for i in range(1,3):
+        for i in range(1, 3):
             self.url = f'https://terms.naver.com/list.naver?cid=59320&categoryId=59320&page={i}'
             driver = webdriver.Chrome(self.driver_path)
             driver.get(self.url)
@@ -37,7 +37,16 @@ class Nutrition(object):
             for i in ls3:
                 self.new_food_nut.append(i.text)
             # print(self.one_nut)
-                
+
+            for i in ls3:
+                if '1회제공량' in i.text:
+                    self.new_food_gram.append(i.text)
+                elif '칼로리' in i.text:
+                    self.new_food_kcal.append(i.text)
+                else:
+                    pass
+
+
 
             # print(len(self.food_name))  # 16
             # print(len(self.food_nut))   # 15
@@ -47,13 +56,6 @@ class Nutrition(object):
                 temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
                 self.new_food_nut.append(temp)
             
-            for i in ls3:
-                if '1회제공량' in i.text:
-                    self.new_food_gram.append(i.text)
-                elif '칼로리' in i.text:
-                    self.new_food_kcal.append(i.text)
-                else:
-                    pass
 
             for i, j, k in zip(self.new_food_nut, self.new_food_gram, self.new_food_kcal):
                 temp = i + ',' + j + ',' + k
