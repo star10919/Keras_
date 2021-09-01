@@ -13,12 +13,12 @@ class Nutrition(object):
     new_food_nut = []
     new_food_gram = []
     new_food_kcal = []
-    one_nut = []
+    final_food_nut = []
     
 
     def scrap_name(self):
 
-        for i in range(1):
+        for i in range(1,3):
             self.url = f'https://terms.naver.com/list.naver?cid=59320&categoryId=59320&page={i}'
             driver = webdriver.Chrome(self.driver_path)
             driver.get(self.url)
@@ -35,7 +35,7 @@ class Nutrition(object):
 
             ls3 = all_div.find_all("span", {"class": "info"})        # 1회 제공량
             for i in ls3:
-                self.one_nut.append(i.text)
+                self.new_food_nut.append(i.text)
             # print(self.one_nut)
                 
 
@@ -47,20 +47,29 @@ class Nutrition(object):
                 temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
                 self.new_food_nut.append(temp)
             
-            for i, j in enumerate(self.one_nut):
-                if '1회제공량' in j.text:
-                    self.new_food_gram.append(j.text)
-                elif '칼로리' in j.text:
-                    self.new_food_kcal.append(j.text)
+            for i in ls3:
+                if '1회제공량' in i.text:
+                    self.new_food_gram.append(i.text)
+                elif '칼로리' in i.text:
+                    self.new_food_kcal.append(i.text)
                 else:
                     pass
 
+            for i in self.new_food_gram:
+                temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
+                self.new_food_gram.append(temp)
+
+            for i in self.new_food_kcal:
+                temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
+                self.new_food_kcal.append(temp)
+            
+            for i, j, k in zip(self.new_food_nut, self.new_food_gram, self.new_food_kcal):
+                temp = i + ',' + j + ',' + k
+                self.final_food_nut.append(temp)
+
 
             for i, j in enumerate(self.food_name):
-                # print('i,j :\n',i, j)
-                # print('name :\n',self.food_name[i])
-                # print('nutrition :\n',self.food_nut[i])
-                self.dict[self.food_name[i]] = self.new_food_nut[i]
+                self.dict[self.food_name[i]] = self.final_food_nut[i]
             
             driver.close()
 
