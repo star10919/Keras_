@@ -55,26 +55,20 @@ class Nutrition(object):
                 else:
                     pass
 
-            for i in self.new_food_gram:
-                temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
-                self.new_food_gram.append(temp)
-
-            for i in self.new_food_kcal:
-                temp = i.replace('\n', '').replace('\t', '').replace(' ', '').replace('[영양성분]', '')     # 불필요한 요소 제거
-                self.new_food_kcal.append(temp)
-            
             for i, j, k in zip(self.new_food_nut, self.new_food_gram, self.new_food_kcal):
                 temp = i + ',' + j + ',' + k
-                self.final_food_nut.append(temp)
-
+                self.final_food_nut.append(temp)                # nutrition
+            # print(self.final_food_nut)
 
             for i, j in enumerate(self.food_name):
                 self.dict[self.food_name[i]] = self.final_food_nut[i]
-            
+
             driver.close()
 
-        print(self.dict)
-        
+        # print(self.dict)
+        for key, value in self.dict.items():
+            print(f'{key} :: {value[:15]} ... {value[-26:]}')
+    
 
 
     '''
