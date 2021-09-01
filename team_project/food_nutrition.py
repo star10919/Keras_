@@ -75,7 +75,7 @@ class Nutrition(object):
             
         # print(self.dict)
         for key, value in self.dict.items():
-            print(f'{key} :: {value[:15]} ... {value[-22:]}')
+            print(f'{key} :: {value[:15]} ... {value[-26:]}')
     
     '''
         for i in ls:
