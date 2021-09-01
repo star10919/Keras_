@@ -5,7 +5,7 @@ from selenium import webdriver
 class Nutrition(object):
     # url = 'https://terms.naver.com/list.naver?cid=59320&categoryId=59320'
     url = None
-    driver_path = 'D:/chromedriver'
+    driver_path = 'c:/Program Files/Google/Chrome/chromedriver'
     dict = {}
     df = None
     food_name = []
