@@ -20,7 +20,7 @@ class Nutrition(object):
 
     def scrap_name(self):
 
-        for i in range(1, 3):
+        for i in range(1, 39):
             self.url = f'https://terms.naver.com/list.naver?cid=59320&categoryId=59320&page={i}'
             driver = webdriver.Chrome(self.driver_path)
             driver.get(self.url)
