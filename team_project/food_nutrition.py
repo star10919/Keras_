@@ -1,11 +1,13 @@
 import pandas as pd
 from bs4 import BeautifulSoup
 from selenium import webdriver
+from itertools import chain
+
 
 class Nutrition(object):
     # url = 'https://terms.naver.com/list.naver?cid=59320&categoryId=59320'
     url = None
-    driver_path = 'c:/Program Files/Google/Chrome/chromedriver'
+    driver_path = 'C:/chromedriver'
     dict = {}
     df = None
     food_name = []
@@ -72,11 +74,38 @@ class Nutrition(object):
                 # print('nutrition :\n',self.food_nut[i])
                 self.dict[self.food_name[i]] = self.final_food_nut[i]
             driver.close()
-            
-        # print(self.dict)
+        food_ls = []
+        unique_ls = [] # 유니크 값을 확인하기 위한 배열
         for key, value in self.dict.items():
-            print(f'{key} :: {value[:15]} ... {value[-26:]}')
+            nut_tr = self.dict[key].split('-')[:-1]
+            nut_tr = ' '.join(nut_tr).split()
+            print('nut_tr', nut_tr)
+            kal_tr = self.dict[key].split('-')[-1].split(',')
+            kal_tr = [x.replace(' ', ':') for x in kal_tr]
+            print('kal_tr', kal_tr)
+            ls = nut_tr[:] + kal_tr
+            print('ls', ls)
+            new_dict = {sub.split(":")[0]: sub.split(":")[1] for sub in ls[:]}
+            new_dict.update({'음식명' : key})
+            print('new_dict',new_dict)
+            unique_ls.append(list(new_dict.keys()))
+            unique_value = ['나트륨', '포화지방산', '당류', '음식명', '1회제공량', '지방', '콜레스테롤', '탄수화물', '단백질', '트랜스지방', '칼로리']
+            for i, j in enumerate(unique_value):
+                print('ㅐㅐ', list(new_dict.keys()))
+                if (j in list(new_dict.keys())) == False:
+                    new_dict.update({j : '0g'})
+
+            food_ls.append(new_dict)
+
+        unique_ls = list(chain.from_iterable(unique_ls)) # 2d -> 1d
+        test = set(unique_ls) # 유니크 값 출력
+        # print('test', test)
+        for i in food_ls:
+            print('testtest',i)
+        
+        food = pd.DataFrame([i for i in food_ls], columns=['음식명', '나트륨', '포화지방산', '당류', '1회제공량', '지방', '콜레스테롤', '탄수화물', '단백질', '트랜스지방', '칼로리'])
     
+        food.to_csv('food.csv', index=False)
     '''
         for i in ls:
             print()
