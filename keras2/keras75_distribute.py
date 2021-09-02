@@ -40,7 +40,7 @@ strategy = tf.distribute.experimental.MultiWorkerMirroredStrategy(
     # tf.distribute.experimental.CollectiveCommunication.AUTO
 )
 
-
+ 
 
 with strategy.scope():
 
