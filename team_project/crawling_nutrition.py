@@ -7,7 +7,7 @@ from itertools import chain
 class Nutrition(object):
     # url = 'https://terms.naver.com/list.naver?cid=59320&categoryId=59320'
     url = None
-    driver_path = 'C:/chromedriver'
+    driver_path = 'c:/Program Files/Google/Chrome/chromedriver'
     dict = {}
     df = None
     food_name = []
@@ -74,6 +74,7 @@ class Nutrition(object):
                 # print('nutrition :\n',self.food_nut[i])
                 self.dict[self.food_name[i]] = self.final_food_nut[i]
             driver.close()
+
         food_ls = []
         unique_ls = [] # 유니크 값을 확인하기 위한 배열
         for key, value in self.dict.items():
