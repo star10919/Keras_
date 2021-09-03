@@ -25,13 +25,13 @@ class Nutrition(object):
             driver = webdriver.Chrome(self.driver_path)
             driver.get(self.url)
             all_div = BeautifulSoup(driver.page_source, 'html.parser')
-            ls1 = all_div.find_all("div", {"class": "subject"})
+            ls1 = all_div.find_all("div", {"class": "subject"})     # name
             for i in ls1:
-                self.food_name.append(i.find('a').text)     # name
+                self.food_name.append(i.find('a').text)
             # print(self.food_name)
 
 
-            ls2 = all_div.find_all("p", {"class": "desc __ellipsis"})
+            ls2 = all_div.find_all("p", {"class": "desc __ellipsis"})   # nutrition
             for i in ls2:
                 self.food_nut.append(i.text)
             
@@ -74,6 +74,10 @@ class Nutrition(object):
                 # print('nutrition :\n',self.food_nut[i])
                 self.dict[self.food_name[i]] = self.final_food_nut[i]
             driver.close()
+
+
+
+
 
         food_ls = []
         unique_ls = [] # 유니크 값을 확인하기 위한 배열
