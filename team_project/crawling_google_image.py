@@ -8,7 +8,7 @@ import pandas as pd
 
 keyword = pd.read_csv('./food.csv')
 keyword = keyword['음식명']
-
+ 
 def createFolder(directory): # os를 임포트 하면 폴더 만들 수 있음
     try: 
         if not os.path.exists(directory): #고구마 라는 폴더가 없으면 만들고, 있으면 넘어감
