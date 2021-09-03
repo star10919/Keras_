@@ -6,8 +6,9 @@ import urllib.request
 from multiprocessing import Pool 
 import pandas as pd
 
-keyword=['고구마','김치찌개','감자','잔치국수']
-# keyword=['고구마','김치찌개','감자','잔치국수','열무김치','진미채볶음','계란말이','카레','닭가슴살','토마토달걀볶음']
+keyword = pd.read_csv('./food.csv')
+keyword = keyword['음식명']
+
 def createFolder(directory): # os를 임포트 하면 폴더 만들 수 있음
     try: 
         if not os.path.exists(directory): #고구마 라는 폴더가 없으면 만들고, 있으면 넘어감
@@ -42,7 +43,6 @@ def image_download(keyword):
     (//a)[position()< 3]: 문서의 처음 두링크선택
     //table/tr/* : 모든 테이블에서 모든 자식 tr 태그 선택
     //div[@*] : 속성이 하나라도 있는 div 태그 선택
-
     '''
 
     Keyword.send_keys(keyword)  # 키워드 입력
