@@ -56,7 +56,7 @@ gan.compile(loss='binary_crossentropy', optimizer=Adam())
 losses = []
 accuracies = []
 iteration_checkpoints = []
-
+ 
 
 def train(iterations, batch_size, sample_interval):
     (X_train, _), (_, _) = mnist.load_data()
