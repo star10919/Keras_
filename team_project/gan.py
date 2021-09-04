@@ -33,7 +33,7 @@ def build_discriminator(img_shape):     # 구별자
     model.add(Dense(1, activation='sigmoid'))
 
     return model
-
+ 
 
 def build_gan(generator, discriminator):
     model = Sequential()
