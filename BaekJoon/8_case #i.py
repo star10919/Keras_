@@ -7,4 +7,4 @@ for i in range(1, T+1):
     line = input()
     a = line.split(" ")[0]
     b = line.split(" ")[1]
-    print('Case #', f'{i}:', int(a) + int(b))
+    print(f'Case #{i}: {int(a) + int(b)}')
