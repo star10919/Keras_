@@ -91,7 +91,7 @@ class Nutrition(object):
             ls = nut_tr[:] + kal_tr # 둘이 합침
             print('ls', ls)
             new_dict = {sub.split(":")[0]: sub.split(":")[1] for sub in ls[:]} # {'탄수화물':5g, '단백질':4g} 처럼 모든 영양성분을 키와 값으로 나눔
-            new_dict.update({'음식명' : key}) # 음식명도 영양성분 dictioanry와 합침('음식명' : '고구마', '탄수화물': 5g ~)
+            new_dict.update({'음식명' : key}) # '음식명'(컬럼 추가)도 영양성분 dictioanry와 합침('음식명' : '고구마', '탄수화물': 5g ~)  /  dictionary는 update(list에서 append)
             print('new_dict',new_dict)
             unique_ls.append(list(new_dict.keys())) # 유니크 값을 확인하기 위한 배열에 키값을 추가함.
             unique_value = ['나트륨', '포화지방산', '당류', '음식명', '1회제공량', '지방', '콜레스테롤', '탄수화물', '단백질', '트랜스지방', '칼로리'] # 크롤링한 데이터에서의 유니크값 들
