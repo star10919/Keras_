@@ -1,17 +1,17 @@
 from selenium import webdriver 
-from selenium.webdriver.common.keys import Keys 
+from selenium.webdriver.common.keys import Keys         # 동적페이지라 request 말고 selenium 사용
 import time 
-import os 
-import urllib.request 
+import os       # 경로지정 가능
+import urllib.request       # selenium을 통해 가져온 각 이미지들의 url을 불러들여 이미지를 저장하게 할 urllib.request를 import 한다.
 from multiprocessing import Pool 
 import pandas as pd
 
 keyword = pd.read_csv('./food.csv')
 keyword = keyword['음식명']
 
-def createFolder(directory): # os를 임포트 하면 폴더 만들 수 있음
+def createFolder(directory):    # 이미지들이 createFolder를 지정하여 이미지들이 저장될 폴더를 만듦
     try: 
-        if not os.path.exists(directory): #고구마 라는 폴더가 없으면 만들고, 있으면 넘어감
+        if not os.path.exists(directory):   # 고구마 라는 폴더가 없으면 만들고, 있으면 넘어감
             os.makedirs(directory) 
     except OSError: 
         print ('Error: Creating directory. ' + directory)
@@ -28,9 +28,9 @@ def image_download(keyword):
 
 
 ################################### 구글 이미지 검색 접속 및 검색어 입력 ###################################
-    print(keyword, '검색')  # 키워드 검색하도록 명령
-    driver.get('https://www.google.co.kr/imghp?hl=ko')  # 크롤링할 URL입력
-    Keyword=driver.find_element_by_xpath('//*[@id="sbtc"]/div/div[2]/input') # xpath의 원하는 값을 가져옴
+    print(keyword, '검색')  
+    driver.get('https://www.google.co.kr/imghp?hl=ko')  # 크롤링할 URL입력 
+    Keyword=driver.find_element_by_xpath('//*[@id="sbtc"]/div/div[2]/input') # 키워드입력(검색)창에 대한 xpath
     
     '''
     find_element_by_xpath 
@@ -52,9 +52,9 @@ def image_download(keyword):
 ################################################# 스크롤 #################################################
     print(keyword+' 스크롤 중 .............') 
     elem = driver.find_element_by_tag_name("body") 
-    for i in range(1): 
-        elem.send_keys(Keys.PAGE_DOWN)  # 무한 스크롤
-        time.sleep(0.1) 
+    for i in range(6): 
+        elem.send_keys(Keys.PAGE_DOWN)  # range만큼 스크롤
+        time.sleep(0.1)      # 일정 시간동안 프로세스를 일시정지(실수단위로 지정 가능)
     try: 
         driver.find_element_by_xpath('//*[@id="islmp"]/div/div/div/div[1]/div[4]/div[2]/input').click()  # 결과 더보기 버튼 누르기
         for i in range(1): 
@@ -65,7 +65,7 @@ def image_download(keyword):
 
 
 ############################################### 이미지 개수 ###############################################
-    images = driver.find_elements_by_css_selector("img.rg_i.Q4LuWd") 
+    images = driver.find_elements_by_css_selector("img.rg_i.Q4LuWd")   # find_element_by_css_selector : css선택자를 사용하여 접근
     print(keyword+' 찾은 이미지 개수:', len(images))
     links=[] 
     for i in range(1,len(images)): 
@@ -84,7 +84,7 @@ def image_download(keyword):
             try: 
                 url = i 
                 start = time.time() 
-                urllib.request.urlretrieve(url, "./"+keyword+"/"+keyword+"_"+str(k-forbidden)+".jpg")
+                urllib.request.urlretrieve(url, "./"+keyword+"/"+keyword+"_"+str(k-forbidden)+".jpg")       # urlretrieved(url, 로컬에 저장될 파일 이름)
                 print(str(k+1)+'/'+str(len(links))+' '+keyword+' 다운로드 중....... Download time : '+str(time.time() - start)[:5]+' 초') 
             except: 
                 forbidden+=1 
@@ -95,6 +95,6 @@ def image_download(keyword):
 
 if __name__=='__main__': 
     pool = Pool(processes=4) # 4개의 프로세스를 사용합니다.     # Pool : 처리할 일들을 바닥에 뿌려놓고 알아서 분산처리 
-    pool.map(image_download, keyword)
+    pool.map(image_download, keyword)       # map(function, list or tuple)
 
 print('끝')
