@@ -62,7 +62,7 @@ def image_download(keyword):
             time.sleep(0.1) 
     except: 
         pass 
-
+ 
 
 ############################################### 이미지 개수 ###############################################
     images = driver.find_elements_by_css_selector("img.rg_i.Q4LuWd")   # find_element_by_css_selector : css_selector을 사용하여 접근
@@ -80,7 +80,7 @@ def image_download(keyword):
 
 ############################################# 이미지 다운로드 #############################################
         forbidden=0 
-        for k,i in enumerate(links): 
+        for k, i in enumerate(links): 
             try: 
                 url = i 
                 start = time.time() 
