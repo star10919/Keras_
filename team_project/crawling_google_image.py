@@ -65,7 +65,7 @@ def image_download(keyword):
 
 
 ############################################### 이미지 개수 ###############################################
-    images = driver.find_elements_by_css_selector("img.rg_i.Q4LuWd")   # find_element_by_css_selector : css선택자를 사용하여 접근
+    images = driver.find_elements_by_css_selector("img.rg_i.Q4LuWd")   # find_element_by_css_selector : css_selector을 사용하여 접근
     print(keyword+' 찾은 이미지 개수:', len(images))
     links=[] 
     for i in range(1,len(images)): 
