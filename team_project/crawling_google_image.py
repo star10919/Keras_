@@ -70,7 +70,7 @@ def image_download(keyword):
     links=[] 
     for i in range(1,len(images)): 
         try: 
-            driver.find_element_by_xpath('//*[@id="islrg"]/div[1]/div['+str(i)+']/a[1]/div[1]/img').click() 
+            driver.find_element_by_xpath('//*[@id="islrg"]/div[1]/div['+str(i)+']/a[1]/div[1]/img').click()     # 
             # links.append(driver.find_element_by_xpath('//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div/div[2]/a/img').get_attribute('src')) 
             links.append(driver.find_element_by_xpath('//*[@id="Sva75c"]/div/div/div[3]/div[2]/c-wiz/div/div[1]/div[1]/div[2]/div[1]/a/img').get_attribute('src')) # 검사 copy x_path
             driver.find_element_by_xpath('//*[@id="Sva75c"]/div/div/div[2]/a').click() 
@@ -84,7 +84,7 @@ def image_download(keyword):
             try: 
                 url = i 
                 start = time.time() 
-                urllib.request.urlretrieve(url, "./"+keyword+"/"+keyword+"_"+str(k-forbidden)+".jpg")       # urlretrieved(url, 로컬에 저장될 파일 이름)
+                urllib.request.urlretrieve(url, "./"+keyword+"/"+keyword+"_"+str(k-forbidden)+".jpg")       # urlretrieve(url, 로컬에 저장될 파일 이름)
                 print(str(k+1)+'/'+str(len(links))+' '+keyword+' 다운로드 중....... Download time : '+str(time.time() - start)[:5]+' 초') 
             except: 
                 forbidden+=1 
