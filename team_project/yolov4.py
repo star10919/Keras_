@@ -31,12 +31,12 @@ def main(img_path):     # 이미지 전처리
 
     #iou_threshold, score_threshold 넘는 부분 제거
     boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(  
-        boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
-        scores=tf.reshape(pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
-        max_output_size_per_class=50,
-        max_total_size=50,
-        iou_threshold=IOU_THRESHOLD,
-        score_threshold=SCORE_THRESHOLD)
+        boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),    # [batch_size, num_boxes, q, 4]
+        scores=tf.reshape(pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),    # [batch_size, num_boxes, num_classes]
+        max_output_size_per_class=50,   # Tensor클래스당 비최대 억제에 의해 선택되는 최대 상자 수를 나타내는 정수 스칼라
+        max_total_size=50,  # 	모든 클래스에 대해 유지되는 최대 상자 수를 나타내는 int32 스칼라입니다. 이 값을 크게 설정하면 시스템 작업 부하에 따라 OOM 오류가 발생할 수 있습니다.
+        iou_threshold=IOU_THRESHOLD,    # IOU에 대해 상자가 너무 많이 겹치는지 여부를 결정하기 위한 임계값
+        score_threshold=SCORE_THRESHOLD)   # 점수에 따라 상자를 제거할 시기를 결정하기 위한 임계값
 
     pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
     result = utils.draw_bbox(img, pred_bbox)        # 결과값을 bounding box로 그림
@@ -44,7 +44,7 @@ def main(img_path):     # 이미지 전처리
     result = cv2.cvtColor(np.array(result), cv2.COLOR_RGB2BGR)  # BGR에서 RGB로 변환
     cv2.imwrite('result.png', result)   # opencv로 저장하려면 윗줄 과정 필요
     
-
+ 
 if __name__ == '__main__':
     img_path = 'C:/Users/bit/yolov4/tensorflow-yolov4-tflite/data/table.jpg'
     main(img_path)
