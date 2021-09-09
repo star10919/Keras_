@@ -1,4 +1,3 @@
-from re import S
 import tensorflow as tf
 from tensorflow.python import saved_model
 import core.utils as utils
@@ -13,27 +12,26 @@ INPUT_SIZE = 416
 
 # load model
 saved_model_loaded = tf.saved_model.load(MODEL_PATH, tags=[tag_constants.SERVING])
-infer = saved_model_loaded.signatures['serving_default']
+infer = saved_model_loaded.signatures['serving_default']        # model load
 
 def main(img_path):     # 이미지 전처리
-    img = cv2.imread(img_path)      # 이미지 읽어오기
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)      # 이미지 컬러 시스템 변경(BGR -> RGB)
+    img = cv2.imread(img_path)      # 이미지 읽어오기-cv2로 읽어오면 numpy타입으로 받아짐
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)      # 이미지 컬러 시스템 변경(BGR -> RGB)   opencv:BGR /  pillow:RGB
 
     img_input = cv2.resize(img, (INPUT_SIZE, INPUT_SIZE))       # 이미지 크기 변경
     img_input = img_input / 255.
     img_input = img_input[np.newaxis, ...].astype(np.float32)   # newaxis : 차원 1개 추가
-    img_input = tf.constant(img_input)      # numpy array를 tensor로 바꿔줌
+    img_input = tf.constant(img_input)      # numpy array를 tensor 상수로 바꿔줌
 
-    pred_bbox = infer(img_input)        # bounding box로 후처리
+    pred_bbox = infer(img_input)        # 로드한 model에 이미지 넣어줌
 
-    for key, value in pred_bbox.items():
+    for key, value in pred_bbox.items():       # bounding box 후처리
         boxes = value[:, :, 0:4]
         pred_conf = value[:, :, 4:]
 
-    boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(
+    boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(     #iou_threshold, score_threshold 넘는 부분 제거
         boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),
-        scores=tf.reshape(
-            pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
+        scores=tf.reshape(pred_conf, (tf.shape(pred_conf)[0], -1, tf.shape(pred_conf)[-1])),
         max_output_size_per_class=50,
         max_total_size=50,
         iou_threshold=IOU_THRESHOLD,
@@ -47,5 +45,5 @@ def main(img_path):     # 이미지 전처리
     
 
 if __name__ == '__main__':
-    img_path = 'C:/Users/bit/yolov4/tensorflow-yolov4-tflite/data/kite.jpg'
+    img_path = 'C:/Users/bit/yolov4/tensorflow-yolov4-tflite/data/table.jpg'
     main(img_path)
