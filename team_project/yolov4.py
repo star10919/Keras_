@@ -44,7 +44,7 @@ def main(img_path):     # 이미지 전처리
     result = cv2.cvtColor(np.array(result), cv2.COLOR_RGB2BGR)  # BGR에서 RGB로 변환
     cv2.imwrite('result.png', result)   # opencv로 저장하려면 윗줄 과정 필요
     
- 
+
 if __name__ == '__main__':
     img_path = 'C:/Users/bit/yolov4/tensorflow-yolov4-tflite/data/table.jpg'
     main(img_path)
