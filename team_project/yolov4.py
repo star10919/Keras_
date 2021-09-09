@@ -16,10 +16,10 @@ saved_model_loaded = tf.saved_model.load(MODEL_PATH, tags=[tag_constants.SERVING
 infer = saved_model_loaded.signatures['serving_default']
 
 def main(img_path):     # 이미지 전처리
-    img = cv2.imread(img_path)      # 이미지 로드
+    img = cv2.imread(img_path)      # 이미지 읽어오기
     img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)      # 이미지 컬러 시스템 변경(BGR -> RGB)
 
-    img_input = cv2.resize(img, (INPUT_SIZE, INPUT_SIZE))
+    img_input = cv2.resize(img, (INPUT_SIZE, INPUT_SIZE))       # 이미지 크기 변경
     img_input = img_input / 255.
     img_input = img_input[np.newaxis, ...].astype(np.float32)   # newaxis : 차원 1개 추가
     img_input = tf.constant(img_input)      # numpy array를 tensor로 바꿔줌
@@ -40,7 +40,7 @@ def main(img_path):     # 이미지 전처리
         score_threshold=SCORE_THRESHOLD)
 
     pred_bbox = [boxes.numpy(), scores.numpy(), classes.numpy(), valid_detections.numpy()]
-    result = utils.draw_bbox(img, pred_bbox)
+    result = utils.draw_bbox(img, pred_bbox)        # 결과값을 bounding box로 그림
 
     result = cv2.cvtColor(np.array(result), cv2.COLOR_RGB2BGR)  # BGR에서 RGB로 변환
     cv2.imwrite('result.png', result)   # opencv로 저장하려면 윗줄 과정 필요
