@@ -28,7 +28,7 @@ def main(img_path):     # 이미지 전처리
     for key, value in pred_bbox.items():       # bounding box 후처리
         boxes = value[:, :, 0:4]
         pred_conf = value[:, :, 4:]
-
+ 
     #io u_threshold, score_threshold 넘는 부분 제거
     boxes, scores, classes, valid_detections = tf.image.combined_non_max_suppression(  
         boxes=tf.reshape(boxes, (tf.shape(boxes)[0], -1, 1, 4)),    # [batch_size, num_boxes, q, 4]
