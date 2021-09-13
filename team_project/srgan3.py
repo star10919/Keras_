@@ -11,6 +11,8 @@ from IPython import display
 import datetime
 import time
 
+# IndexError: pop from empty list
+
 gpus = tf.config.experimental.list_physical_devices('GPU')
 
 if gpus:
@@ -28,7 +30,8 @@ AUTOTUNE = tf.data.experimental.AUTOTUNE
 BATCH_SIZE = 8
 EPOCH =  1000
 # IMAGE_LEN = len(os.listdir("../pytorch/celeba_data/img_align_celeba/img_align_celeba/"))
-IMAGE_LEN = len(os.listdir("./godeunguh/*"))
+# IMAGE_LEN = 3
+IMAGE_LEN = len(os.listdir("./godeunguh/"))
 
 
 
