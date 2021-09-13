@@ -26,7 +26,7 @@ from data_loader import DataLoader
 import numpy as np
 import os
 
-import keras.backend as K
+# import keras.backend as K
 
 class SRGAN():
     def __init__(self):
