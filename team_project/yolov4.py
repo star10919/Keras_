@@ -5,6 +5,8 @@ from tensorflow.python.saved_model import tag_constants
 import cv2
 import numpy as np
 
+# kite/person(실습)
+
 MODEL_PATH = 'C:/Users/bit/yolov4/tensorflow-yolov4-tflite/checkpoints/yolov4-416'
 IOU_THRESHOLD = 0.45
 SCORE_THRESHOLD = 0.25
