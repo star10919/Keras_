@@ -3,6 +3,7 @@ from bs4 import BeautifulSoup
 from selenium import webdriver
 from itertools import chain
 
+# 영양성분 크롤링
 
 class Nutrition(object):
     # url = 'https://terms.naver.com/list.naver?cid=59320&categoryId=59320'
