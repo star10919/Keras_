@@ -26,7 +26,7 @@ def image_download(keyword):
     explicitly wait : 웹페이지의 일부분이 나타날때까지 기다리기
     '''
 
- 
+
 ################################### 구글 이미지 검색 접속 및 검색어 입력 ###################################
     print(keyword, '검색')  
     driver.get('https://www.google.co.kr/imghp?hl=ko')  # 크롤링할 URL입력 
