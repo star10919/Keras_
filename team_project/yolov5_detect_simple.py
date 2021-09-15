@@ -12,7 +12,7 @@ from utils.plots import plot_one_box
 from utils.torch_utils import select_device, time_synchronized
 
 
-SOURCE = 'data/images/bus.jpg'
+SOURCE = 'data/images/haein.jpg'
 WEIGHTS = 'yolov5s.pt'
 IMG_SIZE = 640
 DEVICE = ''
