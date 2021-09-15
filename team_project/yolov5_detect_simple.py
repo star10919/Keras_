@@ -13,12 +13,12 @@ from utils.torch_utils import select_device, time_synchronized
 
 
 SOURCE = 'data/images/haein.jpg'
-WEIGHTS = 'yolov5s.pt'
+WEIGHTS = 'yolov5s.pt'      # yolov5s, yolov5m, yolov5l, yolov5x
 IMG_SIZE = 640
 DEVICE = ''
 AUGMENT = False
-CONF_THRES = 0.25
-IOU_THRES = 0.45 # CONF_THRES와 IOU_THRES는 모델 prediction이후 바운딩 박스를 조절하는 NMS(Non-Max-Suppresion)에 사용되는 threshold 값. 기본값으로 설정
+CONF_THRES = 0.25  # prediction이후 바운딩 박스를 조절하는 NMS(Non-Max-Suppresion)에 사용되는 threshold 값.
+IOU_THRES = 0.45   # prediction이후 바운딩 박스를 조절하는 NMS(Non-Max-Suppresion)에 사용되는 threshold 값.
 CLASSES = None # CLASSES는 분류 필터링을 할 경우 사용하고 AGNOSTIC_NMS는 Classification없이 물체의 바운딩 박스만을 찾고 싶을때 사용
 AGNOSTIC_NMS = False
 
@@ -39,7 +39,7 @@ def detect():
         model.half()  # to FP16
 
     # Get names and colors
-    names = model.module.names if hasattr(model, 'module') else model.names
+    names = model.module.names if hasattr(model, 'module') else model.names     # hasattr: model의 존재 확인
     colors = [[random.randint(0, 255) for _ in range(3)] for _ in names]
 
     # Run inference
@@ -52,24 +52,25 @@ def detect():
     이후 torch zero Tensor를 생성하여 Inference
     '''
 
+
+
     # Load image
     img0 = cv2.imread(source)  # opencv2에서는 BGR체계로 불러와짐
     assert img0 is not None, 'Image Not Found ' + source # 아까 설정한 source에서 이미지를 읽고 이미지가 없을 경우 예외처리
 
     # Padded resize
-    img = letterbox(img0, imgsz, stride=stride)[0] # letterbox를 이용해 패딩을 해주고 opencv는 BGR 체계이기 때문에 RGB로 바꿔줌
+    img = letterbox(img0, imgsz, stride=stride)[0] # letterbox를 이용해 패딩을 해줌
 
     # Convert 
-    img = img[:, :, ::-1].transpose(2, 0, 1)  # to 3x416x416 pytorch의 경우 모델에 입력할 경우 채널차원이 맨 앞에 있어야해서 transpose를 적용
-    img = np.ascontiguousarray(img)
+    img = img[:, :, ::-1].transpose(2, 0, 1)  #BGR to RGB, to 3x416x416 pytorch의 경우 모델에 입력할 경우 채널차원이 맨 앞에 있어야해서 transpose를 적용
+    img = np.ascontiguousarray(img)     # 메모리에 연속배열 반환
 
     img = torch.from_numpy(img).to(device)
     img = img.half() if half else img.float()  # uint8 to fp16/32
     img /= 255.0  # 0 - 255 to 0.0 - 1.0
     if img.ndimension() == 3:
-        img = img.unsqueeze(0)
-    
-    # numpy array에서 torch Tensor형식으로 변환하고 torch 모델의 입력은 항상 배치형태로 받기 때문에 맨 앞에 차원을 하나 넣어줌
+        img = img.unsqueeze(0)      # 차원 늘림
+    # numpy array에서 torch Tensor형식으로 변환하고, torch 모델의 입력은 항상 배치형태로 받기 때문에 맨 앞에 차원을 하나 넣어줌
     # 최종적으로는 1 x 3 x IMG_COL x IMG_ROW의 사이즈가 출력
 
     # Inference
@@ -89,6 +90,9 @@ def detect():
     그리드 셀에서 18900개의 바운딩 박스를 예측 확인
     pred를 직접 출력하면 index 0~3은 바운딩 박스의 위치, index 4는 바운딩 박스의 Confidence Score, 나머지 80개는 클래스들의 확률을 나타냄
     '''
+
+ 
+
 
     s = ''
     s += '%gx%g ' % img.shape[2:]  # print string
