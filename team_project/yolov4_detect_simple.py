@@ -8,8 +8,8 @@ import numpy as np
 # kite/person(실습)
 
 MODEL_PATH = 'C:/Users/bit/yolov4/tensorflow-yolov4-tflite/checkpoints/yolov4-416'
-IOU_THRESHOLD = 0.45
-SCORE_THRESHOLD = 0.25
+IOU_THRESHOLD = 0.45        # 정답과 예측값이 얼마나 겹치는지를 나타내는 지표
+SCORE_THRESHOLD = 0.25      # 예측한 box안에 실제 object가 얼마나 존재하는지
 INPUT_SIZE = 416
 
 # load model
