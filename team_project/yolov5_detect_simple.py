@@ -22,7 +22,7 @@ IOU_THRES = 0.45 # CONF_THRES와 IOU_THRES는 모델 prediction이후 바운딩 
 CLASSES = None # CLASSES는 분류 필터링을 할 경우 사용하고 AGNOSTIC_NMS는 Classification없이 물체의 바운딩 박스만을 찾고 싶을때 사용
 AGNOSTIC_NMS = False
 
- 
+
 def detect():
     source, weights, imgsz = SOURCE, WEIGHTS, IMG_SIZE
 
