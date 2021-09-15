@@ -47,7 +47,7 @@ def detect():
         model(torch.zeros(1, 3, imgsz, imgsz).to(device).type_as(next(model.parameters())))  # run once
 
     '''
-    디바이스 선택 후 모델을 로드하고 이미지 사이즈를 stride로 나눌 수 있는지 체크 ////////////////// stride가 무엇인지 찾아보기
+    디바이스 선택 후 모델을 로드하고 이미지 사이즈를 stride로 나눌 수 있는지 체크 ////////////////// stride : 커널 이동 보폭
     그 다음엔 class name을 설정해주고 각 클래스 별로 RGB 컬러를 랜덤으로 지정
     이후 torch zero Tensor를 생성하여 Inference
     '''
