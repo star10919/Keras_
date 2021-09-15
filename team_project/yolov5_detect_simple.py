@@ -91,7 +91,7 @@ def detect():
     pred를 직접 출력하면 index 0~3은 바운딩 박스의 위치, index 4는 바운딩 박스의 Confidence Score, 나머지 80개는 클래스들의 확률을 나타냄
     '''
 
- 
+
 
 
     s = ''
