@@ -20,4 +20,4 @@ y_predict = model.predict(x_test)
 results = model.evaluate(x_test, y_test)
 print(results)
 
-# [0.04554564133286476, 0.9840999841690063]  loss / accuracy 
+# [0.04554564133286476, 0.9840999841690063]  loss / accuracy
