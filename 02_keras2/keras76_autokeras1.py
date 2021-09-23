@@ -18,4 +18,4 @@ model.fit(x_train, y_train, epochs=2)
 y_predict = model.predict(x_test)
 
 results = model.evaluate(x_test, y_test)
-print(results)
+print(results) 
