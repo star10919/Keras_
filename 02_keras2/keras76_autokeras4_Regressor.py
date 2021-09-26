@@ -17,4 +17,4 @@ model = ak.StructureDataRegressor(overwrite=True, max_trials=1)
 model.fit(x, y, epochs=2, validation_split=0.2)
 
 # 4. 평가, 예측
-results = model.evaluate(x, y)
+results = model.evaluate(x, y) 
