@@ -5,4 +5,4 @@ def windowed_dataset(series, window_size, batch_size, shuffle_buffer):
     ds = ds.flat_map(lambda w: w.batch(window_size + 1))
     ds = ds.shuffle(shuffle_buffer)
     ds = ds.map(lambda w: (w[:-1], w[1:]))
-    return ds.batch(batch_size).prefetch(1)
+    return ds.batch(batch_size).prefetch(1) 
