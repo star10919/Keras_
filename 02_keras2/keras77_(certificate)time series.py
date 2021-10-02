@@ -31,7 +31,7 @@ def solution_model():
 	# and sunspots. They are decleared here.
     time_step = []
     sunspots = []
-
+ 
     with open('sunspots.csv') as csvfile:
       reader = csv.reader(csvfile, delimiter=',')
       next(reader)
