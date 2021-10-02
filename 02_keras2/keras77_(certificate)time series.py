@@ -6,7 +6,7 @@ import pandas as pd
 
 urllib.request.urlretrieve('https://storage.googleapis.com/download.tensorflow.org/data/Sunspots.csv', 'sunspots.csv')
 sunspots = pd.read_csv('sunspots.csv', sep=",")
-
+ 
 print(sunspots)
 
 # Index(['Unnamed: 0', 'Date', 'Monthly Mean Total Sunspot Number'], dtype='object')
