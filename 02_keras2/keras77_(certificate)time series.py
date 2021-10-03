@@ -8,7 +8,7 @@ urllib.request.urlretrieve('https://storage.googleapis.com/download.tensorflow.o
 sunspots = pd.read_csv('sunspots.csv', sep=",")
  
 print(sunspots)
- 
+
 # Index(['Unnamed: 0', 'Date', 'Monthly Mean Total Sunspot Number'], dtype='object')
 
 
