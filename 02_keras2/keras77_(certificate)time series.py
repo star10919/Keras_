@@ -21,7 +21,7 @@ def windowed_dataset(series, window_size, batch_size, shuffle_buffer):
     ds = ds.shuffle(shuffle_buffer)
     ds = ds.map(lambda w: (w[:-1], w[1:]))
     return ds.batch(batch_size).prefetch(1) 
-
+ 
 
 def solution_model():
     url = 'https://storage.googleapis.com/download.tensorflow.org/data/Sunspots.csv'
