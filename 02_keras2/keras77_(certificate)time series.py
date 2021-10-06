@@ -10,7 +10,7 @@ sunspots = pd.read_csv('sunspots.csv', sep=",")
 print(sunspots)
 
 # Index(['Unnamed: 0', 'Date', 'Monthly Mean Total Sunspot Number'], dtype='object')
- 
+
 
 
 def windowed_dataset(series, window_size, batch_size, shuffle_buffer):
