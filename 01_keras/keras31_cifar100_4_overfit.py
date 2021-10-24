@@ -7,7 +7,7 @@
 -> layer별로 정규화를 시켜주는것은 어떠냐는 의미 
 3. dropout
 : 각 layer마다 몇개의 node를 빼고 계산했을 때 과적합이 줄어들었음을 알 수 있다
-: 이 때 머신은 랜덤하게 제외시킬 노트를 일정비율로 솎아준다.
+: 이 때 머신은 랜덤하게 제외시킬 노드를 일정비율로 솎아준다.
 '''
 import numpy as np
 from tensorflow.keras.datasets import cifar100
